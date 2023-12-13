@@ -12,7 +12,8 @@ struct MainMenuView: View
     @State private var selection: String? = "Item1"
     @State private var isShowTestWindow = false
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-
+    @State private var searchText: String = ""
+    
     var body: some View
     {
         NavigationSplitView(columnVisibility: $columnVisibility)
@@ -83,6 +84,7 @@ struct MainMenuView: View
             Text("Go auth Mishanya")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }//detail if no selected
+        .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
         .navigationTitle("Gradify dev build")
         .sheet(isPresented: $isShowTestWindow)
         {

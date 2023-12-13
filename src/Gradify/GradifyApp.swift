@@ -35,8 +35,6 @@ struct GradifyApp: App
         .commandsRemoved()
         .windowResizability(.contentSize)
 
-        
-
     }
     
 }
