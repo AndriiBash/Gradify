@@ -11,32 +11,44 @@ import Firebase
 @main
 struct GradifyApp: App
 {
-    @State private var isLogined: Bool = false
-        
-    var screen = NSScreen.main?.visibleFrame
-        
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    //var screen = NSScreen.main?.visibleFrame
+    //var windowController = WindowController()
+    
     init()
     {
         FirebaseApp.configure()
+        //windowController.setMainWindow()
+        //windowController.showWindow(self)
+        let windowController = WindowController()
+        
+        NSApp.setActivationPolicy(.regular)
+        windowController.showWindow(nil)
+        windowController.setMainWindow()
+
     }
     
     var body: some Scene
     {
-        WindowGroup
+        MenuBarExtra // costul' :(
         {
-            MainMenuView()
-                .onAppear
-                {
-                    let window = WindowController()
-                    window.setMainWindow()
-                    window.showWindow(nil)
-                }
+            Text("Hello Status Bar Menu!")
+            Divider()
+            Button("shoow window mian") { }
+            
+            Button("Quit")
+            {
+                NSApp.terminate(nil)
+            }
+        }
+        label:
+        {
+            Image(systemName: "graduationcap.fill")
         }
         .commandsRemoved()
-        .windowResizability(.contentSize)
-
+         
     }
     
 }
-
 

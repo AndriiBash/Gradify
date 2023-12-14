@@ -81,7 +81,7 @@ struct MainMenuView: View
         }
         detail:
         {
-            Text("Go auth Mishanya")
+            Text("Go auth")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }//detail if no selected
         .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")

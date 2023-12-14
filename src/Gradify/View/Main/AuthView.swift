@@ -9,10 +9,9 @@ import SwiftUI
 
 struct AuthView: View
 {
-    @StateObject var loginData = LoginModel()
+    @ObservedObject var loginData: LoginModel
+    var windowController: WindowController
     
-    @Binding var currentLogin:              Bool
-
     @State private var isRemberMe:          Bool = false
     @State private var forgetPassAlertShow: Bool = false
     @State private var isHoverOnButton:     Bool = false
@@ -235,7 +234,8 @@ struct AuthView: View
             
         }//Main HStack
         .ignoresSafeArea(.all, edges: .all)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(minWidth: 780, maxWidth: .infinity,
+               minHeight: 520, maxHeight: .infinity)
         .background(Color("BackgroundLeftLoginView"))
         //.background(VisualEffectView())
         .overlay(
@@ -266,7 +266,7 @@ struct AuthView: View
     
     func animateIcon()
     {
-        if !currentLogin
+        if !loginData.statusAuth
         {
             startAnimate.toggle()
             
@@ -282,13 +282,15 @@ struct AuthView: View
 
 }
 
+
 struct AuthView_Previews: PreviewProvider
 {
-    @State static var isLogined = false
+    @State private static var loginData = LoginModel()
+    @State private static var windowController = WindowController()
 
     static var previews: some View
     {
-        AuthView(currentLogin: $isLogined)
+        AuthView(loginData: loginData, windowController: windowController)
     }
 }
 

@@ -11,7 +11,7 @@ struct StartView: View
 {
     @State private var animateStatus: Bool = true
     
-    @Binding var isLogined: Bool
+   // @Binding var isLogined: Bool
     
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
@@ -69,26 +69,12 @@ struct StartView: View
         .background(Color("BackgroundLeftLoginView"))
         //.ignoresSafeArea(.all, edges: .all)
         .navigationTitle("")
-        .onAppear
-        {
-            if isLogined
-            {
-                // need fix!!!!!
-                //dismiss()
-                //openWindow(id: "mainWindow")
-            }
-        }
         
     }
 }
 
-struct StartView_Previews: PreviewProvider
+#Preview
 {
-    @State static var isLogined = false
-
-    static var previews: some View
-    {
-        StartView(isLogined: $isLogined)
-    }
+    StartView()
 }
 
