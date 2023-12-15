@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Firebase
         run: |
-          brew install firebase-tools
+          brew install --cask firebase-admin
 
       - name: Set up Xcode Version
         uses: maxim-lobanov/setup-xcode@v1
