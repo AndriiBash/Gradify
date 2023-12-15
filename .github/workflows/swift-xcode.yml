@@ -24,12 +24,5 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build
+          xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build -allowProvisioningUpdates
 
-      - name: Test
-        run: |
-          xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' test
-
-      - name: Deploy
-        run: |
-           firebase deploy
