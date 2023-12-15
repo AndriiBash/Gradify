@@ -1,4 +1,4 @@
-name: Build macOS Project
+name: Build macOS Project with Firebase
 
 on:
   push:
@@ -8,16 +8,21 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Xcode
-      uses: swift/actions/setup-xcode@v2
-      with:
-        xcode-version: '12'
+      - name: Install Firebase
+        run: |
+          brew install --cask firebase-admin
 
-    - name: Build
-      run: |
-        xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build
+      - name: Set up Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build
+        run: |
+          xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build -allowProvisioningUpdates
+
