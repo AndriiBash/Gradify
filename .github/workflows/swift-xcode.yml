@@ -13,28 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Import certificates and provisioning profiles
+        run: |
+          echo "$CI_SECRET_CERTIFICATE_PASSWORD" | security unlock-keychain -p - ${CI_SECRET_CERTIFICATE_KEYCHAIN}
+          security import $CI_SECRET_CERTIFICATE_FILE -k ${CI_SECRET_CERTIFICATE_KEYCHAIN}
+          security import $CI_SECRET_PROVISIONING_PROFILE_FILE -k ${CI_SECRET_CERTIFICATE_KEYCHAIN}
+
       - name: Install Firebase
         run: |
           brew install --cask firebase-admin
 
-      - name: Install Apple Certificate and Provisioning Profile
-        env:
-          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_SECRET }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE }}
-        run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-
-          echo -n "$APPLE_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
       - name: Build App
         run: |
           xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build -allowProvisioningUpdates
-
-      - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
-        run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
-
+        
+    
