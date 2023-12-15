@@ -33,7 +33,7 @@
 		B5535C0E2AEEFCC700709D53 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		B56A1DAA2AFD5F84006AC92D /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		B57AAA342AF12DE6003E79E6 /* InfoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRowView.swift; sourceTree = "<group>"; };
-		B584C3142AE9879B00464E32 /* Gradify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B584C3142AE9879B00464E32 /* Gradify developer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gradify developer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B584C3172AE9879B00464E32 /* GradifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradifyApp.swift; sourceTree = "<group>"; };
 		B584C31B2AE9879D00464E32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B584C31E2AE9879D00464E32 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		B584C3152AE9879B00464E32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B584C3142AE9879B00464E32 /* Gradify.app */,
+				B584C3142AE9879B00464E32 /* Gradify developer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,7 +187,7 @@
 				B58901502B18745900151AB4 /* FirebaseStorage */,
 			);
 			productName = Gradify;
-			productReference = B584C3142AE9879B00464E32 /* Gradify.app */;
+			productReference = B584C3142AE9879B00464E32 /* Gradify developer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -318,6 +318,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -382,12 +383,13 @@
 		B584C3242AE9879D00464E32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Gradify/GradifyDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Gradify/Preview Content\"";
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -402,7 +404,7 @@
 				);
 				MARKETING_VERSION = "for Developers";
 				PRODUCT_BUNDLE_IDENTIFIER = AndriiIzbash.Gradify;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Gradify developer";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -411,12 +413,13 @@
 		B584C3252AE9879D00464E32 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = RealeseAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Gradify/Gradify.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Gradify/Preview Content\"";
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;

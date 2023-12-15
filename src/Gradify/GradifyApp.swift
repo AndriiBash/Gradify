@@ -19,19 +19,16 @@ struct GradifyApp: App
     init()
     {
         FirebaseApp.configure()
-        //windowController.setMainWindow()
-        //windowController.showWindow(self)
+
         let windowController = WindowController()
         
-        NSApp.setActivationPolicy(.regular)
+        windowController.setStartWindow()
         windowController.showWindow(nil)
-        windowController.setMainWindow()
-
     }
     
     var body: some Scene
     {
-        MenuBarExtra // costul' :(
+        MenuBarExtra
         {
             Text("Hello Status Bar Menu!")
             Divider()

@@ -49,7 +49,8 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         let hostingController = NSHostingController(rootView: MainMenuView())
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
-                
+        window?.center()
+
         useMiniWindow(status: false)
         useTranspertTitleBar(status: false)
     }// func setMainWindow
@@ -60,7 +61,8 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         let hostingController = NSHostingController(rootView: StartView())
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
-        
+        window?.center()
+
         useMiniWindow(status: true)
         useTranspertTitleBar(status: true)
     }
@@ -70,7 +72,8 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         let hostingController = NSHostingController(rootView: AuthView(loginData: loginData, windowController: self))
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
-        
+        window?.center()
+
         useMiniWindow(status: false)
         useTranspertTitleBar(status: true)
     }
@@ -84,6 +87,11 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
     func useTranspertTitleBar(status: Bool)
     {
         window?.titlebarAppearsTransparent = status
+    }
+    
+    func setTitleNameWindow(title: String)
+    {
+        window?.title = title
     }
     
     //func windowWillClose(_ notification: Notification)
