@@ -20,25 +20,21 @@ jobs:
       - name: Install Apple Certificate and Provisioning Profile
         env:
           APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_SECRET }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE }}
         run: |
-          # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
 
-          # import certificate and provisioning profile from secrets
           echo -n "$APPLE_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
-          # install the certificate and provisioning profile using setup-xcode
-          # replace the following with the specific action you're using
-          # (e.g., actions/setup-apple-certificate@v1)
-          # and update the required parameters as needed
-          # ...
 
       - name: Build App
         run: |
           xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' build -allowProvisioningUpdates
 
-
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
 
