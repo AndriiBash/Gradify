@@ -13,14 +13,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Xcode
-        uses: swift/actions/setup-xcode@v3
-        with:
-          xcode-version: '12'
-
       - name: Install Firebase
         run: |
           brew install firebase-tools
+
+      - name: Set up Xcode Version
+        uses: actions/setup-xcode-version@v1
+        with:
+          xcode-version: '12'
 
       - name: Build
         run: |
@@ -29,10 +29,6 @@ jobs:
       - name: Test
         run: |
           xcodebuild -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' test
-
-      - name: Install Firebase CLI
-        run: |
-          brew install firebase-tools
 
       - name: Deploy
         run: |
