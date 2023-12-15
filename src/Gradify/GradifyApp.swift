@@ -22,7 +22,7 @@ struct GradifyApp: App
 
         let windowController = WindowController()
         
-        windowController.setStartWindow()
+        windowController.setLoginWindow()
         windowController.showWindow(nil)
     }
     
