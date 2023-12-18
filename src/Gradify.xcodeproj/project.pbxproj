@@ -23,6 +23,7 @@
 		B5B0D2182B17780300B5417C /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0D2172B17780300B5417C /* LoginModel.swift */; };
 		B5B0D26C2B1796BF00B5417C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B5B0D26B2B1796BF00B5417C /* FirebaseAuth */; };
 		B5B0D2702B17981300B5417C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5B0D26F2B17981200B5417C /* GoogleService-Info.plist */; };
+		B5B55E5D2B30AAC9002E0F4D /* PopOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55E5C2B30AAC9002E0F4D /* PopOverView.swift */; };
 		B5E23C6D2AFBD3F600806DAC /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E23C6C2AFBD3F600806DAC /* ButtonView.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		B5B0D26A2B17931900B5417C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B5B0D26F2B17981200B5417C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5B0D2712B179C3500B5417C /* GradifyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradifyDebug.entitlements; sourceTree = "<group>"; };
+		B5B55E5C2B30AAC9002E0F4D /* PopOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverView.swift; sourceTree = "<group>"; };
 		B5E23C6C2AFBD3F600806DAC /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 		B5B0D2162B167FAD00B5417C /* PopUp */ = {
 			isa = PBXGroup;
 			children = (
+				B5B55E5C2B30AAC9002E0F4D /* PopOverView.swift */,
 				B5B0D2142B167A6D00B5417C /* LoadingScreen.swift */,
 			);
 			path = PopUp;
@@ -255,6 +258,7 @@
 				B504A0282B0E449B003000C4 /* AppDelegate.swift in Sources */,
 				B584C3182AE9879B00464E32 /* GradifyApp.swift in Sources */,
 				B57AAA352AF12DE6003E79E6 /* InfoRowView.swift in Sources */,
+				B5B55E5D2B30AAC9002E0F4D /* PopOverView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

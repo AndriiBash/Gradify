@@ -13,6 +13,8 @@ struct GradifyApp: App
 {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
+    @State private var isPopoverVisible = false
+
     //var screen = NSScreen.main?.visibleFrame
     //var windowController = WindowController()
     
@@ -21,8 +23,8 @@ struct GradifyApp: App
         FirebaseApp.configure()
 
         let windowController = WindowController()
-        
-        windowController.setLoginWindow()
+
+        windowController.setCurrentWindow()
         windowController.showWindow(nil)
     }
     
@@ -30,7 +32,6 @@ struct GradifyApp: App
     {
         MenuBarExtra
         {
-            Text("Hello Status Bar Menu!")
             Divider()
             Button("shoow window mian") { }
             
@@ -41,10 +42,9 @@ struct GradifyApp: App
         }
         label:
         {
-            Image(systemName: "graduationcap.fill")
+            //Image(systemName: "graduationcap.fill")
         }
         .commandsRemoved()
-         
     }
     
 }

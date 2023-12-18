@@ -10,11 +10,12 @@ import SwiftUI
 struct StartView: View
 {
     @State private var animateStatus: Bool = true
-    
+    var windowController: WindowController
+
    // @Binding var isLogined: Bool
     
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismiss) private var dismiss
+    //@Environment(\.openWindow) private var openWindow
+    //@Environment(\.dismiss) private var dismiss
         
     var body: some View
     {
@@ -47,9 +48,8 @@ struct StartView: View
             Button
             {
                 // go to auth
-                dismiss()
-                openWindow(id: "loginView")
                 animateStatus = false
+                windowController.setLoginWindow()
             }
             label:
             {
@@ -73,8 +73,13 @@ struct StartView: View
     }
 }
 
-#Preview
+struct StartView_Previews: PreviewProvider
 {
-    StartView()
+    @State private static var windowController = WindowController()
+
+    static var previews: some View
+    {
+        StartView(windowController: windowController)
+    }
 }
 

@@ -5,6 +5,7 @@
 //  Created by Андрiй on 22.11.2023.
 //
 
+import SwiftUI
 import Foundation
 import Cocoa
 
@@ -14,6 +15,45 @@ class AppDelegate: NSObject, NSApplicationDelegate
     //{
     //    (notification.object as? NSApplication)?.windows.first?.makeKeyAndOrderFront(self)
     //}
+    var statusItem: NSStatusItem?
+    var popOver = NSPopover()
+    
+    func applicationDidFinishLaunching(_ notification: Notification)
+    {
+        let menuView = PopOverView()
+        
+        popOver.behavior = .transient
+        popOver.animates = true
+        
+        popOver.contentViewController = NSViewController()
+        popOver.contentViewController?.view = NSHostingView(rootView: menuView)
+        
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        
+        if let menuButton = statusItem?.button
+        {
+            menuButton.image = NSImage(systemSymbolName: "graduationcap.fill", accessibilityDescription: nil)
+            menuButton.action = #selector(MenuButtonToogle)
+        }
+    }// func applicationDidFinishLaunching(_ notification: Notification)
+    
+    @objc func MenuButtonToogle()
+    {
+        if let menuButton = statusItem?.button
+        {
+            self.popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: NSRectEdge.minY)
+        }
+    }
+    
+    func applicationDidResignActive(_ notification: Notification)
+    {
+        popOver.performClose(nil)
+    }// func applicationDidResignActive(_ notification: Notification)
+    
+    func applicationDidBecomeActive(_ notification: Notification)
+    {
+        popOver.performClose(nil)
+    }// func applicationDidBecomeActive(_ notification: Notification)
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     {

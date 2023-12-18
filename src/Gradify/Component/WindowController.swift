@@ -38,12 +38,10 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         window.makeKey()
         
         //window.standardWindowButton(.closeButton)?.action = Selector("")
-
         
         self.init(window: window)
     }// func convenience init
 
-    
     func setMainWindow()
     {
         let hostingController = NSHostingController(rootView: MainMenuView())
@@ -54,18 +52,6 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         useMiniWindow(status: false)
         useTranspertTitleBar(status: false)
     }// func setMainWindow
-
-    
-    func setStartWindow()
-    {
-        let hostingController = NSHostingController(rootView: StartView())
-        
-        window?.contentView = NSHostingView(rootView: hostingController.rootView)
-        window?.center()
-
-        useMiniWindow(status: true)
-        useTranspertTitleBar(status: true)
-    }
     
     func setLoginWindow()
     {
@@ -73,10 +59,42 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.center()
-
+        
         useMiniWindow(status: false)
         useTranspertTitleBar(status: true)
+    }// func setLoginWindow()
+
+    func setStartWindow()
+    {
+        let hostingController = NSHostingController(rootView: StartView(windowController: self))
+        
+        window?.contentView = NSHostingView(rootView: hostingController.rootView)
+        window?.center()
+
+        useMiniWindow(status: true)
+        useTranspertTitleBar(status: true)
+    }// func setStartWindow()
+        
+    func setCurrentWindow()
+    {
+        // opens a specific window depending on what the user has been doing since the application started opening
+        setStartWindow()
+        
+        //setStartWindow()
+        //updateWindowContent()
+        
+    }// func setCurrentWindow()
+    
+   /*
+    func updateWindowContent()
+    {
+        if let authView = window?.contentView as? NSHostingView<AuthView>
+        {
+            // Обновляем содержимое AuthView при изменении loginData
+            loginData = authView.rootView.loginData
+        }
     }
+    */
     
     func useMiniWindow(status: Bool)
     {
@@ -87,12 +105,13 @@ class WindowController: NSWindowController//, NSWindowDelegate//, ObservableObje
     func useTranspertTitleBar(status: Bool)
     {
         window?.titlebarAppearsTransparent = status
-    }
+    }// func useTranspertTitleBar(status: Bool)
     
     func setTitleNameWindow(title: String)
     {
         window?.title = title
-    }
+    }// func setTitleNameWindow(title: String)
+
     
     //func windowWillClose(_ notification: Notification)
     //{
