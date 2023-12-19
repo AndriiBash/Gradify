@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - name: Checkout Repository
@@ -46,15 +46,10 @@ jobs:
         run: |
           brew install --cask firebase-admin
           
-      - name: Build app
-        uses: maxim-lobanov/xcodebuild-action@v1
-        with:
-          project: src/Gradify.xcodeproj
-          scheme: Gradify
-          configuration: Debug
-          destination: 'platform=macOS,arch=x86_64'
-          xcode-version: 15.0-beta
-        
+      - name: Build App
+        run: |
+          xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' -allowProvisioningUpdates
+
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
