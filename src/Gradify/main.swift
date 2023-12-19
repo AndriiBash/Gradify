@@ -32,5 +32,3 @@ final class GradifyApp
 }
 
 _ = GradifyApp()
-
-
