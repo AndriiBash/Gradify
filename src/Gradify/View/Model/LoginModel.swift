@@ -58,7 +58,6 @@ class LoginModel: ObservableObject
         {
             print("Error : \(error.localizedDescription)") // also debug
         }
-        
     }// func resetPassword()
     
     

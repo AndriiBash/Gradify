@@ -11,12 +11,14 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate
 {
+    
     //func applicationWillBecomeActive(_ notification: Notification)
     //{
     //    (notification.object as? NSApplication)?.windows.first?.makeKeyAndOrderFront(self)
     //}
     var statusItem: NSStatusItem?
     var popOver = NSPopover()
+    
     
     func applicationDidFinishLaunching(_ notification: Notification)
     {
@@ -39,11 +41,22 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     @objc func MenuButtonToogle()
     {
-        if let menuButton = statusItem?.button
+        guard let button = statusItem?.button else { return }
+
+        if popOver.isShown
         {
-            self.popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: NSRectEdge.minY)
+            popOver.performClose(nil)
         }
-    }
+        else
+        {
+            popOver.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
+        }
+    }// @obj func MenuButtonToogle()
+    
+    func applicationDidEnterBackground(_ notification: Notification)
+    {
+        popOver.performClose(nil)
+    }// func applicationDidEnterBackground(_ notification: Notification)
     
     func applicationDidResignActive(_ notification: Notification)
     {
@@ -80,5 +93,10 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
         return true
     }
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { // ANENTION!!!
+            // Возвращайте false, чтобы приложение не закрывалось после закрытия последнего окна
+            return false
+        }
     
 }

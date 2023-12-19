@@ -237,7 +237,7 @@ struct AuthView: View
         }//Main HStack
         .ignoresSafeArea(.all, edges: .all)
         .frame(minWidth: 780, maxWidth: .infinity,
-               minHeight: 520, maxHeight: .infinity)
+               minHeight: 560, maxHeight: .infinity)
         .background(Color("BackgroundLeftLoginView"))
         //.background(VisualEffectView())
         .overlay(
