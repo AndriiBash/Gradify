@@ -45,10 +45,15 @@ jobs:
       - name: Install Firebase
         run: |
           brew install --cask firebase-admin
-
-      - name: Build App
-        run: |
-          xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -project src/Gradify.xcodeproj -scheme Gradify -destination 'platform=macOS,arch=x86_64' -allowProvisioningUpdates
+          
+      - name: Build app
+        uses: maxim-lobanov/xcodebuild-action@v1
+        with:
+          project: src/Gradify.xcodeproj
+          scheme: Gradify
+          configuration: Debug
+          destination: 'platform=macOS,arch=x86_64'
+          xcode-version: 15.0-beta
         
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
