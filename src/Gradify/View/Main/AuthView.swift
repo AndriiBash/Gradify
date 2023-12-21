@@ -18,9 +18,6 @@ struct AuthView: View
     @State private var isRegistration:      Bool = false
     @State private var startAnimate:        Bool = true
     
-    //@Environment(\.openWindow) private var openWindow
-    //@Environment(\.dismiss) private var dismiss
-
     var body: some View
     {
         HStack(spacing: 0)
@@ -61,12 +58,14 @@ struct AuthView: View
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
                             .padding(.horizontal, 8)
+                            .autocorrectionDisabled()
                             .textContentType(.username)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(style: StrokeStyle(lineWidth: 1))
                                     .foregroundColor(loginData.statusAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
-                        
+                            .keyboardShortcut("a", modifiers: .command)
+
                         SecureField("Введіть пароль", text: $loginData.password)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
@@ -166,7 +165,7 @@ struct AuthView: View
                     .disabled(loginData.password.isEmpty && loginData.password.isEmpty)
                     .onHover
                     { isHovered in
-                        if loginData.password.isEmpty && loginData.password.isEmpty
+                        if !loginData.password.isEmpty && !loginData.password.isEmpty
                         {
                             self.isHoverOnButton = isHovered
                             changeCursor()
@@ -248,7 +247,6 @@ struct AuthView: View
                     LoadingScreen()
                 }
             })
-        
     }
         
     func changeCursor()

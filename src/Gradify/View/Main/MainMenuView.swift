@@ -32,7 +32,7 @@ struct MainMenuView: View
                         Label("Item 2", systemImage: "square.fill")
                     }
                     
-                    NavigationLink(destination: ScrollView{Text("Item 3").frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
+                    NavigationLink(destination: ScrollView{Text("Item 3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
                     {
                         HStack
                         {

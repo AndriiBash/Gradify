@@ -19,7 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     var statusItem: NSStatusItem?
     var popOver = NSPopover()
     
-    
     func applicationDidFinishLaunching(_ notification: Notification)
     {
         let menuView = PopOverView()
@@ -37,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
             menuButton.image = NSImage(systemSymbolName: "graduationcap.fill", accessibilityDescription: nil)
             menuButton.action = #selector(MenuButtonToogle)
         }
+
     }// func applicationDidFinishLaunching(_ notification: Notification)
     
     @objc func MenuButtonToogle()
@@ -94,9 +94,8 @@ class AppDelegate: NSObject, NSApplicationDelegate
         return true
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { // ANENTION!!!
-            // Возвращайте false, чтобы приложение не закрывалось после закрытия последнего окна
-            return false
-        }
+    //func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { // ANENTION!!!
+    //        return false
+    //    }
     
 }

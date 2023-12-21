@@ -16,7 +16,7 @@ struct StartView: View
     
     //@Environment(\.openWindow) private var openWindow
     //@Environment(\.dismiss) private var dismiss
-        
+    
     var body: some View
     {
         VStack
@@ -60,7 +60,6 @@ struct StartView: View
             }// Button go to mainWindow or auth
             .keyboardShortcut(.defaultAction)
             .padding()
-            
         }// VStack
         .padding(.top, 12)
         .frame(minWidth: 390, maxWidth: 390,
@@ -69,7 +68,6 @@ struct StartView: View
         .background(Color("BackgroundLeftLoginView"))
         //.ignoresSafeArea(.all, edges: .all)
         .navigationTitle("")
-        
     }
 }
 

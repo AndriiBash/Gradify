@@ -21,7 +21,7 @@ final class GradifyApp
 
         windowController.setCurrentWindow()
         windowController.showWindow(nil)
-        
+                
         let app = NSApplication.shared
         let delegate = AppDelegate()
         app.delegate = delegate
