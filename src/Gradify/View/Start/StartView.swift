@@ -11,11 +11,6 @@ struct StartView: View
 {
     @State private var animateStatus: Bool = true
     var windowController: WindowController
-
-   // @Binding var isLogined: Bool
-    
-    //@Environment(\.openWindow) private var openWindow
-    //@Environment(\.dismiss) private var dismiss
     
     var body: some View
     {

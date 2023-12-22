@@ -48,7 +48,7 @@ struct AuthView: View
                 
                 VStack(spacing: 16)
                 {
-                    Text(loginData.statusAuth ? "Помилка авторизації, не вірний пароль або логін!" : " ")
+                    Text(loginData.wrongAuth ? "Помилка авторизації, не вірний пароль або логін!" : " ")
                         .foregroundColor(Color.red)
                         .transition(.move(edge: .bottom))
                     
@@ -58,12 +58,12 @@ struct AuthView: View
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
                             .padding(.horizontal, 8)
-                            .autocorrectionDisabled()
+                            .autocorrectionDisabled()   // ?
                             .textContentType(.username)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(style: StrokeStyle(lineWidth: 1))
-                                    .foregroundColor(loginData.statusAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
+                                    .foregroundColor(loginData.wrongAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
                             .keyboardShortcut("a", modifiers: .command)
 
                         SecureField("Введіть пароль", text: $loginData.password)
@@ -74,7 +74,7 @@ struct AuthView: View
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(style: StrokeStyle(lineWidth: 1))
-                                    .foregroundColor(loginData.statusAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
+                                    .foregroundColor(loginData.wrongAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
                     }// VStack with Textfield
                     
                     HStack
@@ -137,18 +137,15 @@ struct AuthView: View
                         {
                             do
                             {
-                                try await loginData.loginUser()
-                                
-                                if loginData.currentAuth
+                                await loginData.loginUser()
+
+                                if loginData.statusAuth
                                 {
                                     windowController.setMainWindow()
                                 }
                             }
-                            catch
-                            {
-                                print("Error checking authentication: \(error)")
-                            }
                         }
+
                     }
                     label:
                     {
@@ -263,7 +260,7 @@ struct AuthView: View
             }
         }
     }// func changeCursor()
-    
+
     func animateIcon()
     {
         if !loginData.statusAuth

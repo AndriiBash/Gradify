@@ -15,8 +15,8 @@ class LoginModel: ObservableObject
     @Published var password:        String = ""
     @Published var emailForReset:   String = ""
     
-    @Published var currentAuth:     Bool = false
     @Published var statusAuth:      Bool = false
+    @Published var wrongAuth:       Bool = false
     @Published var isLoading:       Bool = false
     
     func loginUser() async
@@ -27,14 +27,14 @@ class LoginModel: ObservableObject
         {
             let result = try await Auth.auth().signIn(withEmail: userName, password: password)
             
-            self.statusAuth = false
-            self.currentAuth = true
-            print("true") // debug
+            self.statusAuth = true
+            self.wrongAuth = false
+            print("true auth") // debug
         }
         catch
         {
+            self.wrongAuth = true
             print("Error : \(error.localizedDescription)") // also debug
-            self.statusAuth = true
         }
 
         withAnimation
@@ -43,8 +43,6 @@ class LoginModel: ObservableObject
         }
     }// func loginUser() async
 
-    
-    
     func resetPassword() async
     {
         do

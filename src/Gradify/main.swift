@@ -27,7 +27,6 @@ final class GradifyApp
         app.delegate = delegate
 
         _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-
     }
 }
 

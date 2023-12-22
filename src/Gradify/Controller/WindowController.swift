@@ -123,9 +123,8 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
     }// func initMenuBar()
 
     
-    
-    
-    
+
+
     func setMainWindow()
     {
         let hostingController = NSHostingController(rootView: MainMenuView())
@@ -142,9 +141,6 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
     {
         let hostingController = NSHostingController(rootView: AuthView(loginData: loginData, windowController: self))
         
-       loginData.userName = "21312"
-
-        //window?.contentView = nil
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.center()
         
@@ -170,7 +166,6 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         //setLoginWindow()
         //setStartWindow()
         //updateWindowContent()
-        
     }// func setCurrentWindow()
     
    /*
