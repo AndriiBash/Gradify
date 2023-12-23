@@ -11,17 +11,19 @@ import SwiftUI
 class WindowController: NSWindowController, ObservableObject, Identifiable//, NSWindowDelegate//, ObservableObject
 {
     var loginData: LoginModel
+    var aboutAppWindow: NSWindow
 
-    init(window: NSWindow, loginModel: LoginModel = LoginModel())
+    init(window: NSWindow, aboutAppWindow: NSWindow, loginModel: LoginModel = LoginModel())
     {
         self.loginData = loginModel
+        self.aboutAppWindow = aboutAppWindow
         super.init(window: window)
-    }
+    }// init
     
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
-    }
+    }// required init
     
     convenience init()
     {
@@ -37,11 +39,34 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         window.center()
         window.makeKey()
         
-        //window.standardWindowButton(.closeButton)?.action = Selector("")
+        let aboutAppWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
+            styleMask: [.closable, .titled],
+            backing: .buffered, defer: false)
         
-        self.init(window: window)
+        aboutAppWindow.isReleasedWhenClosed = false
+        aboutAppWindow.isMovableByWindowBackground = true
+        aboutAppWindow.titlebarAppearsTransparent = true
+        aboutAppWindow.standardWindowButton(.zoomButton)?.isHidden = true
+        aboutAppWindow.standardWindowButton(.miniaturizeButton)?.isHidden = true
+        //aboutAppWindow.isMovableByWindowBackground = true
+        
+        let hostingController = NSHostingController(rootView: AboutAppView())
+        aboutAppWindow.contentView = NSHostingView(rootView: hostingController.rootView)
+        
+        aboutAppWindow.styleMask.update(with: .fullSizeContentView)
+        aboutAppWindow.center()
+        
+        self.init(window: window, aboutAppWindow: aboutAppWindow)
         self.initMenuBar()
     }// func convenience init
+    
+    /*
+    func initAboutWindow() -> NSWindow
+    {
+        return NSWindow()
+    }
+     */
     
     func initMenuBar() // NEED REFACTOR!!!!
     {
@@ -54,7 +79,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         let appMenuFirst = NSMenu()
         appMenuItem.submenu = appMenuFirst
         
-        appMenuFirst.addItem(withTitle: "Про Gradify", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenuFirst.addItem(withTitle: "Про Gradify", action: #selector(showAboutAppPanel(_:)), keyEquivalent: "")
         appMenuFirst.addItem(.separator())
         appMenuFirst.addItem(withTitle: "Параметри", action: #selector(NSApplication.terminate), keyEquivalent: ",")
         appMenuFirst.addItem(.separator())
@@ -122,7 +147,13 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
 
     }// func initMenuBar()
 
-    
+    @objc func showAboutAppPanel(_ sender: Any?)
+    {
+        self.aboutAppWindow.makeKeyAndOrderFront(nil)
+        self.aboutAppWindow.windowController?.showWindow(nil)
+
+        print("about")
+    }// @objc func showAboutAppPanel(_ sender: Any?)
 
 
     func setMainWindow()
@@ -130,6 +161,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         let hostingController = NSHostingController(rootView: MainMenuView())
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
+        window?.isMovableByWindowBackground = false
         window?.center()
         
         useMiniWindow(status: false)
@@ -142,6 +174,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         let hostingController = NSHostingController(rootView: AuthView(loginData: loginData, windowController: self))
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
+        window?.isMovableByWindowBackground = true
         window?.center()
         
         useMiniWindow(status: false)
@@ -153,6 +186,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         let hostingController = NSHostingController(rootView: StartView(windowController: self))
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
+        window?.isMovableByWindowBackground = true
         window?.center()
 
         useMiniWindow(status: true)

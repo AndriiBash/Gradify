@@ -71,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     {
         NSApp.windows.first?.makeKeyAndOrderFront(self)
-
+        
         // Logic when the user clicks on an icon in the Dock
         // and the application is already active, but it has no open windows
         /*if !flag

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B512AC5E2B36F74F00E9A09A /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */; };
+		B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */; };
 		B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EA42B30C442002E0F4D /* AppDelegate.swift */; };
 		B5B55EA92B30C444002E0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B55EA82B30C444002E0F4D /* Assets.xcassets */; };
 		B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EB32B30C4AF002E0F4D /* main.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutAppView.swift; path = Gradify/View/Main/AboutAppView.swift; sourceTree = SOURCE_ROOT; };
+		B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBehindWindow.swift; sourceTree = "<group>"; };
 		B5B55EA12B30C442002E0F4D /* Gradify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B55EA42B30C442002E0F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5B55EA82B30C444002E0F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B512AC5F2B36F90100E9A09A /* VisualEffects */ = {
+			isa = PBXGroup;
+			children = (
+				B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */,
+			);
+			path = VisualEffects;
+			sourceTree = "<group>";
+		};
 		B5B55E982B30C442002E0F4D = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +101,7 @@
 				B5B55ECE2B30CDA2002E0F4D /* Assets.xcassets */,
 				B5B55EB32B30C4AF002E0F4D /* main.swift */,
 				B5B55EA42B30C442002E0F4D /* AppDelegate.swift */,
+				B512AC5F2B36F90100E9A09A /* VisualEffects */,
 				B5B55EDA2B30CE8E002E0F4D /* View */,
 				B5B55ED72B30CE65002E0F4D /* Controller */,
 				B5B55EB52B30C55B002E0F4D /* Info.plist */,
@@ -147,6 +160,7 @@
 			children = (
 				B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */,
 				B5B55EE52B30CEC0002E0F4D /* PopOverView.swift */,
+				B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -247,10 +261,12 @@
 				B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */,
 				B5B55EEE2B30CECF002E0F4D /* ButtonView.swift in Sources */,
 				B5B55EF02B30CECF002E0F4D /* InfoRowView.swift in Sources */,
+				B512AC5E2B36F74F00E9A09A /* AboutAppView.swift in Sources */,
 				B5B55EE62B30CEC0002E0F4D /* LoadingScreen.swift in Sources */,
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
 				B5B55EDF2B30CE9F002E0F4D /* AuthView.swift in Sources */,
+				B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */,
 				B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */,
 				B5B55EEF2B30CECF002E0F4D /* FastTutorialView.swift in Sources */,
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
