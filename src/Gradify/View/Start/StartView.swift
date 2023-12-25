@@ -54,6 +54,7 @@ struct StartView: View
                     .font(.body)
             }// Button go to mainWindow or auth
             .keyboardShortcut(.defaultAction)
+            .shadow(radius: 8)
             .padding()
         }// VStack
         .padding(.top, 12)

@@ -15,7 +15,7 @@ struct BlurBehindWindow: NSViewRepresentable
         let visualEffectView = NSVisualEffectView()
         visualEffectView.state = .active
         visualEffectView.blendingMode = .behindWindow
-        visualEffectView.material = .hudWindow//.ultraDark
+        visualEffectView.material = .hudWindow
         
         return visualEffectView
     }

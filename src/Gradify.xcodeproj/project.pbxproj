@@ -31,7 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutAppView.swift; path = Gradify/View/Main/AboutAppView.swift; sourceTree = SOURCE_ROOT; };
+		B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutAppView.swift; path = Gradify/View/Start/AboutAppView.swift; sourceTree = SOURCE_ROOT; };
 		B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBehindWindow.swift; sourceTree = "<group>"; };
 		B5B55EA12B30C442002E0F4D /* Gradify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B55EA42B30C442002E0F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -160,7 +160,6 @@
 			children = (
 				B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */,
 				B5B55EE52B30CEC0002E0F4D /* PopOverView.swift */,
-				B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -172,6 +171,7 @@
 				B5B55EEB2B30CECF002E0F4D /* FastTutorialView.swift */,
 				B5B55EEC2B30CECF002E0F4D /* InfoRowView.swift */,
 				B5B55EE92B30CECF002E0F4D /* StartView.swift */,
+				B512AC5D2B36F74E00E9A09A /* AboutAppView.swift */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -404,7 +404,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -435,7 +435,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -448,7 +448,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "for developers";
+				MARKETING_VERSION = realese;
 				PRODUCT_BUNDLE_IDENTIFIER = AndriiIzbash.Gradify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
