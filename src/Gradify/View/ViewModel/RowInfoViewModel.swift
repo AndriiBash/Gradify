@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InfoRowView: View
+struct RowInfoViewModel: View
 {
     @Binding var isAnimated: Bool
     @State var startAnimate: Bool = true
@@ -78,6 +78,6 @@ struct InfoRowView_Previews: PreviewProvider
 
     static var previews: some View
     {
-        InfoRowView(isAnimated: $isAnimated, imageName: imageName, mainText: mainText, bodyText: bodyText)
+        RowInfoViewModel(isAnimated: $isAnimated, imageName: imageName, mainText: mainText, bodyText: bodyText)
     }
 }

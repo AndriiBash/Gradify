@@ -9,29 +9,29 @@ import SwiftUI
 
 struct AboutAppView: View
 {
+    @State private var isPopoverPresented = false
+
+    #if DEBUG
+        @State private var imageName: String = "DevMainLogo"
+    #else
+        @State private var imageName: String = "RealeseMainLogo"
+    #endif
+    
+    
     var body: some View
     {
         HStack
         {
             VStack
             {
-                #if DEBUG
-                Image("DevMainLogo")
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 125, height: 125)
                     .foregroundColor(Color("CloudLoginView"))
                     .shadow(radius: 4)
-                #else
-                Image("RealeseMainLogo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 125, height: 125)
-                    .foregroundColor(Color("CloudLoginView"))
-                    .shadow(radius: 4)
-                #endif
-                
             }// VStack with logo
+            .padding(.horizontal, 28)
             
             Spacer()
             
@@ -45,7 +45,7 @@ struct AboutAppView: View
                     Spacer()
                 }// HStack with name app
 
-                HStack
+                HStack(spacing: 2)
                 {
                     Text("Версія " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0.0.0"))
                     
@@ -54,16 +54,16 @@ struct AboutAppView: View
                     Spacer()
                 }// HStack with version app
                 .padding(.bottom, 18)
-                .foregroundColor(Color("LightGray"))
+                .foregroundColor(Color("TextLightGray"))
                 .font(.system(size: 12, weight: .regular))
                 
-                HStack
+                HStack // maybe use HStack
                 {
                     Text("© Андрій Ізбаш., 2023-2025. Всі права захищені. Gradify і логотип Gradify є дипломною роботою і не мають комерційних цілей.")
                     
                     Spacer()
-                }// HStack with info for app
-                .foregroundColor(Color("LightGray"))
+                }// ScrollView with info for app
+                .foregroundColor(Color("TextLightGray"))
                 .font(.system(size: 10, weight: .regular))
                 .padding(.bottom, 16)
 
@@ -79,31 +79,33 @@ struct AboutAppView: View
                         Text("Вихідний код")
                             .padding(.horizontal, 10)
                     }// button open github opensource
-                    
+             
                     Spacer()
                     
                     Button
                     {
-                        // pop up window where see thanks ??
-
+                        isPopoverPresented.toggle()
                     }
                     label:
                     {
-                        Text("Подяки")
+                        Text("Подяка")
                             .padding(.horizontal, 12)
                     }// button open github opensource
-
+                    .popover(isPresented: $isPopoverPresented, content: 
+                    {
+                        RespectView()
+                    })//pop over with thanks
                     
                     Spacer()
                 }// HStack with button
                 
                 Spacer()
             }// VStak with another info
-            .padding(.horizontal, 14)
+            //.padding(.horizontal, 14)
             
             Spacer()
         }// main VStack
-        .padding(.horizontal, 24)
+        //.padding(.horizontal, 24)
         .padding(.bottom, 12)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(BlurBehindWindow().ignoresSafeArea())

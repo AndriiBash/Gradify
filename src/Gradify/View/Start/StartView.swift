@@ -28,11 +28,11 @@ struct StartView: View
             
             VStack(spacing: 25)
             {
-                InfoRowView(isAnimated: $animateStatus, imageName: "opticaldiscdrive.fill", mainText: "Ефективний облік даних", bodyText: "Gradify забезпечує ефективний облік та збереження інформації про студентів")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "opticaldiscdrive.fill", mainText: "Ефективний облік даних", bodyText: "Gradify забезпечує ефективний облік та збереження інформації про студентів")
 
-                InfoRowView(isAnimated: $animateStatus, imageName: "speedometer", mainText: "Швидкий доступ до інформації", bodyText: "Зручний та швидкий доступ до важливих даних про студентів")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "speedometer", mainText: "Швидкий доступ до інформації", bodyText: "Зручний та швидкий доступ до важливих даних про студентів")
 
-                InfoRowView(isAnimated: $animateStatus, imageName: "gearshape.2", mainText: "Оптимізація роботи", bodyText: "Оптимізує роботу та допомагає організувати інформацію для зручного доступу")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "gearshape.2", mainText: "Оптимізація роботи", bodyText: "Оптимізує роботу та допомагає організувати інформацію для зручного доступу")
 
             }//VStack with info
             .padding(.top, 40)

@@ -52,7 +52,7 @@ struct MainMenuView: View
                         .padding(.horizontal, 4)
                     }
                     
-                    NavigationLink(destination: ButtonView(), tag: "AnimationButton", selection: $selection)
+                    NavigationLink(destination: ButtonViewModel(), tag: "AnimationButton", selection: $selection)
                     {
                         Label("Item 2", systemImage: "square.fill")
                     }
@@ -88,7 +88,7 @@ struct MainMenuView: View
         .navigationTitle("Gradify dev build")
         .sheet(isPresented: $isShowTestWindow)
         {
-            ButtonView()
+            ButtonViewModel()
         }
 
         //.sheet(item: $isShowTestWindow, content: ButtonView())

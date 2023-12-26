@@ -11,17 +11,23 @@
 
 import SwiftUI
 
-struct ButtonView: View
+struct ButtonViewModel: View
 {
     @State private var isFavorite = false
     
-    var body: some View {
-        VStack {
-            Button {
-                withAnimation {
+    var body: some View
+    {
+        VStack
+        {
+            Button
+            {
+                withAnimation
+                {
                     isFavorite.toggle()
                 }
-            } label: {
+            }
+            label:
+            {
                 Label("Toggle Favorite", systemImage: isFavorite ? "checkmark": "heart")
                     .padding()
             }
@@ -33,5 +39,5 @@ struct ButtonView: View
 
 #Preview
 {
-    ButtonView()
+    ButtonViewModel()
 }

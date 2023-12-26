@@ -110,15 +110,8 @@ struct AuthView: View
                             {
                                 Task
                                 {
-                                    do
-                                    {
-                                        try await loginData.resetPassword()
-                                        loginData.emailForReset = ""
-                                    }
-                                    catch
-                                    {
-                                        print("Error send email to reset pass: \(error)")
-                                    }
+                                    await loginData.resetPassword()
+                                    loginData.emailForReset = ""
                                 }
                             }// button for send reset password email
                             .disabled(loginData.emailForReset.isEmpty ? true : false)

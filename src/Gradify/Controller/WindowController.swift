@@ -40,7 +40,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         window.makeKey()
         
         let aboutAppWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 450, height: 200),
+            contentRect: NSRect(x: 0, y: 0, width: 470, height: 200),
             styleMask: [.closable, .titled],
             backing: .buffered, defer: false)
         
