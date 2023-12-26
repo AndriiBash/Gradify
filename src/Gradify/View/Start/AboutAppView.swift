@@ -54,7 +54,7 @@ struct AboutAppView: View
                     Spacer()
                 }// HStack with version app
                 .padding(.bottom, 18)
-                .foregroundColor(Color("TextLightGray"))
+                .foregroundColor(Color("TextGray"))
                 .font(.system(size: 12, weight: .regular))
                 
                 HStack // maybe use HStack
@@ -63,7 +63,7 @@ struct AboutAppView: View
                     
                     Spacer()
                 }// ScrollView with info for app
-                .foregroundColor(Color("TextLightGray"))
+                .foregroundColor(Color("TextGray"))
                 .font(.system(size: 10, weight: .regular))
                 .padding(.bottom, 16)
 

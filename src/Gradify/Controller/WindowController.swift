@@ -7,6 +7,7 @@
 
 import AppKit
 import SwiftUI
+import Cocoa
 
 class WindowController: NSWindowController, ObservableObject, Identifiable//, NSWindowDelegate//, ObservableObject
 {
@@ -25,7 +26,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         fatalError("init(coder:) has not been implemented")
     }// required init
     
-    convenience init()
+    convenience init()  // NEED REFACTOR!!!!
     {
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
@@ -68,7 +69,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
     }
      */
     
-    func initMenuBar() // NEED REFACTOR!!!!
+    func initMenuBar()
     {
         let mainMenu = NSMenu()
         NSApp.mainMenu = mainMenu
@@ -79,9 +80,9 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         let appMenuFirst = NSMenu()
         appMenuItem.submenu = appMenuFirst
         
-        appMenuFirst.addItem(withTitle: "Про Gradify", action: #selector(showAboutAppPanel(_:)), keyEquivalent: "")
+        appMenuFirst.addItem(withTitle: "Про Gradify", action: #selector(showAboutAppPanelAction(_:)), keyEquivalent: "")
         appMenuFirst.addItem(.separator())
-        appMenuFirst.addItem(withTitle: "Параметри", action: #selector(NSApplication.terminate), keyEquivalent: ",")
+        appMenuFirst.addItem(withTitle: "Параметри", action: #selector(NSApplication.terminate), keyEquivalent: ",") // !!!
         appMenuFirst.addItem(.separator())
         appMenuFirst.addItem(withTitle: "Сховати Gradify", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
         
@@ -138,24 +139,86 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         mainMenu.addItem(fourthMenuItem)
         
         let fourthMenu = NSMenu()
-        fourthMenu.title = "Довідка"
+        fourthMenu.title = "Вікно"
         fourthMenuItem.submenu = fourthMenu
         
-        fourthMenu.addItem(withTitle: "Довідка Gradify", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        //NSApplication.miniaturizeAll(nil)
+        //NSApp.windows.first?.isAccessibilityMinimized()
+        
+        // performZoom
+        //NSApplication.shared.windows.
+        
+        //self.window?.performZoom(_:)
+        
+                                
+        fourthMenu.addItem(withTitle: "Згорнути", action: #selector(minimizeAction(_:)), keyEquivalent: "m")
+        fourthMenu.addItem(withTitle: "Оптимізувати", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        
+        // need fix down commands!!
+        
+        fourthMenu.addItem(withTitle: "Розмістити вікно ліворуч на екрані", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Розмістити вікно праворуч на екрані", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Замінити суміжне вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
         fourthMenu.addItem(.separator())
-        fourthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Вилучити вікно з вибору", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Наступне вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Показати вікно перебігу", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(.separator())
+        fourthMenu.addItem(withTitle: "Показати попередню вкладку", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Показати наступну вкладку", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Винести вкладку в нове вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(withTitle: "Обʼєднати всі вікна", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fourthMenu.addItem(.separator())
+        fourthMenu.addItem(withTitle: "Всі наперед", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+
+
+
+        
+        let fifthMenuItem = NSMenuItem()
+        mainMenu.addItem(fifthMenuItem)
+        
+        let fifthMenu = NSMenu()
+        fifthMenu.title = "Довідка"
+        fifthMenuItem.submenu = fifthMenu
+        
+        fifthMenu.addItem(withTitle: "Довідка Gradify", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        fifthMenu.addItem(.separator())
+        fifthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
     }// func initMenuBar()
 
-    @objc func showAboutAppPanel(_ sender: Any?)
+    @objc func showAboutAppPanelAction(_ sender: Any?)
     {
         self.aboutAppWindow.makeKeyAndOrderFront(nil)
         self.aboutAppWindow.windowController?.showWindow(nil)
+    }// @objc func showAboutAppPanelAction(_ sender: Any?)
+    
+    @objc func performZoomAction(_ sender: Any?)
+    {
+        if let activeWindow = NSApplication.shared.keyWindow
+        {
+            activeWindow.performZoom(nil)
+        }
+    }// @objc func performZoomAction(_ sender: Any?)
 
-        print("about")
-    }// @objc func showAboutAppPanel(_ sender: Any?)
+    @objc func minimizeAction(_ sender: Any?)
+    {
+        if let activeWindow = NSApplication.shared.keyWindow
+        {
+            activeWindow.miniaturize(nil)
+        }
+    }
 
-
+    @objc func tileFullScreen(_ sender: Any?)
+    {
+        if let activeWindow = NSApplication.shared.keyWindow
+        {
+            activeWindow.toggleFullScreen(nil)
+        }
+    }
+    
+    
+    
     func setMainWindow()
     {
         let hostingController = NSHostingController(rootView: MainMenuView())

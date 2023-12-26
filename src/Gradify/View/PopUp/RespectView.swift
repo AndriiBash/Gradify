@@ -24,7 +24,8 @@ struct RespectView: View
             .padding(.top, 6)
 
         }// main scroll view
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 6)
     }
 }
 
