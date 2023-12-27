@@ -11,23 +11,16 @@ import SwiftUI
 
 final class GradifyApp
 {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
     init()
     {
         FirebaseApp.configure()
-     
-        let windowController = WindowController()
 
-        windowController.setCurrentWindow()
-        windowController.showWindow(nil)
-                
         let app = NSApplication.shared
         let delegate = AppDelegate()
         app.delegate = delegate
 
         _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
     }
-}
+} // main class where start application
 
 _ = GradifyApp()

@@ -85,7 +85,7 @@ struct MainMenuView: View
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }//detail if no selected
         .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
-        .navigationTitle("Gradify dev build")
+        .navigationTitle(selection ?? "Не обрано")
         .sheet(isPresented: $isShowTestWindow)
         {
             ButtonViewModel()

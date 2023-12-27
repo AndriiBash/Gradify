@@ -1,4 +1,4 @@
-//
+
 //  WindowController.swift
 //  Gradify
 //
@@ -9,22 +9,31 @@ import AppKit
 import SwiftUI
 import Cocoa
 
-class WindowController: NSWindowController, ObservableObject, Identifiable//, NSWindowDelegate//, ObservableObject
+class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, Identifiable
 {
     var loginData: LoginModel
     var aboutAppWindow: NSWindow
+    private var tabbedWindows = [NSWindow]()
 
+    // MARK: - Init
     init(window: NSWindow, aboutAppWindow: NSWindow, loginModel: LoginModel = LoginModel())
     {
         self.loginData = loginModel
         self.aboutAppWindow = aboutAppWindow
         super.init(window: window)
+        window.delegate = self
     }// init
     
     required init?(coder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
     }// required init
+    
+    override func windowDidLoad()
+    {
+        super.windowDidLoad()
+        self.window?.delegate = self
+    } // override func windowDidLoad()
     
     convenience init()  // NEED REFACTOR!!!!
     {
@@ -35,10 +44,8 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         
         window.isReleasedWhenClosed = true
 
-        //window.isMovableByWindowBackground = true   // move for click on bg
         window.styleMask.update(with: .fullSizeContentView)
         window.center()
-        window.makeKey()
         
         let aboutAppWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 470, height: 200),
@@ -50,8 +57,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         aboutAppWindow.titlebarAppearsTransparent = true
         aboutAppWindow.standardWindowButton(.zoomButton)?.isHidden = true
         aboutAppWindow.standardWindowButton(.miniaturizeButton)?.isHidden = true
-        //aboutAppWindow.isMovableByWindowBackground = true
-        
+ 
         let hostingController = NSHostingController(rootView: AboutAppView())
         aboutAppWindow.contentView = NSHostingView(rootView: hostingController.rootView)
         
@@ -60,6 +66,8 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         
         self.init(window: window, aboutAppWindow: aboutAppWindow)
         self.initMenuBar()
+        
+        window.delegate = self
     }// func convenience init
     
     /*
@@ -139,9 +147,40 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         mainMenu.addItem(fourthMenuItem)
         
         let fourthMenu = NSMenu()
-        fourthMenu.title = "Вікно"
+        fourthMenu.title = "Перегляд"
         fourthMenuItem.submenu = fourthMenu
         
+        fourthMenu.addItem(withTitle: "Показати бічну панель", action: #selector(NSSplitViewController.toggleSidebar(_:)), keyEquivalent: "S")
+        fourthMenu.addItem(.separator())
+        
+        
+        let menuItemToggleInstrumentPanel = NSMenuItem()
+        menuItemToggleInstrumentPanel.title = "Сховати панель інструментів"
+        menuItemToggleInstrumentPanel.action = #selector(window?.toggleToolbarShown(_:))
+        menuItemToggleInstrumentPanel.keyEquivalentModifierMask = [.option, .command]
+        menuItemToggleInstrumentPanel.keyEquivalent = "t"
+        fourthMenu.addItem(menuItemToggleInstrumentPanel)
+
+        
+        let menuItemToggleFullScreen = NSMenuItem()
+        menuItemToggleFullScreen.title = "Увійти до повноекранного режиму"
+        menuItemToggleFullScreen.action = #selector(window?.toggleFullScreen(_:))
+        menuItemToggleFullScreen.keyEquivalentModifierMask = [.function]
+        menuItemToggleFullScreen.keyEquivalent = "f"
+        fourthMenu.addItem(menuItemToggleFullScreen)
+        //fourthMenu.addItem(withTitle: "Показати панель вкладок", action: #selector(NSApplication.shared.keyWindow?.toggleTabBar(_:)), keyEquivalent: "S")
+        //NSApplication.shared.keyWindow?.toggleTabBar(nil)
+
+        
+        
+        
+        let fifthMenuItem = NSMenuItem()
+        mainMenu.addItem(fifthMenuItem)
+        
+        let fifthMenu = NSMenu()
+        fifthMenu.title = "Вікно"
+        fifthMenuItem.submenu = fifthMenu
+
         //NSApplication.miniaturizeAll(nil)
         //NSApp.windows.first?.isAccessibilityMinimized()
         
@@ -151,39 +190,42 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         //self.window?.performZoom(_:)
         
                                 
-        fourthMenu.addItem(withTitle: "Згорнути", action: #selector(minimizeAction(_:)), keyEquivalent: "m")
-        fourthMenu.addItem(withTitle: "Оптимізувати", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: "Згорнути", action: #selector(minimizeAction(_:)), keyEquivalent: "m")
+        fifthMenu.addItem(withTitle: "Оптимізувати", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        fifthMenu.addItem(.separator())
+        
+        //fifthMenu.addItem(withTitle: "Вилучити вікно з набору", action: #selector(removeWindowFromCollection(_:)), keyEquivalent: "'")
+        //fifthMenu.addItem(withTitle: "Наступне вікно", action: #selector(showNextWindow(_:)), keyEquivalent: "'")
+        //fifthMenu.addItem(withTitle: "Показати вікно перебігу", action: #selector(showWindowOverview(_:)), keyEquivalent: "'")
+        //fifthMenu.addItem(.separator())
+        
+        fifthMenu.addItem(withTitle: "Показати панель вкладок", action: #selector(window?.toggleTabBar(_:)), keyEquivalent: "S")
+        fifthMenu.addItem(withTitle: "Показати всі вкладки", action: #selector(window?.toggleTabOverview(_:)), keyEquivalent: "\\")
+        fifthMenu.addItem(.separator())
+        
+        fifthMenu.addItem(withTitle: "Показати попередню вкладку", action: #selector(window?.selectPreviousTab(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: "Показати наступну вкладку", action: #selector(window?.selectNextTab(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: "Винести вкладку в нове вікно", action: #selector(window?.moveTabToNewWindow(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: "Обʼєднати всі вікна", action: #selector(window?.mergeAllWindows(_:)), keyEquivalent: "")
+        fifthMenu.addItem(.separator())
+        
+        fifthMenu.addItem(withTitle: "Всі наперед", action: #selector(window?.orderFront(_:)), keyEquivalent: "")
+
+
         
         // need fix down commands!!
-        
-        fourthMenu.addItem(withTitle: "Розмістити вікно ліворуч на екрані", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Розмістити вікно праворуч на екрані", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Замінити суміжне вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(.separator())
-        fourthMenu.addItem(withTitle: "Вилучити вікно з вибору", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Наступне вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Показати вікно перебігу", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(.separator())
-        fourthMenu.addItem(withTitle: "Показати попередню вкладку", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Показати наступну вкладку", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Винести вкладку в нове вікно", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(withTitle: "Обʼєднати всі вікна", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fourthMenu.addItem(.separator())
-        fourthMenu.addItem(withTitle: "Всі наперед", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-
-
 
         
-        let fifthMenuItem = NSMenuItem()
-        mainMenu.addItem(fifthMenuItem)
+        let sixthMenuItem = NSMenuItem()
+        mainMenu.addItem(sixthMenuItem)
         
-        let fifthMenu = NSMenu()
-        fifthMenu.title = "Довідка"
-        fifthMenuItem.submenu = fifthMenu
+        let sixthMenu = NSMenu()
+        sixthMenu.title = "Довідка"
+        sixthMenuItem.submenu = sixthMenu
         
-        fifthMenu.addItem(withTitle: "Довідка Gradify", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-        fifthMenu.addItem(.separator())
-        fifthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        sixthMenu.addItem(withTitle: "Довідка Gradify", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        sixthMenu.addItem(.separator())
+        sixthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
     }// func initMenuBar()
 
@@ -207,7 +249,7 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         {
             activeWindow.miniaturize(nil)
         }
-    }
+    }// @objc func minimizeAction(_ sender: Any?)
 
     @objc func tileFullScreen(_ sender: Any?)
     {
@@ -215,9 +257,65 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
         {
             activeWindow.toggleFullScreen(nil)
         }
+    }// @objc func tileFullScreen(_ sender: Any?)
+    
+    @IBAction override func newWindowForTab(_ sender: Any?)
+    {
+        addNewTab()
+    }// @IBAction override func newWindowForTab(_ sender: Any?)
+    
+    func addNewTab()
+    {
+            let newWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
+                styleMask: [.miniaturizable, .closable, .resizable, .titled],
+                backing: .buffered, defer: false)
+
+            let hostingController = NSHostingController(rootView: MainMenuView())
+
+            newWindow.styleMask.update(with: .fullSizeContentView)
+            newWindow.contentView = NSHostingView(rootView: hostingController.rootView)
+
+            self.tabbedWindows.append(newWindow)
+            self.window?.addTabbedWindow(newWindow, ordered: .above)
+            newWindow.makeKeyAndOrderFront(nil)
+    }// func addNewTab()
+    
+    func windowWillClose(_ notification: Notification)
+    {
+        guard let closedWindow = notification.object as? NSWindow
+        else
+        {
+            return
+        }
+
+        if closedWindow != self.window
+        {
+            if let index = self.tabbedWindows.firstIndex(where: { $0 === closedWindow })
+            {
+                self.tabbedWindows.remove(at: index)
+            }
+        }
+
+        /*
+        if closedWindow === self.window
+        {
+            // if close main window
+            //NSApplication.shared.terminate(self)
+        }
+        else
+        {
+            removeTabbedWindow(closedWindow)
+        } */
+    }// func windowWillClose(_ notification: Notification)
+    
+    
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
     }
     
-    
+    // MARK: - Setter window (views)
     
     func setMainWindow()
     {
@@ -259,22 +357,13 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
     func setCurrentWindow()
     {
         // opens a specific window depending on what the user has been doing since the application started opening
-        setStartWindow()
-        //setLoginWindow()
         //setStartWindow()
-        //updateWindowContent()
+        
+        //setStartWindow()
+        //setMainWindow()
+        //setLoginWindow()
+        setStartWindow()
     }// func setCurrentWindow()
-    
-   /*
-    func updateWindowContent()
-    {
-        if let authView = window?.contentView as? NSHostingView<AuthView>
-        {
-            // Обновляем содержимое AuthView при изменении loginData
-            loginData = authView.rootView.loginData
-        }
-    }
-    */
     
     func useMiniWindow(status: Bool)
     {
@@ -291,13 +380,5 @@ class WindowController: NSWindowController, ObservableObject, Identifiable//, NS
     {
         window?.title = title
     }// func setTitleNameWindow(title: String)
-
-    
-    //func windowWillClose(_ notification: Notification)
-    //{
-    //   window?.windowController?.showWindow(nil)
-        // Additional cleanup or actions when the window is closed.
-    //}// func windowWillClose
-   
 }
 

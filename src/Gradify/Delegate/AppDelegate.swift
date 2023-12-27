@@ -18,9 +18,17 @@ class AppDelegate: NSObject, NSApplicationDelegate
     //}
     var statusItem: NSStatusItem?
     var popOver = NSPopover()
+
+    var windowController: WindowController!
+    
+    // MARK: - Funcation's
     
     func applicationDidFinishLaunching(_ notification: Notification)
     {
+        windowController = WindowController()
+        windowController.setCurrentWindow()
+        windowController.showWindow(nil)
+
         let menuView = PopOverView()
         
         popOver.behavior = .transient
@@ -39,6 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
     }// func applicationDidFinishLaunching(_ notification: Notification)
     
+    
     @objc func MenuButtonToogle()
     {
         guard let button = statusItem?.button else { return }
@@ -53,6 +62,11 @@ class AppDelegate: NSObject, NSApplicationDelegate
         }
     }// @obj func MenuButtonToogle()
     
+    @IBAction func newWindowForTab(_ sender: Any?)
+    {
+        windowController.addNewTab()
+    } // @IBAction func newWindowForTab(_ sender: Any?)
+
     func applicationDidEnterBackground(_ notification: Notification)
     {
         popOver.performClose(nil)
@@ -92,10 +106,11 @@ class AppDelegate: NSObject, NSApplicationDelegate
          */
 
         return true
-    }
+    } // func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     
-    //func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { // ANENTION!!!
-    //        return false
-    //    }
+    //func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
+    //{
+    //    return true
+    //}// func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
     
 }
