@@ -9,6 +9,14 @@ import AppKit
 import SwiftUI
 import Cocoa
 
+enum WindowType: CaseIterable
+{
+    case main
+    case login
+    case start
+    case empty // just example
+}// enum WindowType
+
 class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, Identifiable
 {
     var loginData: LoginModel
@@ -100,12 +108,10 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         menuItemHideAll.keyEquivalentModifierMask = [.option, .command]
         menuItemHideAll.keyEquivalent = "h"
         appMenuFirst.addItem(menuItemHideAll)
-        //menuItem.keyEquivalentModifierMask
         
         appMenuFirst.addItem(withTitle: "Показати всі", action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: "")
         appMenuFirst.addItem(.separator())
         appMenuFirst.addItem(withTitle: "Завершити Gradify", action: #selector(NSApplication.terminate), keyEquivalent: "q")
-        
         
         let secondMenuItem = NSMenuItem()
         mainMenu.addItem(secondMenuItem)
@@ -116,13 +122,11 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         secondMenuItem.submenu = secondMenu
         secondMenu.addItem(withTitle: "Test", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
-        // second menu
         let thirdMenuItem = NSMenuItem()
         mainMenu.addItem(thirdMenuItem)
         
         let thirdMenu = NSMenu()
         thirdMenu.title = "Редагування"
-        
         thirdMenuItem.submenu = thirdMenu
         
         thirdMenu.addItem(withTitle: "Відмінити", action: Selector(("undo:")), keyEquivalent: "z")
@@ -134,15 +138,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         thirdMenu.addItem(withTitle: "Видалити", action: #selector(NSText.delete(_:)), keyEquivalent: "")
         thirdMenu.addItem(withTitle: "Вибрати все", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         thirdMenu.addItem(.separator())
-        
-        // this work don't use this
-        //thirdMenu.addItem(withTitle: "Автозаповнення", action: #selector(NSApplication.copy), keyEquivalent: "") // !
-        //thirdMenu.addItem(withTitle: "Почати диктування", action: #selector(NSApplication.copy), keyEquivalent: "") // !
-        //thirdMenu.addItem(withTitle: "Емодзі та символи", action: #selector(NSApplication.copy), keyEquivalent: "") // !
-
-        //!!!!
-        //secondMenuItem.title = "Файл"
-        
+                
         let fourthMenuItem = NSMenuItem()
         mainMenu.addItem(fourthMenuItem)
         
@@ -153,7 +149,6 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         fourthMenu.addItem(withTitle: "Показати бічну панель", action: #selector(NSSplitViewController.toggleSidebar(_:)), keyEquivalent: "S")
         fourthMenu.addItem(.separator())
         
-        
         let menuItemToggleInstrumentPanel = NSMenuItem()
         menuItemToggleInstrumentPanel.title = "Сховати панель інструментів"
         menuItemToggleInstrumentPanel.action = #selector(window?.toggleToolbarShown(_:))
@@ -161,18 +156,12 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         menuItemToggleInstrumentPanel.keyEquivalent = "t"
         fourthMenu.addItem(menuItemToggleInstrumentPanel)
 
-        
         let menuItemToggleFullScreen = NSMenuItem()
         menuItemToggleFullScreen.title = "Увійти до повноекранного режиму"
         menuItemToggleFullScreen.action = #selector(window?.toggleFullScreen(_:))
         menuItemToggleFullScreen.keyEquivalentModifierMask = [.function]
         menuItemToggleFullScreen.keyEquivalent = "f"
         fourthMenu.addItem(menuItemToggleFullScreen)
-        //fourthMenu.addItem(withTitle: "Показати панель вкладок", action: #selector(NSApplication.shared.keyWindow?.toggleTabBar(_:)), keyEquivalent: "S")
-        //NSApplication.shared.keyWindow?.toggleTabBar(nil)
-
-        
-        
         
         let fifthMenuItem = NSMenuItem()
         mainMenu.addItem(fifthMenuItem)
@@ -181,40 +170,38 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         fifthMenu.title = "Вікно"
         fifthMenuItem.submenu = fifthMenu
 
-        //NSApplication.miniaturizeAll(nil)
-        //NSApp.windows.first?.isAccessibilityMinimized()
-        
-        // performZoom
-        //NSApplication.shared.windows.
-        
-        //self.window?.performZoom(_:)
         
                                 
         fifthMenu.addItem(withTitle: "Згорнути", action: #selector(minimizeAction(_:)), keyEquivalent: "m")
         fifthMenu.addItem(withTitle: "Оптимізувати", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        // fifthMenu.addItem(withTitle: "Розмістити вікно ліворуч на екрані", action: #selector(window?.left(_:)), keyEquivalent: "")
+        // fifthMenu.addItem(withTitle: "Розмістити вікно праворуч на екрані", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        
+        
+        
         fifthMenu.addItem(.separator())
-        
-        //fifthMenu.addItem(withTitle: "Вилучити вікно з набору", action: #selector(removeWindowFromCollection(_:)), keyEquivalent: "'")
-        //fifthMenu.addItem(withTitle: "Наступне вікно", action: #selector(showNextWindow(_:)), keyEquivalent: "'")
-        //fifthMenu.addItem(withTitle: "Показати вікно перебігу", action: #selector(showWindowOverview(_:)), keyEquivalent: "'")
-        //fifthMenu.addItem(.separator())
-        
         fifthMenu.addItem(withTitle: "Показати панель вкладок", action: #selector(window?.toggleTabBar(_:)), keyEquivalent: "S")
         fifthMenu.addItem(withTitle: "Показати всі вкладки", action: #selector(window?.toggleTabOverview(_:)), keyEquivalent: "\\")
         fifthMenu.addItem(.separator())
-        
-        fifthMenu.addItem(withTitle: "Показати попередню вкладку", action: #selector(window?.selectPreviousTab(_:)), keyEquivalent: "")
-        fifthMenu.addItem(withTitle: "Показати наступну вкладку", action: #selector(window?.selectNextTab(_:)), keyEquivalent: "")
+                
+        let menuItemShowPreviousTab = NSMenuItem()
+        menuItemShowPreviousTab.title = "Показати попередню вкладку"
+        menuItemShowPreviousTab.action = #selector(window?.selectPreviousTab(_:))
+        menuItemShowPreviousTab.keyEquivalentModifierMask = [.control, .shift]
+        menuItemShowPreviousTab.keyEquivalent = "\u{0009}"
+        fifthMenu.addItem(menuItemShowPreviousTab)
+
+        let menuItemShowNextTab = NSMenuItem()
+        menuItemShowNextTab.title = "Показати наступну вкладку"
+        menuItemShowNextTab.action = #selector(window?.selectNextTab(_:))
+        menuItemShowNextTab.keyEquivalentModifierMask = [.control]
+        menuItemShowNextTab.keyEquivalent = "\u{0009}"
+        fifthMenu.addItem(menuItemShowNextTab)
+
         fifthMenu.addItem(withTitle: "Винести вкладку в нове вікно", action: #selector(window?.moveTabToNewWindow(_:)), keyEquivalent: "")
         fifthMenu.addItem(withTitle: "Обʼєднати всі вікна", action: #selector(window?.mergeAllWindows(_:)), keyEquivalent: "")
         fifthMenu.addItem(.separator())
-        
         fifthMenu.addItem(withTitle: "Всі наперед", action: #selector(window?.orderFront(_:)), keyEquivalent: "")
-
-
-        
-        // need fix down commands!!
-
         
         let sixthMenuItem = NSMenuItem()
         mainMenu.addItem(sixthMenuItem)
@@ -228,7 +215,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         sixthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
     }// func initMenuBar()
-
+    
     @objc func showAboutAppPanelAction(_ sender: Any?)
     {
         self.aboutAppWindow.makeKeyAndOrderFront(nil)
@@ -309,7 +296,6 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         } */
     }// func windowWillClose(_ notification: Notification)
     
-    
     deinit
     {
         NotificationCenter.default.removeObserver(self)
@@ -332,7 +318,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
     
     func setLoginWindow()
     {
-        let hostingController = NSHostingController(rootView: AuthView(loginData: loginData, windowController: self))
+        let hostingController = NSHostingController(rootView: LoginView(loginData: loginData, windowController: self))
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.isMovableByWindowBackground = true
@@ -354,15 +340,19 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         useTranspertTitleBar(status: true)
     }// func setStartWindow()
         
-    func setCurrentWindow()
+    func setCurrentWindow(ofType type: WindowType)
     {
-        // opens a specific window depending on what the user has been doing since the application started opening
-        //setStartWindow()
-        
-        //setStartWindow()
-        //setMainWindow()
-        //setLoginWindow()
-        setStartWindow()
+        switch type
+        {
+        case .main:
+            return setMainWindow()
+        case .login:
+            return setLoginWindow()
+        case .start:
+            return setStartWindow()
+        default:
+            return setStartWindow()
+        }
     }// func setCurrentWindow()
     
     func useMiniWindow(status: Bool)

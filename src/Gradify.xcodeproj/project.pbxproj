@@ -20,7 +20,7 @@
 		B5B55ECC2B30CBE9002E0F4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5B55ECB2B30CBE9002E0F4D /* GoogleService-Info.plist */; };
 		B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55ED52B30CE57002E0F4D /* WindowController.swift */; };
 		B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EDC2B30CE9F002E0F4D /* MainMenuView.swift */; };
-		B5B55EDF2B30CE9F002E0F4D /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EDD2B30CE9F002E0F4D /* AuthView.swift */; };
+		B5B55EDF2B30CE9F002E0F4D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EDD2B30CE9F002E0F4D /* LoginView.swift */; };
 		B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE12B30CEB3002E0F4D /* LoginModel.swift */; };
 		B5B55EE62B30CEC0002E0F4D /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE52B30CEC0002E0F4D /* PopOverView.swift */; };
@@ -45,7 +45,7 @@
 		B5B55ECE2B30CDA2002E0F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5B55ED52B30CE57002E0F4D /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		B5B55EDC2B30CE9F002E0F4D /* MainMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
-		B5B55EDD2B30CE9F002E0F4D /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		B5B55EDD2B30CE9F002E0F4D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		B5B55EE12B30CEB3002E0F4D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		B5B55EE52B30CEC0002E0F4D /* PopOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopOverView.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		B5B55EDB2B30CE99002E0F4D /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				B5B55EDD2B30CE9F002E0F4D /* AuthView.swift */,
+				B5B55EDD2B30CE9F002E0F4D /* LoginView.swift */,
 				B5B55EDC2B30CE9F002E0F4D /* MainMenuView.swift */,
 			);
 			path = Main;
@@ -282,7 +282,7 @@
 				B5B55EE62B30CEC0002E0F4D /* LoadingScreen.swift in Sources */,
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
-				B5B55EDF2B30CE9F002E0F4D /* AuthView.swift in Sources */,
+				B5B55EDF2B30CE9F002E0F4D /* LoginView.swift in Sources */,
 				B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */,
 				B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */,
 				B5B55EEF2B30CECF002E0F4D /* FastTutorialView.swift in Sources */,

@@ -44,7 +44,7 @@ struct StartView: View
             {
                 // go to auth
                 animateStatus = false
-                windowController.setLoginWindow()
+                windowController.setCurrentWindow(ofType: .login)
             }
             label:
             {

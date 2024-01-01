@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AuthView: View
+struct LoginView: View
 {
     @ObservedObject var loginData: LoginModel
     var windowController: WindowController
@@ -134,7 +134,7 @@ struct AuthView: View
 
                                 if loginData.statusAuth
                                 {
-                                    windowController.setMainWindow()
+                                    windowController.setCurrentWindow(ofType: .main)
                                 }
                             }
                         }
@@ -280,7 +280,7 @@ struct AuthView_Previews: PreviewProvider
 
     static var previews: some View
     {
-        AuthView(loginData: loginData, windowController: windowController)
+        LoginView(loginData: loginData, windowController: windowController)
     }
 }
 
