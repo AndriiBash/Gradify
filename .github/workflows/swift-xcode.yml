@@ -1,4 +1,4 @@
-name: Build macOS Project with Firebase
+name: Build on macOS 13.0
 
 on:
   push:
