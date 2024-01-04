@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Gradify
+
+  Created by Андрiй on 04.01.2024.
+
+*/
+
+// MARK: - Localize menuBarItem, item: Gradify
+
+"Про Gradify" = "About Gradify";
+"Параметри..." = "Setings...";
+"Сховати Gradify" = "Hide Gradify";
+"Сховати решту" = "Hide other";
+"Показати всі" = "Show all";
+"Завершити Gradify" = "Quit Gradify";
+
+// MARK: - Localize menuBarItem, item: File
+
+// Need add many menu
+"Файл" = "File";
+
+// MARK: - Localize menuBarItem, item: Edit
+
+"Редагування" = "Edit";
+"Відмінити" = "Undo";
+"Повторити" = "Redo";
+"Вирізати" = "Cut";
+"Скопіювати" = "Copy";
+"Вставити" = "Paste";
+"Видалити" = "Delete";
+"Вибрати все" = "Select All";
+
+// MARK: - Localize menuBarItem, item: View
+
+"Перегляд" = "View";
+"Показати бічну панель" = "Show Sidebar";
+"Сховати бічну панель" = "Hide Sidebar";
+"Показати панель вкладок" = "Show Tab Bar";
+"Сховати панель вкладок" = "Hide Tab Bar";
+"Показати всі вкладки" = "Show All Tabs";
+"Завершити огляд вкладок" = "Exit Tab Overview";
+"Показати панель інструментів" = "Show Toolbar";
+"Сховати панель інструментів" = "Hide Toolbar";
+"Увійти до повноекранного режиму" = "Enter Full Screen";
+"Вийти з повноекранного режиму" = "Exit Full Screen";
+
+// MARK: - Localize menuBarItem, item: Window
+
+"Вікно" = "Window";
+"Згорнути" = "Minimize";
+"Оптимізувати" = "Zoom";
+"Показати попередню вкладку" = "Show Previous Window Tab";
+"Показати наступну вкладку" = "Show Next Window Tab";
+"Винести вкладку в нове вікно" = "Move Tab to New Window";
+"Обʼєднати всі вікна" = "Merge All Window";
+"Всі наперед" = "Bring All to Front";
+
+// MARK: - Localize menuBarItem, item: Help
+
+"Довідка" = "Help";
+"Довідка Gradify" = "Gradify Help";
+"Онлайн довідка" = "Online Help";

@@ -96,29 +96,31 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         let appMenuFirst = NSMenu()
         appMenuItem.submenu = appMenuFirst
         
-        appMenuFirst.addItem(withTitle: "Про Gradify", action: #selector(showAboutAppPanelAction(_:)), keyEquivalent: "")
+        appMenuFirst.addItem(withTitle: String(localized: "Про Gradify"), action: #selector(showAboutAppPanelAction(_:)), keyEquivalent: "")
+        
         appMenuFirst.addItem(.separator())
-        appMenuFirst.addItem(withTitle: "Параметри", action: #selector(NSApplication.terminate), keyEquivalent: ",") // !!!
+        appMenuFirst.addItem(withTitle: String(localized: "Параметри..."), action: #selector(NSApplication.terminate), keyEquivalent: ",") // !!!
         appMenuFirst.addItem(.separator())
-        appMenuFirst.addItem(withTitle: "Сховати Gradify", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        appMenuFirst.addItem(withTitle: String(localized: "Сховати Gradify"), action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
         
         let menuItemHideAll = NSMenuItem()
-        menuItemHideAll.title = "Сховати решту"
+        menuItemHideAll.title = String(localized: "Сховати решту")
         menuItemHideAll.action = #selector(NSApplication.hideOtherApplications(_:))
         menuItemHideAll.keyEquivalentModifierMask = [.option, .command]
         menuItemHideAll.keyEquivalent = "h"
         appMenuFirst.addItem(menuItemHideAll)
         
-        appMenuFirst.addItem(withTitle: "Показати всі", action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: "")
+        appMenuFirst.addItem(withTitle: String(localized: "Показати всі"), action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: "")
         appMenuFirst.addItem(.separator())
-        appMenuFirst.addItem(withTitle: "Завершити Gradify", action: #selector(NSApplication.terminate), keyEquivalent: "q")
+        appMenuFirst.addItem(withTitle: String(localized: "Завершити Gradify"), action: #selector(NSApplication.terminate), keyEquivalent: "q")
         
         let secondMenuItem = NSMenuItem()
         mainMenu.addItem(secondMenuItem)
         
         let secondMenu = NSMenu()
-        secondMenu.title = "Файл"
+        secondMenu.title = String(localized: "Файл")
         
+        // !!!!
         secondMenuItem.submenu = secondMenu
         secondMenu.addItem(withTitle: "Test", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
@@ -126,38 +128,45 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         mainMenu.addItem(thirdMenuItem)
         
         let thirdMenu = NSMenu()
-        thirdMenu.title = "Редагування"
-        thirdMenuItem.submenu = thirdMenu
         
-        thirdMenu.addItem(withTitle: "Відмінити", action: Selector(("undo:")), keyEquivalent: "z")
-        thirdMenu.addItem(withTitle: "Повторити", action: Selector(("redo:")), keyEquivalent: "Z")
+        thirdMenu.title = String(localized: "Редагування")
+        thirdMenuItem.submenu = thirdMenu
+            
+        thirdMenu.addItem(withTitle: String(localized: "Відмінити"), action: Selector(("undo:")), keyEquivalent: "z")
+        thirdMenu.addItem(withTitle: String(localized: "Повторити"), action: Selector(("redo:")), keyEquivalent: "Z")
         thirdMenu.addItem(.separator())
-        thirdMenu.addItem(withTitle: "Вирізати", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
-        thirdMenu.addItem(withTitle: "Скопіювати", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
-        thirdMenu.addItem(withTitle: "Вставити", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
-        thirdMenu.addItem(withTitle: "Видалити", action: #selector(NSText.delete(_:)), keyEquivalent: "")
-        thirdMenu.addItem(withTitle: "Вибрати все", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        thirdMenu.addItem(withTitle: String(localized: "Вирізати"), action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        thirdMenu.addItem(withTitle: String(localized: "Скопіювати"), action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        thirdMenu.addItem(withTitle: String(localized: "Вставити"), action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        thirdMenu.addItem(withTitle: String(localized: "Видалити"), action: #selector(NSText.delete(_:)), keyEquivalent: "")
+        thirdMenu.addItem(withTitle: String(localized: "Вибрати все"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         thirdMenu.addItem(.separator())
                 
         let fourthMenuItem = NSMenuItem()
         mainMenu.addItem(fourthMenuItem)
         
         let fourthMenu = NSMenu()
-        fourthMenu.title = "Перегляд"
+        fourthMenu.title = String(localized: "Перегляд")
         fourthMenuItem.submenu = fourthMenu
         
-        fourthMenu.addItem(withTitle: "Показати бічну панель", action: #selector(NSSplitViewController.toggleSidebar(_:)), keyEquivalent: "S")
+        fourthMenu.addItem(withTitle: String(localized: "Показати бічну панель"), action: #selector(NSSplitViewController.toggleSidebar(_:)), keyEquivalent: "S")
         fourthMenu.addItem(.separator())
         
+        fourthMenu.addItem(withTitle: String(localized: "Показати панель вкладок"), action: #selector(window?.toggleTabBar(_:)), keyEquivalent: "T")
+        fourthMenu.addItem(withTitle: String(localized: "Показати всі вкладки"), action: #selector(window?.toggleTabOverview(_:)), keyEquivalent: "")
+        fourthMenu.addItem(.separator())
+        
+        window?.toggleTabBar(nil)
+        
         let menuItemToggleInstrumentPanel = NSMenuItem()
-        menuItemToggleInstrumentPanel.title = "Сховати панель інструментів"
+        menuItemToggleInstrumentPanel.title = String(localized: "Сховати панель інструментів")
         menuItemToggleInstrumentPanel.action = #selector(window?.toggleToolbarShown(_:))
         menuItemToggleInstrumentPanel.keyEquivalentModifierMask = [.option, .command]
         menuItemToggleInstrumentPanel.keyEquivalent = "t"
         fourthMenu.addItem(menuItemToggleInstrumentPanel)
 
         let menuItemToggleFullScreen = NSMenuItem()
-        menuItemToggleFullScreen.title = "Увійти до повноекранного режиму"
+        menuItemToggleFullScreen.title = String(localized: "Увійти до повноекранного режиму")
         menuItemToggleFullScreen.action = #selector(window?.toggleFullScreen(_:))
         menuItemToggleFullScreen.keyEquivalentModifierMask = [.function]
         menuItemToggleFullScreen.keyEquivalent = "f"
@@ -167,52 +176,44 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         mainMenu.addItem(fifthMenuItem)
         
         let fifthMenu = NSMenu()
-        fifthMenu.title = "Вікно"
+        fifthMenu.title = String(localized: "Вікно")
         fifthMenuItem.submenu = fifthMenu
 
-        
-                                
-        fifthMenu.addItem(withTitle: "Згорнути", action: #selector(minimizeAction(_:)), keyEquivalent: "m")
-        fifthMenu.addItem(withTitle: "Оптимізувати", action: #selector(performZoomAction(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: String(localized: "Згорнути"), action: #selector(minimizeAction(_:)), keyEquivalent: "m")
+        fifthMenu.addItem(withTitle: String(localized: "Оптимізувати"), action: #selector(performZoomAction(_:)), keyEquivalent: "")
         // fifthMenu.addItem(withTitle: "Розмістити вікно ліворуч на екрані", action: #selector(window?.left(_:)), keyEquivalent: "")
         // fifthMenu.addItem(withTitle: "Розмістити вікно праворуч на екрані", action: #selector(performZoomAction(_:)), keyEquivalent: "")
-        
-        
-        
-        fifthMenu.addItem(.separator())
-        fifthMenu.addItem(withTitle: "Показати панель вкладок", action: #selector(window?.toggleTabBar(_:)), keyEquivalent: "S")
-        fifthMenu.addItem(withTitle: "Показати всі вкладки", action: #selector(window?.toggleTabOverview(_:)), keyEquivalent: "\\")
         fifthMenu.addItem(.separator())
                 
         let menuItemShowPreviousTab = NSMenuItem()
-        menuItemShowPreviousTab.title = "Показати попередню вкладку"
+        menuItemShowPreviousTab.title = String(localized: "Показати попередню вкладку")
         menuItemShowPreviousTab.action = #selector(window?.selectPreviousTab(_:))
         menuItemShowPreviousTab.keyEquivalentModifierMask = [.control, .shift]
         menuItemShowPreviousTab.keyEquivalent = "\u{0009}"
         fifthMenu.addItem(menuItemShowPreviousTab)
 
         let menuItemShowNextTab = NSMenuItem()
-        menuItemShowNextTab.title = "Показати наступну вкладку"
+        menuItemShowNextTab.title = String(localized: "Показати наступну вкладку")
         menuItemShowNextTab.action = #selector(window?.selectNextTab(_:))
         menuItemShowNextTab.keyEquivalentModifierMask = [.control]
         menuItemShowNextTab.keyEquivalent = "\u{0009}"
         fifthMenu.addItem(menuItemShowNextTab)
 
-        fifthMenu.addItem(withTitle: "Винести вкладку в нове вікно", action: #selector(window?.moveTabToNewWindow(_:)), keyEquivalent: "")
-        fifthMenu.addItem(withTitle: "Обʼєднати всі вікна", action: #selector(window?.mergeAllWindows(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: String(localized: "Винести вкладку в нове вікно"), action: #selector(window?.moveTabToNewWindow(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: String(localized: "Обʼєднати всі вікна"), action: #selector(window?.mergeAllWindows(_:)), keyEquivalent: "")
         fifthMenu.addItem(.separator())
-        fifthMenu.addItem(withTitle: "Всі наперед", action: #selector(window?.orderFront(_:)), keyEquivalent: "")
+        fifthMenu.addItem(withTitle: String(localized: "Всі наперед"), action: #selector(window?.orderFront(_:)), keyEquivalent: "")
         
         let sixthMenuItem = NSMenuItem()
         mainMenu.addItem(sixthMenuItem)
         
         let sixthMenu = NSMenu()
-        sixthMenu.title = "Довідка"
+        sixthMenu.title = String(localized: "Довідка")
         sixthMenuItem.submenu = sixthMenu
-        
-        sixthMenu.addItem(withTitle: "Довідка Gradify", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+
+        sixthMenu.addItem(withTitle: String(localized: "Довідка Gradify"), action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
         sixthMenu.addItem(.separator())
-        sixthMenu.addItem(withTitle: "Онлайн довідка", action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
+        sixthMenu.addItem(withTitle: String(localized: "Онлайн довідка"), action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
 
     }// func initMenuBar()
     
