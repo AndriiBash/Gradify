@@ -61,3 +61,33 @@
 "Довідка" = "Help";
 "Довідка Gradify" = "Gradify Help";
 "Онлайн довідка" = "Online Help";
+
+// MARK: - Localize startWindow
+
+"Зустрічайте" = "Welcome to";
+"Ефективний облік даних" = "Effective data accounting";
+"Gradify забезпечує ефективний облік та збереження інформації про студентів" = "Gradify provides efficient accounting and storage of information about students";
+"Швидкий доступ до інформації" = "Quick access to information";
+"Зручний та швидкий доступ до важливих даних про студентів" = "Convenient and quick access to important data about students";
+"Оптимізація роботи" = "Optimization of work";
+"Оптимізує роботу та допомагає організувати інформацію для зручного доступу" = "Optimizes work and helps organize information for convenient access";
+"Далі" = "Start";
+
+// MARK: - Localize LoginView
+
+"З поверненням!" = "Welcome back!";
+"Помилка авторизації, невірний пароль або логін!" = "Authorization error, incorrect password or login!";
+"Введіть логін" = "Enter your login";
+"Введіть пароль" = "Enter your password";
+"Запам'ятати мене" = "Remember me";
+"Забули пароль?" = "Forgot password?";
+"Email-пошта" = "Email";
+"Надіслати" = "Send";
+"Скасувати" = "Cancel";
+"Авторизуватись" = "Log in";
+"Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля." = "Enter your email address and we'll send you instructions on how to reset your password.";
+"Відсутній аккаунту?" = "Missing account?";
+"Зареєструйтесь" = "Sign up";
+"Реєстрація" = "Registration";
+"Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!" = "Thank you for choosing our service! To create an account and gain full access, please contact our support team at support@gradify.online. We are always ready to help!";
+"Написати" = "Write";

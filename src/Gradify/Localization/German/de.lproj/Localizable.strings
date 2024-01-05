@@ -8,7 +8,7 @@
 
 // MARK: - Localize menuBarItem, item: Gradify
 
-"Про Gradify" = "Über Gradify";
+"Про Gradify" = "Über „Gradify“";
 "Параметри..." = "Einstellungen...";
 "Сховати Gradify" = "Gradify ausblenden";
 "Сховати решту" = "Andere ausblenden";
@@ -61,3 +61,33 @@
 "Довідка" = "Hilfe";
 "Довідка Gradify" = "Gradify-Hilfe";
 "Онлайн довідка" = "Online-Hilfe";
+
+// MARK: - Localize startWindow
+
+"Зустрічайте" = "Willkommen zu";
+"Ефективний облік даних" = "Effektive Datenbuchhaltung";
+"Gradify забезпечує ефективний облік та збереження інформації про студентів" = "Gradify bietet eine effiziente Buchhaltung und Speicherung von Informationen über Studierende";
+"Швидкий доступ до інформації" = "Schneller Zugriff auf Informationen";
+"Зручний та швидкий доступ до важливих даних про студентів" = "Bequemer und schneller Zugriff auf wichtige Daten über Studierende";
+"Оптимізація роботи" = "Optimierung der Arbeit";
+"Оптимізує роботу та допомагає організувати інформацію для зручного доступу" = "Optimiert die Arbeit und hilft, Informationen für einen bequemen Zugriff zu organisieren";
+"Далі" = "Start";
+
+// MARK: - Localize LoginView
+
+"З поверненням!" = "Schön, dich wiederzusehen!";
+"Помилка авторизації, невірний пароль або логін!" = "Autorisierungsfehler, falsches Passwort oder Login!";
+"Введіть логін" = "Geben Sie Ihr Login ein";
+"Введіть пароль" = "Geben Sie Ihr Passwort ein";
+"Запам'ятати мене" = "Erinnere dich an mich";
+"Забули пароль?" = "Haben Sie Ihr Passwort vergessen?";
+"Email-пошта" = "Email";
+"Надіслати" = "Schicken";
+"Скасувати" = "Stornieren";
+"Авторизуватись" = "Anmeldung";
+"Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля." = "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres Passworts.";
+"Відсутній аккаунту?" = "Fehlendes Konto?";
+"Зареєструйтесь" = "Melden Sie sich an";
+"Реєстрація" = "Anmeldung";
+"Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!" = "Vielen Dank, dass Sie sich für unseren Service entschieden haben! Um ein Konto zu erstellen und vollen Zugriff zu erhalten, wenden Sie sich bitte an unser Support-Team unter support@gradify.online. Wir sind immer bereit zu helfen!";
+"Написати" = "Schreiben";

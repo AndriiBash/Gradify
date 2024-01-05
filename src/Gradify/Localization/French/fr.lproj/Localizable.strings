@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  Gradify
+
+  Created by Андрiй on 04.01.2024.
+  
+*/
+
+// MARK: - Localize menuBarItem, item: Gradify
+
+"Про Gradify" = "À propos de Gradify";
+"Параметри..." = "Réglages...";
+"Сховати Gradify" = "Masquer Gradify";
+"Сховати решту" = "Masquer les autres";
+"Показати всі" = "Tout afficher";
+"Завершити Gradify" = "Quitter Gradify";
+
+// MARK: - Localize menuBarItem, item: File
+
+// Need add many menu
+"Файл" = "Fichier";
+
+// MARK: - Localize menuBarItem, item: Edit
+
+"Редагування" = "Édition";
+"Відмінити" = "Annuler";
+"Повторити" = "Rétablir";
+"Вирізати" = "Couper";
+"Скопіювати" = "Copier";
+"Вставити" = "Coller";
+"Видалити" = "Supprimer";
+"Вибрати все" = "Tout sélectionner";
+
+// MARK: - Localize menuBarItem, item: View
+
+"Перегляд" = "Présentation";
+"Показати бічну панель" = "Afficher la barre latérale";
+"Сховати бічну панель" = "Masquer la barre latérale";
+"Показати панель вкладок" = "Afficher la barre des onglets";
+"Сховати панель вкладок" = "Masquer la barre des onglets";
+"Показати всі вкладки" = "Afficher tous les onglets";
+"Завершити огляд вкладок" = "Quitter l'aperçu des onglets";
+"Показати панель інструментів" = "Afficher la barre d'outils";
+"Сховати панель інструментів" = "Masquer la barre d'outils";
+"Увійти до повноекранного режиму" = "Entrer en plein écran";
+"Вийти з повноекранного режиму" = "Quitter le plein écran";
+
+// MARK: - Localize menuBarItem, item: Window
+
+"Вікно" = "Fenêtre";
+"Згорнути" = "Minimiser";
+"Оптимізувати" = "Réduire/agrandir";
+"Показати попередню вкладку" = "Afficher l'onglet de la fenêtre précédente";
+"Показати наступну вкладку" = "Afficher l'onglet de la fenêtre suivante";
+"Винести вкладку в нове вікно" = "Déplacer l'onglet dans une nouvelle fenêtre";
+"Обʼєднати всі вікна" = "Fusionner toutes les fenêtres";
+"Всі наперед" = "Tout ramener au premier plan";
+
+// MARK: - Localize menuBarItem, item: Help
+
+"Довідка" = "Aide";
+"Довідка Gradify" = "Aide Gradify";
+"Онлайн довідка" = "Aide en ligne";
+
+// MARK: - Localize startWindow
+
+"Зустрічайте" = "Découvrez";
+"Ефективний облік даних" = "Comptabilité efficace des données";
+"Gradify забезпечує ефективний облік та збереження інформації про студентів" = "Gradify fournit une comptabilité et un stockage efficaces des informations sur les étudiants";
+"Швидкий доступ до інформації" = "Accès rapide aux informations";
+"Зручний та швидкий доступ до важливих даних про студентів" = "Accès pratique et rapide aux données importantes sur les étudiants";
+"Оптимізація роботи" = "Optimisation du travail";
+"Оптимізує роботу та допомагає організувати інформацію для зручного доступу" = "Optimise le travail et aide à organiser les informations pour un accès pratique";
+"Далі" = "Démarrer";
+
+// MARK: - Localize LoginView
+
+"З поверненням!" = "Content de te revoir!";
+"Помилка авторизації, невірний пароль або логін!" = "Erreur d'autorisation, mot de passe ou connexion incorrect!";
+"Введіть логін" = "Entrez votre identifiant";
+"Введіть пароль" = "Tapez votre mot de passe";
+"Запам'ятати мене" = "Souviens-toi de moi";
+"Забули пароль?" = "Mot de passe oublié?";
+"Email-пошта" = "E-mail";
+"Надіслати" = "Envoyer";
+"Скасувати" = "Annuler";
+"Авторизуватись" = "Se connecter";
+"Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля." = "Entrez votre adresse e-mail et nous vous enverrons des instructions pour réinitialiser votre mot de passe";
+"Відсутній аккаунту?" = "Compte manquant ?";
+"Зареєструйтесь" = "S'inscrire";
+"Реєстрація" = "Inscription";
+"Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!" = "Merci d'avoir choisi notre service ! Pour créer un compte et obtenir un accès complet, veuillez contacter notre équipe d'assistance à support@gradify.online. Nous sommes toujours prêts à vous aider!";
+"Написати" = "Écrire";

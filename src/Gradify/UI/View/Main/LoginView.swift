@@ -41,20 +41,20 @@ struct LoginView: View
                         }
                 }// VStack with hello photo
                 
-                Text("З поверненням!")
+                Text(String(localized: "З поверненням!"))
                     .font(.title.bold())
                 
                 Spacer()
                 
+                Text(loginData.wrongAuth ? String(localized: "Помилка авторизації, невірний пароль або логін!") : " ")
+                    .foregroundColor(Color.red)
+                    .transition(.move(edge: .bottom))
+                
                 VStack(spacing: 16)
                 {
-                    Text(loginData.wrongAuth ? "Помилка авторизації, не вірний пароль або логін!" : " ")
-                        .foregroundColor(Color.red)
-                        .transition(.move(edge: .bottom))
-                    
                     VStack(spacing: 16)
                     {
-                        TextField("Введіть логін", text: $loginData.userName)
+                        TextField(String(localized: "Введіть логін"), text: $loginData.userName)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
                             .padding(.horizontal, 8)
@@ -64,9 +64,9 @@ struct LoginView: View
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(style: StrokeStyle(lineWidth: 1))
                                     .foregroundColor(loginData.wrongAuth ? Color.red.opacity(0.7) : Color.gray.opacity(0.7)))
-                            .keyboardShortcut("a", modifiers: .command)
+                            //.keyboardShortcut("a", modifiers: .command)
 
-                        SecureField("Введіть пароль", text: $loginData.password)
+                        SecureField(String(localized: "Введіть пароль"), text: $loginData.password)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
                             .padding(.horizontal, 8)
@@ -79,7 +79,7 @@ struct LoginView: View
                     
                     HStack
                     {
-                        Toggle("Запам'ятати мене", isOn: $isRemberMe)
+                        Toggle(String(localized: "Запам'ятати мене"), isOn: $isRemberMe)
                         //.labelsHidden()
                         //.toggleStyle(CheckboxToggleStyle())
                         
@@ -87,12 +87,12 @@ struct LoginView: View
                         
                         Button
                         {
-                            print("forget pass")
+                            //print("forget pass")
                             forgetPassAlertShow.toggle()
                         }
                         label:
                         {
-                            Text("Забули пароль?")
+                            Text(String(localized: "Забули пароль?"))
                                 .foregroundColor(Color.blue)
                                 .underline(true, color: Color.blue)
                                 .onHover
@@ -102,11 +102,11 @@ struct LoginView: View
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .alert("Забули пароль?", isPresented: $forgetPassAlertShow)
+                        .alert(String(localized: "Забули пароль?"), isPresented: $forgetPassAlertShow)
                         {
-                            TextField("Email-пошта", text: $loginData.emailForReset)
+                            TextField(String(localized: "Email-пошта"), text: $loginData.emailForReset)
                             
-                            Button("Надіслати")
+                            Button(String(localized: "Надіслати"))
                             {
                                 Task
                                 {
@@ -116,11 +116,11 @@ struct LoginView: View
                             }// button for send reset password email
                             .disabled(loginData.emailForReset.isEmpty ? true : false)
                             
-                            Button("Скасувати", role: .cancel) { } // cancel button
+                            Button(String(localized: "Скасувати"), role: .cancel) { } // cancel button
                         }
                         message:
                         {
-                            Text("Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля.")
+                            Text(String(localized: "Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля."))
                         }// alert to reset password
                     }// HStack with remember me Toogle and button forget pass
                     
@@ -144,7 +144,7 @@ struct LoginView: View
                     {
                         Spacer()
                         
-                        Text("Авторизуватись")
+                        Text(String(localized: "Авторизуватись"))
                             .padding(.vertical, 6)
                         
                         Spacer()
@@ -164,7 +164,7 @@ struct LoginView: View
                 
                     HStack
                     {
-                        Text("Відсутній аккаунту?")
+                        Text(String(localized: "Відсутній аккаунту?"))
                             .foregroundColor(Color.gray)
                         
                         Button
@@ -173,7 +173,7 @@ struct LoginView: View
                         }
                         label:
                         {
-                            Text("Зареєструйтесь")
+                            Text(String(localized: "Зареєструйтесь"))
                                 .foregroundColor(Color.blue)
                                 .underline(true, color: Color.blue)
                                 .onHover
@@ -186,9 +186,9 @@ struct LoginView: View
                         .alert(isPresented: $isRegistration)
                         {
                             Alert(
-                                title: Text("Реєстрація"),
-                                message: Text("Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!"),
-                                primaryButton: .default(Text("Написати"))
+                                title: Text(String(localized: "Реєстрація")),
+                                message: Text(String(localized: "Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!")),
+                                primaryButton: .default(Text(String(localized: "Написати")))
                                 {
                                     if let mailURL = URL(string: "mailto:support@gradify.online")
                                     {
@@ -196,7 +196,7 @@ struct LoginView: View
                                     }
                                 },//Primary button
 
-                                secondaryButton: .cancel(Text("Скасувати"))
+                                secondaryButton: .cancel(Text(String(localized: "Скасувати")))
                             )
                         }
                     }// Hstack for register user
@@ -269,7 +269,6 @@ struct LoginView: View
             }
         }
     }// func animateIcon()
-
 }
 
 

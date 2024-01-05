@@ -21,13 +21,15 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
 {
     var loginData: LoginModel
     var aboutAppWindow: NSWindow
+    var settingAppWindow: NSWindow
     private var tabbedWindows = [NSWindow]()
 
     // MARK: - Init
-    init(window: NSWindow, aboutAppWindow: NSWindow, loginModel: LoginModel = LoginModel())
+    init(window: NSWindow, aboutAppWindow: NSWindow, settingAppWindow: NSWindow, loginModel: LoginModel = LoginModel())
     {
         self.loginData = loginModel
         self.aboutAppWindow = aboutAppWindow
+        self.settingAppWindow = settingAppWindow
         super.init(window: window)
         window.delegate = self
     }// init
@@ -43,7 +45,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         self.window?.delegate = self
     } // override func windowDidLoad()
     
-    convenience init()  // NEED REFACTOR!!!!
+    convenience init()  // NEED REFACTOR!!
     {
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
@@ -51,6 +53,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
             backing: .buffered, defer: false)
         
         window.isReleasedWhenClosed = true
+        window.tabbingMode = .disallowed
 
         window.styleMask.update(with: .fullSizeContentView)
         window.center()
@@ -65,14 +68,29 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         aboutAppWindow.titlebarAppearsTransparent = true
         aboutAppWindow.standardWindowButton(.zoomButton)?.isHidden = true
         aboutAppWindow.standardWindowButton(.miniaturizeButton)?.isHidden = true
- 
-        let hostingController = NSHostingController(rootView: AboutAppView())
-        aboutAppWindow.contentView = NSHostingView(rootView: hostingController.rootView)
+        aboutAppWindow.tabbingMode = .disallowed
+        
+        let aboutViewHostingController = NSHostingController(rootView: AboutAppView())
+        aboutAppWindow.contentView = NSHostingView(rootView: aboutViewHostingController.rootView)
         
         aboutAppWindow.styleMask.update(with: .fullSizeContentView)
         aboutAppWindow.center()
+                
+        let settingAppWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 470, height: 200),
+            styleMask: [.closable, .titled],
+            backing: .buffered, defer: false)
         
-        self.init(window: window, aboutAppWindow: aboutAppWindow)
+        settingAppWindow.isReleasedWhenClosed = false
+        settingAppWindow.tabbingMode = .disallowed
+
+        let settingViewHostingController = NSHostingController(rootView: SettingView())
+        settingAppWindow.contentView = NSHostingView(rootView: settingViewHostingController.rootView)
+
+        settingAppWindow.styleMask.update(with: .fullSizeContentView)
+        settingAppWindow.center()
+        
+        self.init(window: window, aboutAppWindow: aboutAppWindow, settingAppWindow: settingAppWindow)
         self.initMenuBar()
         
         window.delegate = self
@@ -97,9 +115,8 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         appMenuItem.submenu = appMenuFirst
         
         appMenuFirst.addItem(withTitle: String(localized: "Про Gradify"), action: #selector(showAboutAppPanelAction(_:)), keyEquivalent: "")
-        
         appMenuFirst.addItem(.separator())
-        appMenuFirst.addItem(withTitle: String(localized: "Параметри..."), action: #selector(NSApplication.terminate), keyEquivalent: ",") // !!!
+        appMenuFirst.addItem(withTitle: String(localized: "Параметри..."), action: #selector(showSettingAppAction(_:)), keyEquivalent: ",")
         appMenuFirst.addItem(.separator())
         appMenuFirst.addItem(withTitle: String(localized: "Сховати Gradify"), action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
         
@@ -217,6 +234,12 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
 
     }// func initMenuBar()
     
+    @objc func showSettingAppAction(_ sender: Any?)
+    {
+        self.settingAppWindow.makeKeyAndOrderFront(nil)
+        self.aboutAppWindow.windowController?.showWindow(nil)
+    }// func @objc func showSettingAppAction(_ sender: Any?)
+    
     @objc func showAboutAppPanelAction(_ sender: Any?)
     {
         self.aboutAppWindow.makeKeyAndOrderFront(nil)
@@ -254,19 +277,19 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
     
     func addNewTab()
     {
-            let newWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
-                styleMask: [.miniaturizable, .closable, .resizable, .titled],
-                backing: .buffered, defer: false)
+        let newWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
+            styleMask: [.miniaturizable, .closable, .resizable, .titled],
+            backing: .buffered, defer: false)
 
-            let hostingController = NSHostingController(rootView: MainMenuView())
+        let hostingController = NSHostingController(rootView: MainMenuView())
 
-            newWindow.styleMask.update(with: .fullSizeContentView)
-            newWindow.contentView = NSHostingView(rootView: hostingController.rootView)
+        newWindow.styleMask.update(with: .fullSizeContentView)
+        newWindow.contentView = NSHostingView(rootView: hostingController.rootView)
 
-            self.tabbedWindows.append(newWindow)
-            self.window?.addTabbedWindow(newWindow, ordered: .above)
-            newWindow.makeKeyAndOrderFront(nil)
+        self.tabbedWindows.append(newWindow)
+        self.window?.addTabbedWindow(newWindow, ordered: .above)
+        newWindow.makeKeyAndOrderFront(nil)
     }// func addNewTab()
     
     func windowWillClose(_ notification: Notification)
@@ -310,6 +333,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.isMovableByWindowBackground = false
+        window?.tabbingMode = .preferred
         window?.center()
         
         useMiniWindow(status: false)
@@ -323,6 +347,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.isMovableByWindowBackground = true
+        window?.tabbingMode = .disallowed
         window?.center()
         
         useMiniWindow(status: false)
@@ -335,6 +360,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         
         window?.contentView = NSHostingView(rootView: hostingController.rootView)
         window?.isMovableByWindowBackground = true
+        window?.tabbingMode = .disallowed
         window?.center()
 
         useMiniWindow(status: true)

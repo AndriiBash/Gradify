@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationDidFinishLaunching(_ notification: Notification)
     {
         windowController = WindowController()
-        windowController.setCurrentWindow(ofType: .main)
+        windowController.setCurrentWindow(ofType: .start)
         windowController.showWindow(nil)
         
         let menuView = PopOverView()

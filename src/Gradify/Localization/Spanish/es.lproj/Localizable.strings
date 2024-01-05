@@ -61,3 +61,33 @@
 "Довідка" = "Ayuda";
 "Довідка Gradify" = "Ayuda de Gradify";
 "Онлайн довідка" = "Ayuda en línea";
+
+// MARK: - Localize startWindow
+
+"Зустрічайте" = "¡Bienvenido a";
+"Ефективний облік даних" = "Eficiencia de datos";
+"Gradify забезпечує ефективний облік та збереження інформації про студентів" = "Gradify proporciona contabilidad y almacenamiento eficiente de información sobre los estudiantes";
+"Швидкий доступ до інформації" = "Acceso rápido a la información";
+"Зручний та швидкий доступ до важливих даних про студентів" = "Acceso cómodo y rápido a datos importantes sobre los estudiantes.";
+"Оптимізація роботи" = "Optimización del trabajo";
+"Оптимізує роботу та допомагає організувати інформацію для зручного доступу" = "Optimiza el trabajo y ayuda a organizar la información para un acceso conveniente";
+"Далі" = "Siguiente";
+
+// MARK: - Localize LoginView
+
+"З поверненням!" = "¡Bienvenido de nuevo!";
+"Помилка авторизації, невірний пароль або логін!" = "¡Error de autorización, contraseña o inicio de sesión incorrectos!";
+"Введіть логін" = "Ingrese su inicio de sesión";
+"Введіть пароль" = "Ingresa tu contraseña";
+"Запам'ятати мене" = "Acuérdate de mí";
+"Забули пароль?" = "¿Olvidaste tu contraseña?";
+"Email-пошта" = "Email";
+"Надіслати" = "Enviar";
+"Скасувати" = "Cancelar";
+"Авторизуватись" = "Acceso";
+"Введіть свою електронну адресу, і ми надішлемо вам інструкції щодо відновлення пароля." = "Ingrese su dirección de correo electrónico y le enviaremos instrucciones sobre cómo restablecer su contraseña.";
+"Відсутній аккаунту?" = "¿Cuenta perdida?";
+"Зареєструйтесь" = "Inscribirse";
+"Реєстрація" = "Registro";
+"Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!" = "¡Gracias por escoger nuestro servicio! Para crear una cuenta y obtener acceso completo, comuníquese con nuestro equipo de soporte en support@gradify.online. ¡Estamos siempre dispuestos a ayudar!";
+"Написати" = "Escribir";

@@ -22,17 +22,17 @@ struct StartView: View
                 .frame(width: 100, height: 100, alignment: .center)
                 .foregroundColor(Color.gray)
             
-            Text("Зустрічайте")
+            Text(String(localized: "Зустрічайте"))
             Text("Gradify")
                 .foregroundColor(.blue)
             
             VStack(spacing: 25)
             {
-                RowInfoViewModel(isAnimated: $animateStatus, imageName: "opticaldiscdrive.fill", mainText: "Ефективний облік даних", bodyText: "Gradify забезпечує ефективний облік та збереження інформації про студентів")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "opticaldiscdrive.fill", mainText: String(localized: "Ефективний облік даних"), bodyText: String(localized: "Gradify забезпечує ефективний облік та збереження інформації про студентів"))
 
-                RowInfoViewModel(isAnimated: $animateStatus, imageName: "speedometer", mainText: "Швидкий доступ до інформації", bodyText: "Зручний та швидкий доступ до важливих даних про студентів")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "speedometer", mainText: String(localized: "Швидкий доступ до інформації"), bodyText: String(localized: "Зручний та швидкий доступ до важливих даних про студентів"))
 
-                RowInfoViewModel(isAnimated: $animateStatus, imageName: "gearshape.2", mainText: "Оптимізація роботи", bodyText: "Оптимізує роботу та допомагає організувати інформацію для зручного доступу")
+                RowInfoViewModel(isAnimated: $animateStatus, imageName: "gearshape.2", mainText: String(localized: "Оптимізація роботи"), bodyText: String(localized: "Оптимізує роботу та допомагає організувати інформацію для зручного доступу"))
 
             }//VStack with info
             .padding(.top, 40)
@@ -42,17 +42,16 @@ struct StartView: View
             
             Button
             {
-                // go to auth
                 animateStatus = false
                 windowController.setCurrentWindow(ofType: .login)
             }
             label:
             {
-                Text("Далі")
+                Text(String(localized: "Далі"))
                     .padding(.vertical, 6)
                     .padding(.horizontal, 34)
                     .font(.body)
-            }// Button go to mainWindow or auth
+            }// Button go to auth
             .keyboardShortcut(.defaultAction)
             .shadow(radius: 8)
             .padding()

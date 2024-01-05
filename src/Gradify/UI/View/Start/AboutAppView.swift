@@ -91,7 +91,7 @@ struct AboutAppView: View
                         Text("Подяка")
                             .padding(.horizontal, 12)
                     }// button open github opensource
-                    .popover(isPresented: $isPopoverPresented, content: 
+                    .popover(isPresented: $isPopoverPresented, content:
                     {
                         RespectView()
                     })//pop over with thanks
