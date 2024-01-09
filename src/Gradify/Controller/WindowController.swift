@@ -78,11 +78,14 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
                 
         let settingAppWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 470, height: 200),
-            styleMask: [.closable, .titled],
+            styleMask: [.closable, .miniaturizable, .resizable, .titled],
             backing: .buffered, defer: false)
         
         settingAppWindow.isReleasedWhenClosed = false
         settingAppWindow.tabbingMode = .disallowed
+        settingAppWindow.windowController?.window?.hidesOnDeactivate = true
+        //settingAppWindow.titlebarAppearsTransparent = true
+        //settingAppWindow.setContentSize(NSSize(width: 100, height: 400))
 
         let settingViewHostingController = NSHostingController(rootView: SettingView())
         settingAppWindow.contentView = NSHostingView(rootView: settingViewHostingController.rootView)

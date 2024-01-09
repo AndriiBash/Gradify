@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Gradify
+
+  Created by Андрiй on 09.01.2024.
+  
+*/
+
+// MARK: - Localize Setting: selected language
+"Українська🇺🇦" = "Україська";
+"Español🇪🇸" = "Іспанська (Іспанія)";
+"Deutsch🇩🇪" = "Німецька (Німеччина)";
+"Français🇫🇷" = "Французька (Франція)";
+"English🇬🇧" = "Англійська (Великобританія)";

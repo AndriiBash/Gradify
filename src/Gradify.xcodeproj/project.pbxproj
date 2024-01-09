@@ -32,6 +32,7 @@
 		B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3312B48459800B8C73D /* AboutAppView.swift */; };
 		B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3332B4845C800B8C73D /* RespectView.swift */; };
 		B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3352B48462500B8C73D /* SettingView.swift */; };
+		B5EEF33A2B4D609800B8C73D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5EEF33C2B4D609800B8C73D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		B5EEF3332B4845C800B8C73D /* RespectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespectView.swift; sourceTree = "<group>"; };
 		B5EEF3352B48462500B8C73D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		B5EEF33B2B4D609800B8C73D /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		B551A47A2B45E9A300B9E928 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				B5EEF3372B4D608500B8C73D /* Ukranian */,
 				B551A4992B46CD7100B9E928 /* Spanish */,
 				B551A4982B46CD5100B9E928 /* French */,
 				B551A4972B46CD4600B9E928 /* German */,
@@ -149,6 +152,7 @@
 		B5AACA4C2B484439008D209F /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B512AC5F2B36F90100E9A09A /* VisualEffects */,
 				B512AC642B3ACE1600E9A09A /* ViewModel */,
 				B5AACA4D2B48446B008D209F /* Model */,
 				B5B55EDA2B30CE8E002E0F4D /* View */,
@@ -187,10 +191,9 @@
 				B5B55EC42B30CAF5002E0F4D /* GradifyRelease.entitlements */,
 				B5B55ECE2B30CDA2002E0F4D /* Assets.xcassets */,
 				B5B55EB32B30C4AF002E0F4D /* main.swift */,
+				B5B55ED72B30CE65002E0F4D /* Controller */,
 				B5AACA4C2B484439008D209F /* UI */,
 				B512AC652B3ACF2E00E9A09A /* Delegate */,
-				B512AC5F2B36F90100E9A09A /* VisualEffects */,
-				B5B55ED72B30CE65002E0F4D /* Controller */,
 				B551A47A2B45E9A300B9E928 /* Localization */,
 				B5B55EB52B30C55B002E0F4D /* Info.plist */,
 				B5B55ECB2B30CBE9002E0F4D /* GoogleService-Info.plist */,
@@ -252,6 +255,14 @@
 				B5EEF3312B48459800B8C73D /* AboutAppView.swift */,
 			);
 			path = Start;
+			sourceTree = "<group>";
+		};
+		B5EEF3372B4D608500B8C73D /* Ukranian */ = {
+			isa = PBXGroup;
+			children = (
+				B5EEF33C2B4D609800B8C73D /* Localizable.strings */,
+			);
+			path = Ukranian;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +339,7 @@
 				B551A4862B46C9F500B9E928 /* Localizable.strings in Resources */,
 				B551A48B2B46CA4C00B9E928 /* Localizable.strings in Resources */,
 				B5B55EA92B30C444002E0F4D /* Assets.xcassets in Resources */,
+				B5EEF33A2B4D609800B8C73D /* Localizable.strings in Resources */,
 				B551A4802B45EB5C00B9E928 /* Localizable.strings in Resources */,
 				B5B55ECC2B30CBE9002E0F4D /* GoogleService-Info.plist in Resources */,
 				B551A4932B46CD2000B9E928 /* Localizable.strings in Resources */,
@@ -390,6 +402,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				B551A4942B46CD2000B9E928 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B5EEF33C2B4D609800B8C73D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5EEF33B2B4D609800B8C73D /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -524,6 +544,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = DevAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Gradify/Gradify.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -556,6 +577,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RealeseAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Gradify/GradifyRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

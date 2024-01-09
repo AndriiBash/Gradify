@@ -91,3 +91,10 @@
 "Реєстрація" = "Inscription";
 "Дякуємо за вибір нашого сервісу! Для створення облікового запису та отримання повного доступу, будь ласка, звертайтеся до нашої служби підтримки за електронною адресою support@gradify.online. Ми завжди готові допомогти!" = "Merci d'avoir choisi notre service ! Pour créer un compte et obtenir un accès complet, veuillez contacter notre équipe d'assistance à support@gradify.online. Nous sommes toujours prêts à vous aider!";
 "Написати" = "Écrire";
+
+// MARK: - Localize Setting: selected language
+"Українська🇺🇦" = "Ukrainien";
+"Español🇪🇸" = "Espagnol (Espagne)";
+"Deutsch🇩🇪" = "Allemand (Allemagne)";
+"Français🇫🇷" = "Français (France)";
+"English🇬🇧" = "Anglais (Grande Bretagne)";

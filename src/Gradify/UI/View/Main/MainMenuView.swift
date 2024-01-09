@@ -27,7 +27,7 @@ struct MainMenuView: View
                         Label("Item 1", systemImage: "circle.fill")
                     }
                     
-                    NavigationLink(destination: Text("Item 2"), tag: "Item2", selection: $selection)
+                    NavigationLink(destination: SettingView(), tag: "Item2", selection: $selection)
                     {
                         Label("Item 2", systemImage: "square.fill")
                     }
