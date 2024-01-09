@@ -28,9 +28,9 @@ struct SettingView: View
     {
         Form
         {
-            Section(header: Text("Головні налаштування").foregroundColor(.secondary).bold())
+            Section(header: Text(String(localized: "Головні налаштування")).foregroundColor(.secondary).bold())
             {
-                Picker("Мова застосунку", selection: $selectedLanguage)
+                Picker(String(localized: "Мова застосунку"), selection: $selectedLanguage)
                 {
                     ForEach(Language.allCases, id: \.self)
                     { language in
@@ -42,8 +42,11 @@ struct SettingView: View
                 }// Picker for change lanuage
                 .onChange(of: selectedLanguage)
                 { _, _ in // don't see new and old value
-                    UserDefaults.standard.set(["\(selectedLanguage)"], forKey: "AppleLanguages")
-                    exit(-1)
+                    showLanguageInfo.toggle()
+                }
+                .sheet(isPresented: $showLanguageInfo)
+                {
+                    AcceptChangeLanguage(showStatus: $showLanguageInfo, selectedLanguage: $selectedLanguage)
                 }
                 
                 Text("Hello, World!") // just example

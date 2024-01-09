@@ -98,3 +98,10 @@
 "Deutsch🇩🇪" = "Deutsches (Deutschland)";
 "Français🇫🇷" = "Französisch (Frankreich)";
 "English🇬🇧" = "Englisch (Großbritannien)";
+
+"Головні налаштування" = "Haupteinstellungen";
+"Перезапустити" = "Neu starten";
+"Не перезапускати" = "Nicht neu starten";
+"Основну мову застосунку зміненно. Перезапустити застосунок зараз?" = "Die Hauptsprache der Anwendung wurde geändert. App jetzt neu starten?";
+"Застосунок не зможе використовувати нову мову до перезапуску." = "Die App kann die neue Sprache erst nach einem Neustart verwenden.";
+"Мова застосунку" = "Anwendungssprache";

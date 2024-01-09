@@ -33,6 +33,7 @@
 		B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3332B4845C800B8C73D /* RespectView.swift */; };
 		B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3352B48462500B8C73D /* SettingView.swift */; };
 		B5EEF33A2B4D609800B8C73D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5EEF33C2B4D609800B8C73D /* Localizable.strings */; };
+		B5F3412F2B4D956300AC5751 /* AcceptChangeLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3412E2B4D956300AC5751 /* AcceptChangeLanguage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		B5EEF3332B4845C800B8C73D /* RespectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespectView.swift; sourceTree = "<group>"; };
 		B5EEF3352B48462500B8C73D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		B5EEF33B2B4D609800B8C73D /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B5F3412E2B4D956300AC5751 /* AcceptChangeLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptChangeLanguage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				B5EEF3332B4845C800B8C73D /* RespectView.swift */,
 				B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */,
 				B5B55EE52B30CEC0002E0F4D /* PopOverView.swift */,
+				B5F3412E2B4D956300AC5751 /* AcceptChangeLanguage.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */,
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
 				B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */,
+				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
