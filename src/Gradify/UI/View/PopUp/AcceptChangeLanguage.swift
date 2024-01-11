@@ -49,7 +49,7 @@ struct AcceptChangeLanguage: View
                     Button
                     {
                         UserDefaults.standard.set(["\(selectedLanguage)"], forKey: "AppleLanguages")
-                        exit(-1)
+                        restartApp()
                     }
                     label:
                     {
@@ -79,9 +79,24 @@ struct AcceptChangeLanguage: View
             
             Spacer()
         }// main VStack
-        .frame(width: 290, height: 290)
+        .frame(width: 290, height: 270)
         .padding()
     }
+    
+    func restartApp()
+    {
+        // func work only in deploy application
+        //print(path)
+        
+        let url = URL(fileURLWithPath: Bundle.main.resourcePath!)
+        let path = url.deletingLastPathComponent().deletingLastPathComponent().absoluteString
+        let task = Process()
+        task.launchPath = "/usr/bin/open"
+        task.arguments = [path]
+        task.launch()
+                
+        exit(0)
+    } // func restartApp
 }
 
 /* bruh not working
