@@ -6,5 +6,5 @@
 # Gradify application for education
 | | **Architecture** | **Build** |
 |---|:---:|:---:|
-| **macOS 14.2**        | ARM64 |[![Build Status](https://github.com/dwyl/repo-badges/blob/main/svg/build-passing.svg)]()|
+| **macOS 14.2**        | ARM64 |[![Build Status](https://github.com/AndriiBash/Gradify/actions/workflows/swift-xcode-MacOS14.yml/badge.svg)]()|
 | **macOS 13.0**        | ARM64 |[![Build Status](https://github.com/AndriiBash/Gradify/actions/workflows/swift-xcode.yml/badge.svg)]()|
