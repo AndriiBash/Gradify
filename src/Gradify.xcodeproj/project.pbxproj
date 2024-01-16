@@ -12,6 +12,9 @@
 		B551A4862B46C9F500B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4882B46C9F500B9E928 /* Localizable.strings */; };
 		B551A48B2B46CA4C00B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A48D2B46CA4C00B9E928 /* Localizable.strings */; };
 		B551A4932B46CD2000B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4952B46CD2000B9E928 /* Localizable.strings */; };
+		B5A6F37D2B52CAE30044DFF8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37C2B52CAE30044DFF8 /* TestView.swift */; };
+		B5A6F37F2B52CD8E0044DFF8 /* ReadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */; };
+		B5A6F3812B52D70F0044DFF8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F3802B52D70F0044DFF8 /* User.swift */; };
 		B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EA42B30C442002E0F4D /* AppDelegate.swift */; };
 		B5B55EA92B30C444002E0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B55EA82B30C444002E0F4D /* Assets.xcassets */; };
 		B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EB32B30C4AF002E0F4D /* main.swift */; };
@@ -42,6 +45,9 @@
 		B551A4872B46C9F500B9E928 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A48C2B46CA4C00B9E928 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A4942B46CD2000B9E928 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B5A6F37C2B52CAE30044DFF8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestView.swift; path = Gradify/UI/View/TestView.swift; sourceTree = SOURCE_ROOT; };
+		B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadModel.swift; sourceTree = "<group>"; };
+		B5A6F3802B52D70F0044DFF8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B5B55EA12B30C442002E0F4D /* Gradify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B55EA42B30C442002E0F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5B55EA82B30C444002E0F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -166,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				B5B55EE12B30CEB3002E0F4D /* LoginModel.swift */,
+				B5A6F3802B52D70F0044DFF8 /* User.swift */,
+				B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -223,6 +231,7 @@
 		B5B55EDA2B30CE8E002E0F4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B5A6F37C2B52CAE30044DFF8 /* TestView.swift */,
 				B5B55EE82B30CEC8002E0F4D /* Start */,
 				B5B55EE32B30CEBB002E0F4D /* PopUp */,
 				B5B55EDB2B30CE99002E0F4D /* Main */,
@@ -364,14 +373,17 @@
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
+				B5A6F37D2B52CAE30044DFF8 /* TestView.swift in Sources */,
 				B5B55EDF2B30CE9F002E0F4D /* LoginView.swift in Sources */,
 				B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */,
 				B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */,
 				B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */,
+				B5A6F37F2B52CD8E0044DFF8 /* ReadModel.swift in Sources */,
 				B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */,
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
 				B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */,
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguage.swift in Sources */,
+				B5A6F3812B52D70F0044DFF8 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

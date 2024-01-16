@@ -22,7 +22,7 @@ struct MainMenuView: View
             {
                 Section("Test item")
                 {
-                    NavigationLink(destination: Text("Item 1"), tag: "Item1", selection: $selection)
+                    NavigationLink(destination: TestView(), tag: "Item1", selection: $selection)
                     {
                         Label("Item 1", systemImage: "circle.fill")
                     }

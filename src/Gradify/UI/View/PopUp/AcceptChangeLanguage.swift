@@ -85,9 +85,7 @@ struct AcceptChangeLanguage: View
     
     func restartApp()
     {
-        // func work only in deploy application
-        //print(path)
-        
+        // func work only in deploy application        
         let url = URL(fileURLWithPath: Bundle.main.resourcePath!)
         let path = url.deletingLastPathComponent().deletingLastPathComponent().absoluteString
         let task = Process()

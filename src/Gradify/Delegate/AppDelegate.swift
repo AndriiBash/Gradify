@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 import Foundation
 import Cocoa
 
@@ -25,6 +26,8 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     func applicationDidFinishLaunching(_ notification: Notification)
     {
+        FirebaseApp.configure()
+
         windowController = WindowController()
         windowController.setCurrentWindow(ofType: .start)
         windowController.showWindow(nil)

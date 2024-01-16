@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:111555560979:ios:7cb41ec4aef09991e0a1e6</string>
+	<key>DATABASE_URL</key>
+	<string>https://gradifydb-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

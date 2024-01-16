@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreInternal
 
 class LoginModel: ObservableObject
 {
