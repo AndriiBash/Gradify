@@ -52,6 +52,10 @@ struct StartView: View
                     .padding(.horizontal, 34)
                     .font(.body)
             }// Button go to auth
+            .onHover
+            { isHovered in
+                changePointingHandCursor(shouldChangeCursor: isHovered)
+            }// change cursor when hover
             .keyboardShortcut(.defaultAction)
             .shadow(radius: 2)
             .padding()

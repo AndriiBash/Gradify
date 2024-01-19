@@ -12,6 +12,7 @@
 		B551A4862B46C9F500B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4882B46C9F500B9E928 /* Localizable.strings */; };
 		B551A48B2B46CA4C00B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A48D2B46CA4C00B9E928 /* Localizable.strings */; };
 		B551A4932B46CD2000B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4952B46CD2000B9E928 /* Localizable.strings */; };
+		B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58FCE762B5AE1FB00B5226F /* CursorHandler.swift */; };
 		B5A6F37D2B52CAE30044DFF8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37C2B52CAE30044DFF8 /* TestView.swift */; };
 		B5A6F37F2B52CD8E0044DFF8 /* ReadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */; };
 		B5A6F3812B52D70F0044DFF8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F3802B52D70F0044DFF8 /* User.swift */; };
@@ -45,6 +46,7 @@
 		B551A4872B46C9F500B9E928 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A48C2B46CA4C00B9E928 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A4942B46CD2000B9E928 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B58FCE762B5AE1FB00B5226F /* CursorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorHandler.swift; sourceTree = "<group>"; };
 		B5A6F37C2B52CAE30044DFF8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestView.swift; path = Gradify/UI/View/TestView.swift; sourceTree = SOURCE_ROOT; };
 		B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadModel.swift; sourceTree = "<group>"; };
 		B5A6F3802B52D70F0044DFF8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -157,9 +159,18 @@
 			path = Spanish;
 			sourceTree = "<group>";
 		};
+		B58FCE782B5AE27E00B5226F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B58FCE762B5AE1FB00B5226F /* CursorHandler.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		B5AACA4C2B484439008D209F /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B58FCE782B5AE27E00B5226F /* Utilities */,
 				B512AC5F2B36F90100E9A09A /* VisualEffects */,
 				B512AC642B3ACE1600E9A09A /* ViewModel */,
 				B5AACA4D2B48446B008D209F /* Model */,
@@ -383,6 +394,7 @@
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
 				B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */,
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguage.swift in Sources */,
+				B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */,
 				B5A6F3812B52D70F0044DFF8 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,7 +577,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -598,7 +610,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;

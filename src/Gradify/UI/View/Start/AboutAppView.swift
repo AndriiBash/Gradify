@@ -47,22 +47,24 @@ struct AboutAppView: View
 
                 HStack(spacing: 2)
                 {
-                    Text("Версія " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0.0.0"))
-                    
+                    Text(String(localized: "Версія") + " " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0.0.0"))
+
                     Text("(" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "No version") + ")")
                     
                     Spacer()
                 }// HStack with version app
-                .padding(.bottom, 18)
+                .padding(.bottom, 16)
                 .foregroundColor(Color("TextGray"))
                 .font(.system(size: 12, weight: .regular))
                 
-                HStack // maybe use HStack
+                HStack
                 {
-                    Text("© Андрій Ізбаш., 2023-2025. Всі права захищені. Gradify і логотип Gradify є дипломною роботою і не мають комерційних цілей.")
-                    
+                    ScrollView
+                    {
+                        Text(String(localized: "© Андрій Ізбаш., 2023-2025. Всі права захищені. Gradify і логотип Gradify є дипломною роботою і не мають комерційних цілей."))
+                    }//ScrollView with text
                     Spacer()
-                }// ScrollView with info for app
+                }// HStack with info for app
                 .foregroundColor(Color("TextGray"))
                 .font(.system(size: 10, weight: .regular))
                 .padding(.bottom, 16)
@@ -76,10 +78,14 @@ struct AboutAppView: View
                     }
                     label:
                     {
-                        Text("Вихідний код")
+                        Text(String(localized: "Вихідний код"))
                             .padding(.horizontal, 10)
                     }// button open github opensource
-             
+                    .onHover
+                    { isHovered in
+                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                    }// change cursor when hover
+
                     Spacer()
                     
                     Button
@@ -88,13 +94,17 @@ struct AboutAppView: View
                     }
                     label:
                     {
-                        Text("Подяка")
+                        Text(String(localized: "Подяка"))
                             .padding(.horizontal, 12)
                     }// button open github opensource
                     .popover(isPresented: $isPopoverPresented, content:
                     {
                         RespectView()
                     })//pop over with thanks
+                    .onHover
+                    { isHovered in
+                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                    }// change cursor when hover
                     
                     Spacer()
                 }// HStack with button

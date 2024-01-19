@@ -14,7 +14,7 @@ struct LoginView: View
     
     @State private var isRemberMe:          Bool = false
     @State private var forgetPassAlertShow: Bool = false
-    @State private var isHoverOnButton:     Bool = false
+    //@State private var isHoverOnButton:     Bool = false
     @State private var isRegistration:      Bool = false
     @State private var startAnimate:        Bool = true
     
@@ -96,10 +96,9 @@ struct LoginView: View
                                 .foregroundColor(Color.blue)
                                 .underline(true, color: Color.blue)
                                 .onHover
-                            { isHovered in
-                                self.isHoverOnButton = isHovered
-                                changeCursor()
-                            }
+                                { isHovered in
+                                    changePointingHandCursor(shouldChangeCursor: isHovered)
+                                }// change cursor when hover
                         }
                         .buttonStyle(PlainButtonStyle())
                         .alert(String(localized: "Забули пароль?"), isPresented: $forgetPassAlertShow)
@@ -157,11 +156,10 @@ struct LoginView: View
                     { isHovered in
                         if !loginData.password.isEmpty && !loginData.password.isEmpty
                         {
-                            self.isHoverOnButton = isHovered
-                            changeCursor()
+                            changePointingHandCursor(shouldChangeCursor: isHovered)
                         }
-                    }
-                
+                    }// change cursor when hover
+
                     HStack
                     {
                         Text(String(localized: "Відсутній аккаунту?"))
@@ -178,9 +176,8 @@ struct LoginView: View
                                 .underline(true, color: Color.blue)
                                 .onHover
                                 { isHovered in
-                                    self.isHoverOnButton = isHovered
-                                    changeCursor()
-                                }
+                                    changePointingHandCursor(shouldChangeCursor: isHovered)
+                                }// change cursor when hover
                         }
                         .buttonStyle(PlainButtonStyle())
                         .alert(isPresented: $isRegistration)
@@ -239,21 +236,6 @@ struct LoginView: View
             })
     }
         
-    func changeCursor()
-    {
-        DispatchQueue.main.async
-        {
-            if (self.isHoverOnButton)
-            {
-                NSCursor.pointingHand.push()
-            }
-            else
-            {
-                NSCursor.pop()
-            }
-        }
-    }// func changeCursor()
-
     func animateIcon()
     {
         if !loginData.statusAuth

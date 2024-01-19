@@ -13,13 +13,13 @@ struct RespectView: View
     {
         ScrollView // maybe get info from file, xz
         {
-            Text("Подяка за внесок у розробку")
+            Text(String(localized: "Подяка за внесок у розробку"))
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
             
             VStack(spacing: 5)
             {
-                Text("Северіна Ольга (ілюстраторка)")
+                Text(String(localized: "Северіна Ольга (ілюстраторка)"))
             }// VStack witn name support and role
             .padding(.top, 6)
 

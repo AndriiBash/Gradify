@@ -105,3 +105,11 @@
 "Основну мову застосунку зміненно. Перезапустити застосунок зараз?" = "La langue principale de l'application a été modifiée. Redémarrer l'application maintenant ?";
 "Застосунок не зможе використовувати нову мову до перезапуску." = "L'application ne pourra pas utiliser la nouvelle langue tant qu'elle n'aura pas été redémarrée.";
 "Мова застосунку" = "Langue de candidature";
+
+// MARK: - Localize AboutAppView and RespecectView
+"Версія" = "Version";
+"Подяка" = "Gratitude";
+"Вихідний код" = "Source Code";
+"© Андрій Ізбаш., 2023-2025. Всі права захищені. Gradify і логотип Gradify є дипломною роботою і не мають комерційних цілей." = "© Andriy Izbash., 2023-2025. Tous droits réservés. Gradify et le logo Gradify sont des travaux d'études supérieures et n'ont aucun but commercial.";
+"Подяка за внесок у розробку" = "Merci pour la contribution au développement";
+"Северіна Ольга (ілюстраторка)" = "Séverina Olga (illustratrice)";

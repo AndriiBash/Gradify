@@ -59,7 +59,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         window.center()
         
         let aboutAppWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 470, height: 200),
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 200),
             styleMask: [.closable, .titled],
             backing: .buffered, defer: false)
         

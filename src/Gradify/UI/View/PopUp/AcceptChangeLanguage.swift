@@ -59,7 +59,11 @@ struct AcceptChangeLanguage: View
                             .foregroundColor(Color.red)
                             //.padding(.vertical, 3)
                     }// Button restart app
-                    
+                    .onHover
+                    { isHovered in
+                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                    }// change cursor when hover
+
                     Button
                     {
                         UserDefaults.standard.set(["\(selectedLanguage)"], forKey: "AppleLanguages")
@@ -71,6 +75,11 @@ struct AcceptChangeLanguage: View
                             .padding(.vertical, 4)
                             .frame(width: 260)
                     }// button cansel restart
+                    .onHover
+                    { isHovered in
+                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                    }// change cursor when hover
+
                 }// VStack with button
                 .padding(.top, 6)
             }// VStack with info about restart app

@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         FirebaseApp.configure()
 
         windowController = WindowController()
-        windowController.setCurrentWindow(ofType: .start)
+        windowController.setCurrentWindow(ofType: .start) //.login
         windowController.showWindow(nil)
         
         let menuView = PopOverView()
