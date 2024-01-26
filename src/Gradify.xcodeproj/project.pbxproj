@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5060CD92B63F6A600316802 /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
 		B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */; };
 		B551A4802B45EB5C00B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4822B45EB5C00B9E928 /* Localizable.strings */; };
 		B551A4862B46C9F500B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4882B46C9F500B9E928 /* Localizable.strings */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B5060CD82B63F6A600316802 /* DataObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObjectModel.swift; sourceTree = "<group>"; };
 		B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBehindWindow.swift; sourceTree = "<group>"; };
 		B551A4832B45EB5E00B9E928 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A4872B46C9F500B9E928 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				B5B55EE12B30CEB3002E0F4D /* LoginModel.swift */,
 				B5A6F3802B52D70F0044DFF8 /* User.swift */,
 				B5A6F37E2B52CD8E0044DFF8 /* ReadModel.swift */,
+				B5060CD82B63F6A600316802 /* DataObjectModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */,
 				B5B55EEE2B30CECF002E0F4D /* ButtonViewModel.swift in Sources */,
 				B5B55EF02B30CECF002E0F4D /* RowInfoViewModel.swift in Sources */,
+				B5060CD92B63F6A600316802 /* DataObjectModel.swift in Sources */,
 				B5B55EE62B30CEC0002E0F4D /* LoadingScreen.swift in Sources */,
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,

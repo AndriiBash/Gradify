@@ -151,10 +151,10 @@ struct LoginView: View
                         Image(systemName: "arrow.right")
                     }// Auth Button
                     .keyboardShortcut(.defaultAction)
-                    .disabled(loginData.password.isEmpty && loginData.password.isEmpty)
+                    .disabled(loginData.userName.isEmpty || loginData.password.isEmpty)
                     .onHover
                     { isHovered in
-                        if !loginData.password.isEmpty && !loginData.password.isEmpty
+                        if !loginData.userName.isEmpty && !loginData.password.isEmpty
                         {
                             changePointingHandCursor(shouldChangeCursor: isHovered)
                         }
