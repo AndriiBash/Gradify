@@ -9,13 +9,13 @@ import SwiftUI
 
 enum Language: String, CaseIterable, Identifiable
 {
+    var id: Language { self }
+
     case uk = "Українська🇺🇦"
     case es = "Español🇪🇸"
     case de = "Deutsch🇩🇪"
     case fr = "Français🇫🇷"
     case en = "English🇬🇧"
-    
-    var id: Language { self }
 } // enum list support Language
 
 struct SettingView: View
@@ -46,7 +46,7 @@ struct SettingView: View
                 }
                 .sheet(isPresented: $showLanguageInfo)
                 {
-                    AcceptChangeLanguage(showStatus: $showLanguageInfo, selectedLanguage: $selectedLanguage)
+                    AcceptChangeLanguageView(showStatus: $showLanguageInfo, selectedLanguage: $selectedLanguage)
                 }
                 
                 Text("Hello, World!") // just example

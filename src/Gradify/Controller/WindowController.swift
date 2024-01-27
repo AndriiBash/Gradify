@@ -24,6 +24,7 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
     var settingAppWindow: NSWindow
     private var tabbedWindows = [NSWindow]()
 
+    
     // MARK: - Init
     init(window: NSWindow, aboutAppWindow: NSWindow, settingAppWindow: NSWindow, loginModel: LoginModel = LoginModel())
     {
@@ -161,7 +162,19 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         thirdMenu.addItem(withTitle: String(localized: "Видалити"), action: #selector(NSText.delete(_:)), keyEquivalent: "")
         thirdMenu.addItem(withTitle: String(localized: "Вибрати все"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         thirdMenu.addItem(.separator())
-                
+        
+        /// need fix :(
+        //thirdMenu.addItem(withTitle: String(localized: "Автозаповнення"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        //thirdMenu.addItem(withTitle: String(localized: "Почати диктування"), action: Selector("startDictation"), keyEquivalent: "a")
+        
+        let menuItemShowCharacterPalette = NSMenuItem()
+        menuItemShowCharacterPalette.title = String(localized: "Емодзі та символи")
+        menuItemShowCharacterPalette.action = #selector(NSApplication.shared.orderFrontCharacterPalette)
+        menuItemShowCharacterPalette.keyEquivalent = "e"
+        menuItemShowCharacterPalette.keyEquivalentModifierMask = [.function]
+        thirdMenu.addItem(menuItemShowCharacterPalette)
+        
+        
         let fourthMenuItem = NSMenuItem()
         mainMenu.addItem(fourthMenuItem)
         
@@ -208,15 +221,15 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         let menuItemShowPreviousTab = NSMenuItem()
         menuItemShowPreviousTab.title = String(localized: "Показати попередню вкладку")
         menuItemShowPreviousTab.action = #selector(window?.selectPreviousTab(_:))
-        menuItemShowPreviousTab.keyEquivalentModifierMask = [.control, .shift]
         menuItemShowPreviousTab.keyEquivalent = "\u{0009}"
+        menuItemShowPreviousTab.keyEquivalentModifierMask = [.control, .shift]
         fifthMenu.addItem(menuItemShowPreviousTab)
 
         let menuItemShowNextTab = NSMenuItem()
         menuItemShowNextTab.title = String(localized: "Показати наступну вкладку")
         menuItemShowNextTab.action = #selector(window?.selectNextTab(_:))
-        menuItemShowNextTab.keyEquivalentModifierMask = [.control]
         menuItemShowNextTab.keyEquivalent = "\u{0009}"
+        menuItemShowNextTab.keyEquivalentModifierMask = [.control]
         fifthMenu.addItem(menuItemShowNextTab)
 
         fifthMenu.addItem(withTitle: String(localized: "Винести вкладку в нове вікно"), action: #selector(window?.moveTabToNewWindow(_:)), keyEquivalent: "")

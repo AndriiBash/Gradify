@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AcceptChangeLanguage: View
+struct AcceptChangeLanguageView: View
 {
     @Binding var showStatus: Bool
     @Binding var selectedLanguage: Language

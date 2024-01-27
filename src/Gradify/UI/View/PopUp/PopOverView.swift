@@ -11,8 +11,10 @@ struct PopOverView: View {
     @Namespace var animation
     //var animation: Namespace.ID
 
-    var body: some View {
-        VStack {
+    var body: some View
+    {
+        VStack 
+        {
             Text("Hello, World!")
                 .padding()
             Button("Close")

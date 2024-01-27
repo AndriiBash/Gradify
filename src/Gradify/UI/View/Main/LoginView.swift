@@ -18,6 +18,11 @@ struct LoginView: View
     @State private var isRegistration:      Bool = false
     @State private var startAnimate:        Bool = true
     
+    @State private var username: String = ""
+    @State private var password: String = ""
+
+    
+    
     var body: some View
     {
         HStack(spacing: 0)
@@ -58,7 +63,7 @@ struct LoginView: View
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 8)
                             .padding(.horizontal, 8)
-                            .autocorrectionDisabled()   // ?
+                            .autocorrectionDisabled(true)
                             .textContentType(.username)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)

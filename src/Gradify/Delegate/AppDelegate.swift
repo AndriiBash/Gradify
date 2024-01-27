@@ -47,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
             menuButton.image = NSImage(systemSymbolName: "graduationcap.fill", accessibilityDescription: nil)
             menuButton.action = #selector(MenuButtonToogle)
         }
-
+        
     }// func applicationDidFinishLaunching(_ notification: Notification)
     
     
