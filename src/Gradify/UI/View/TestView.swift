@@ -59,7 +59,7 @@ struct TestView: View
                 }// main VStack
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }// main ScrollView
-            .background(Color("BackgroundLeftLoginView").opacity(0.3))
+            .background(Color("BackgroundLeftLoginView").opacity(0.35))
         }// main ZStack
         .navigationTitle("testName")
         

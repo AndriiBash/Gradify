@@ -15,16 +15,16 @@ struct PopOverView: View {
     {
         VStack 
         {
-            Text("Hello, World!")
+            Text("This part of the application will only be on the thesis!")
                 .padding()
             Button("Close")
             {
                 // Close the popover
-                //NSApp.sendAction(#selector(NSPopover.performClose(_:)), to: nil, from: nil)
+                NSApp.sendAction(#selector(NSPopover.performClose(_:)), to: nil, from: nil)
             }
             .padding()
         }
-        .frame(maxWidth: 200, maxHeight: 100)
+        .frame(maxWidth: 200, maxHeight: 200)
     }
 }
 

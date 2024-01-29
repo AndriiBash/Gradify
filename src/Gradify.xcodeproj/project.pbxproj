@@ -33,6 +33,7 @@
 		B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */; };
 		B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
+		B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E956D32B67F79900C00529 /* EventMonitorController.swift */; };
 		B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3312B48459800B8C73D /* AboutAppView.swift */; };
 		B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3332B4845C800B8C73D /* RespectView.swift */; };
 		B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3352B48462500B8C73D /* SettingView.swift */; };
@@ -68,6 +69,7 @@
 		B5B55EE92B30CECF002E0F4D /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		B5B55EEA2B30CECF002E0F4D /* ButtonViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonViewModel.swift; sourceTree = "<group>"; };
 		B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowInfoViewModel.swift; sourceTree = "<group>"; };
+		B5E956D32B67F79900C00529 /* EventMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorController.swift; path = Gradify/Controller/EventMonitorController.swift; sourceTree = SOURCE_ROOT; };
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		B5EEF3332B4845C800B8C73D /* RespectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespectView.swift; sourceTree = "<group>"; };
 		B5EEF3352B48462500B8C73D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		B5B55ED72B30CE65002E0F4D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B5E956D32B67F79900C00529 /* EventMonitorController.swift */,
 				B5B55ED52B30CE57002E0F4D /* WindowController.swift */,
 			);
 			path = Controller;
@@ -376,6 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */,
 				B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */,
 				B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */,
 				B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */,

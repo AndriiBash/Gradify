@@ -12,18 +12,14 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate
 {
-    
-    //func applicationWillBecomeActive(_ notification: Notification)
-    //{
-    //    (notification.object as? NSApplication)?.windows.first?.makeKeyAndOrderFront(self)
-    //}
     var statusItem: NSStatusItem?
-    var popOver = NSPopover()
-
+    let popOver = NSPopover()
+    
     var windowController: WindowController!
+    var eventMonitor: EventMonitorController?
+
     
     // MARK: - Funcation's
-    
     func applicationDidFinishLaunching(_ notification: Notification)
     {
         FirebaseApp.configure()
@@ -32,38 +28,69 @@ class AppDelegate: NSObject, NSApplicationDelegate
         windowController.setCurrentWindow(ofType: .main) //.login
         windowController.showWindow(nil)
         
-        let menuView = PopOverView()
         
+        // set popOver menu in right part menuBar
+        let menuView = PopOverView()
+                
         popOver.behavior = .transient
         popOver.animates = true
         
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: menuView)
-        
+                
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
+                
         if let menuButton = statusItem?.button
         {
             menuButton.image = NSImage(systemSymbolName: "graduationcap.fill", accessibilityDescription: nil)
-            menuButton.action = #selector(MenuButtonToogle)
+            menuButton.action = #selector(togglePopover(_:))
         }
         
+        eventMonitor = EventMonitorController(mask: [.leftMouseDown, .rightMouseDown])
+        { [weak self] event in
+            if let strongSelf = self, strongSelf.popOver.isShown
+            {
+                strongSelf.closePopover(sender: event)
+            }
+        }
     }// func applicationDidFinishLaunching(_ notification: Notification)
     
     
-    @objc func MenuButtonToogle()
+    
+    
+    @objc func togglePopover(_ sender: Any?)
     {
-        guard let button = statusItem?.button else { return }
-
         if popOver.isShown
         {
-            popOver.performClose(nil)
+            closePopover(sender: sender)
         }
         else
         {
-            popOver.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
+            showPopover(sender: sender)
         }
-    }// @obj func MenuButtonToogle()
+    }// @objc func togglePopover(_ sender: Any?)
+
+    func showPopover(sender: Any?)
+    {
+        if let button = statusItem?.button
+        {
+            popOver.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+        }
+        eventMonitor?.start()
+    }// func showPopover(sender: Any?)
+    
+    func closePopover(sender: Any?)
+    {
+        popOver.performClose(sender)
+        eventMonitor?.stop()
+    }// func closePopover(sender: Any?)
+    
+    
+    
+    
+    
+    
+    
     
     @IBAction func newWindowForTab(_ sender: Any?)
     {
@@ -72,48 +99,24 @@ class AppDelegate: NSObject, NSApplicationDelegate
 
     func applicationDidEnterBackground(_ notification: Notification)
     {
-        popOver.performClose(nil)
+       // popOver.performClose(nil)
     }// func applicationDidEnterBackground(_ notification: Notification)
     
     func applicationDidResignActive(_ notification: Notification)
     {
-        popOver.performClose(nil)
+      //  popOver.performClose(nil)
     }// func applicationDidResignActive(_ notification: Notification)
     
     func applicationDidBecomeActive(_ notification: Notification)
     {
-        popOver.performClose(nil)
+       // popOver.performClose(nil)
     }// func applicationDidBecomeActive(_ notification: Notification)
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     {
         NSApp.windows.first?.makeKeyAndOrderFront(self)
-        
-        // Logic when the user clicks on an icon in the Dock
-        // and the application is already active, but it has no open windows
-        /*if !flag
-        {
-            if NSApp.isActive && (NSApp.windows.isEmpty || NSApp.windows.contains { !$0.isVisible })
-            {
-                // Logic when the window is active but not visible
-                print("applicationShouldHandleReopen - Window is active but not visible")
-                NSApp.windows.first?.makeKeyAndOrderFront(self)
-            }
-            else
-            {
-                // Otherwise, if the window is visible, just activate it
-                NSApp.windows.first?.makeKeyAndOrderFront(self)
-                print("applicationShouldHandleReopen")
-            }
-        }
-         */
 
         return true
     } // func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
-    
-    //func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
-    //{
-    //    return true
-    //}// func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool
-    
+        
 }
