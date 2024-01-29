@@ -8,3 +8,6 @@
 |---|:---:|:---:|
 | **macOS 14.2**        | ARM64 |[![Build Status](https://github.com/AndriiBash/Gradify/actions/workflows/swift-xcode-MacOS14.yml/badge.svg)]()|
 | **macOS 13.0**        | ARM64 |[![Build Status](https://github.com/AndriiBash/Gradify/actions/workflows/swift-xcode.yml/badge.svg)]()|
+
+# Welcome to Gradify
+Gradify is a teacher app developed using Swift designed to easily maintain a register of students, teachers and other aspects of an educational institution.
