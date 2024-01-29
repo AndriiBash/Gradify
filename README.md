@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/GradifyLogo.png">
-  <img src="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/GradifyLogo~dark.png" alt="Swift logo" height="70">
+  <img src="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/GradifyLogo~dark.png" alt="Gradify logo" height="70">
 </picture>
 
 # Gradify application for education
@@ -11,3 +11,10 @@
 
 # Welcome to Gradify
 Gradify is a teacher app developed using Swift designed to easily maintain a register of students, teachers and other aspects of an educational institution.
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/startView~dark.png">
+    <img src="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/startView.png" alt="Gradify start" height="560">
+  </picture>
+</div>
