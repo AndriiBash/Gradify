@@ -21,30 +21,43 @@ class LoginModel: ObservableObject
     @Published var wrongAuth:       Bool = false
     @Published var isLoading:       Bool = false
     
+    
     func loginUser() async
     {
-        isLoading = true
+        DispatchQueue.main.async
+        {
+            self.isLoading = true
+        }
         
         do
         {
-            let result = try await Auth.auth().signIn(withEmail: userName, password: password)
+            _ = try await Auth.auth().signIn(withEmail: userName, password: password)
             
-            self.statusAuth = true
-            self.wrongAuth = false
-            print("true auth") // debug
+            DispatchQueue.main.async
+            {
+                self.statusAuth = true
+                self.wrongAuth = false
+                print("true auth") // debug
+            }
         }
         catch
         {
-            self.wrongAuth = true
-            print("Error : \(error.localizedDescription)") // also debug
+            DispatchQueue.main.async
+            {
+                self.wrongAuth = true
+                print("Error : \(error.localizedDescription)") // also debug
+            }
         }
-
-        withAnimation
+        DispatchQueue.main.async
         {
-            self.isLoading = false
+            withAnimation
+            {
+                self.isLoading = false
+            }
         }
     }// func loginUser() async
-
+    
+    
     func resetPassword() async
     {
         do
@@ -59,6 +72,5 @@ class LoginModel: ObservableObject
             print("Error : \(error.localizedDescription)") // also debug
         }
     }// func resetPassword()
-    
     
 }

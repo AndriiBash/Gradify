@@ -135,14 +135,13 @@ struct LoginView: View
                             do
                             {
                                 await loginData.loginUser()
-
+                                
                                 if loginData.statusAuth
                                 {
                                     windowController.setCurrentWindow(ofType: .main)
                                 }
                             }
                         }
-
                     }
                     label:
                     {
@@ -215,15 +214,21 @@ struct LoginView: View
             
             VStack
             {
-                Image("Image")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(100)
-                    .padding(.leading, -140)
-                    .shadow(radius: 14)
+                ZStack
+                {
+                    Color("BackgroundRightLoginView")
+                        .opacity(0.8)
+                    
+                    Image("Image")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(100)
+                        .padding(.leading, -140)
+                        .shadow(radius: 14)
+                }// ZStack for opacity and blur behind effect
             }// VStack with photo
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color("BackgroundRightLoginView"))
+            .background(BlurBehindWindow())
             
         }//Main HStack
         .ignoresSafeArea(.all, edges: .all)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 enum Language: String, CaseIterable, Identifiable
 {
@@ -56,6 +57,7 @@ struct SettingView: View
             }// main Section
         }// main Form
         .formStyle(.grouped)
+        .navigationTitle(String(localized: "Налаштування"))
         .frame(minWidth: 450, maxWidth: 450,
                minHeight: 350, maxHeight: .infinity)
     }

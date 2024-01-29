@@ -354,6 +354,11 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         
         useMiniWindow(status: false)
         useTranspertTitleBar(status: false)
+        
+
+        window?.styleMask.insert(.fullSizeContentView)
+
+        //window?.backgroundColor = NSColor(Color.gray)
     }// func setMainWindow
 
     

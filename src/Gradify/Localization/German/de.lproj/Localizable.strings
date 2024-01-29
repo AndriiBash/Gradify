@@ -106,6 +106,7 @@
 "Основну мову застосунку зміненно. Перезапустити застосунок зараз?" = "Die Hauptsprache der Anwendung wurde geändert. App jetzt neu starten?";
 "Застосунок не зможе використовувати нову мову до перезапуску." = "Die App kann die neue Sprache erst nach einem Neustart verwenden.";
 "Мова застосунку" = "Anwendungssprache";
+"Налаштування" = "Einstellungen";
 
 // MARK: - Localize AboutAppView and RespecectView
 "Версія" = "Ausführung";

@@ -17,38 +17,50 @@ class ReadModel: ObservableObject
     
     @Published var valueFromInternet: String?
     @Published var users = [User]()
+    @Published var fetchDataStatus = false
     
     var db = Firestore.firestore()
     
     
-    func fetchData()
-    {
-        db.collection("listUsers").addSnapshotListener
-        { (querySnapshot, error) in
-            
-            
-            guard let document = querySnapshot?.documents else
-            {
-                print("noDoc")
-                return
-            }
-            
-            self.users = document.map
-            { (queryDocumentSnapshot) -> User in
-                let data = queryDocumentSnapshot.data ()
-                
-                let id = data["id"] as? Int ?? 12
-                let name = data["name"] as? String ?? ""
-                let surname = data["lastName"] as? String ?? ""
-                
-                print(data)
-                
-                return User(_id: id, name: name, lastName: surname)
-            }
-            
+   
         
+        
+    func fetchData() async
+    {
+        do
+        {
+            DispatchQueue.main.async
+            {
+                self.fetchDataStatus = false
+            }
+            
+            let querySnapshot = try await db.collection("listUsers").getDocuments()
+            
+            DispatchQueue.main.async
+            {
+                self.users = querySnapshot.documents.map { queryDocumentSnapshot in
+                    let data = queryDocumentSnapshot.data()
+                    let id = data["id"] as? Int ?? 12
+                    let name = data["name"] as? String ?? ""
+                    let surname = data["lastName"] as? String ?? ""
+                    return User(_id: id, name: name, lastName: surname)
+                }
+            }
+            
+            DispatchQueue.main.async
+            {
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.fetchDataStatus = true
+                }
+            }
+        }
+        catch
+        {
+            print("Error fetching data: \(error)")
         }
     }
+
     
     
     
@@ -79,7 +91,16 @@ class ReadModel: ObservableObject
             print(value["name"] ?? "nil")
             print("myValue : " + (self.valueFromInternet ?? ""))
         })
-        
-        
     }// func readValue()
+}
+
+
+/// need add in firebase
+
+struct User: Identifiable
+{
+    var id: String = UUID().uuidString
+    var _id: Int
+    var name: String
+    var lastName: String
 }

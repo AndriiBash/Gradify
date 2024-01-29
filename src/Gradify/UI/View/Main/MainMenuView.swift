@@ -7,92 +7,129 @@
 
 import SwiftUI
 
+struct UsersView: View {
+    var body: some View {
+        VStack
+        {
+            Text("hello")
+        }
+    }
+}
+
+
+
 struct MainMenuView: View
 {
     @State private var selection: String? = "Item1"
-    @State private var isShowTestWindow = false
-    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @State private var searchText: String = ""
+    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+
+    @State var sideBarVisibility: NavigationSplitViewVisibility = .doubleColumn
+
+    
+    @State private var isShowTestWindow = false
+
+    
     
     var body: some View
     {
+        
         NavigationSplitView(columnVisibility: $columnVisibility)
         {
-            List
+            ZStack
             {
-                Section("Test item")
+                Color("BackgroundLeftLoginView").opacity(0.1).ignoresSafeArea()
+                
+                List
                 {
-                    NavigationLink(destination: TestView(), tag: "Item1", selection: $selection)
+                    Section("Test item")
                     {
-                        Label("Item 1", systemImage: "circle.fill")
-                    }
-                    
-                    NavigationLink(destination: SettingView(), tag: "Item2", selection: $selection)
-                    {
-                        Label("Item 2", systemImage: "square.fill")
-                    }
-                    
-                    NavigationLink(destination: ScrollView{Text("Item 3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
-                    {
-                        HStack
+                        NavigationLink(destination: TestView(), tag: "Item1", selection: $selection)
                         {
-                            Image(systemName: "doc.fill")
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30, alignment: .center)
-                            
-                            VStack
+                            Label("Item 1", systemImage: "circle.fill")
+                        }
+                        
+                        NavigationLink(destination: SettingView(), tag: "Item2", selection: $selection)
+                        {
+                            Label("Item 2", systemImage: "square.fill")
+                        }
+                        
+                        NavigationLink(destination:  ScrollView{Text("Item 3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
+                        {
+                            HStack
                             {
-                                Text("Title")
-                                    .font(.body.bold())
-
-                                Text("Body")
-                                    .font(.callout)
-                            }
-                        }//HStack test in SideBar
-                        .padding(.horizontal, 4)
-                    }
-                    
-                    NavigationLink(destination: ButtonViewModel(), tag: "AnimationButton", selection: $selection)
+                                Image(systemName: "doc.fill")
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30, alignment: .center)
+                                
+                                VStack
+                                {
+                                    Text("Title")
+                                        .font(.body.bold())
+                                    
+                                    Text("Body")
+                                        .font(.callout)
+                                }
+                            }//HStack test in SideBar
+                            .padding(.horizontal, 4)
+                        }
+                        
+                        NavigationLink(destination: ButtonViewModel(), tag: "AnimationButton", selection: $selection)
+                        {
+                            Label("Item 2", systemImage: "square.fill")
+                        }
+                        
+                        
+                    }// Section 1
+                } // List
+                .safeAreaInset(edge: .bottom)
+                {
+                    Button
                     {
-                        Label("Item 2", systemImage: "square.fill")
+                        print("test setting")
+                        isShowTestWindow.toggle()
                     }
-                    
-
-                }// Section 1
-            } // List
-            .safeAreaInset(edge: .bottom)
-            {
-                Button
-                {
-                    print("test setting")
-                    isShowTestWindow.toggle()
-                }
-                label:
-                {
-                    Image(systemName: "gearshape.fill")
-                    Text("Налаштування")
-                }
-                //.keyboardShortcut(.defaultAction)
-                .padding(.bottom)
-                .buttonStyle(.borderless)
-                .foregroundColor(.accentColor)
-            } // button auth for test
-            
-        }
+                    label:
+                    {
+                        Image(systemName: "gearshape.fill")
+                        Text("Налаштування")
+                    }
+                    //.keyboardShortcut(.defaultAction)
+                    .padding(.bottom)
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.accentColor)
+                } // button auth for test
+            }// ZStack
+        } // NavigationSplitView(columnVisibility: $columnVisibility)
         detail:
         {
             Text("Go auth")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }//detail if no selected
+        
+        //.background(Color.red)
+        //.toolbarBackground(Color.pink, for: .automatic)
+        //.toolbarBackground(Color.red, for: .windowToolbar)
+        .toolbar
+        {
+            Button(action: {})
+            {
+                Text("TestButton")
+                Image(systemName: "person")
+            }
+            .help("what does this button!!")
+        }
+        
         .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
         .navigationTitle(selection ?? "Не обрано")
         .sheet(isPresented: $isShowTestWindow)
         {
             ButtonViewModel()
         }
-
+        
         //.sheet(item: $isShowTestWindow, content: ButtonView())
         //.frame(minWidth: 550)
+         
     }
 }
 

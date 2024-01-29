@@ -12,9 +12,9 @@ struct RowInfoViewModel: View
     @Binding var isAnimated: Bool
     @State var startAnimate: Bool = true
 
-    var imageName: String
-    var mainText:  String
-    var bodyText:  String
+    let imageName: String
+    let mainText:  String
+    let bodyText:  String
     
     var body: some View
     {
