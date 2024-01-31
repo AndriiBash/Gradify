@@ -17,7 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     var windowController: WindowController!
     var eventMonitor: EventMonitorController?
-
     
     // MARK: - Funcation's
     func applicationDidFinishLaunching(_ notification: Notification)
@@ -55,9 +54,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
         }
     }// func applicationDidFinishLaunching(_ notification: Notification)
     
-    
-    
-    
     @objc func togglePopover(_ sender: Any?)
     {
         if popOver.isShown
@@ -87,11 +83,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     
     
     
-    
-    
-    
-    
-    
     @IBAction func newWindowForTab(_ sender: Any?)
     {
         windowController.addNewTab()
@@ -115,7 +106,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     {
         NSApp.windows.first?.makeKeyAndOrderFront(self)
-
         return true
     } // func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
         

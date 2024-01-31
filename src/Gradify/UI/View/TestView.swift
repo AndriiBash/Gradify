@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct TestView: View
 {
@@ -42,24 +41,33 @@ struct TestView: View
                 {
                     Section
                     {
-                        ForEach(readModel.users.indices, id: \.self)
-                        { index in
-                            VStack(alignment: .leading)
+                        
+                        //LazyHGrid(rows: [GridItem(.flexible())], spacing: 4) {}
+
+                        //ScrollView(.horizontal)
+                        ScrollView(.horizontal, showsIndicators: false)
+                        {
+                            LazyHGrid(rows: [GridItem(.flexible())], spacing: 6)
                             {
-                                textViewRow(name: readModel.users[index].name, lastName: readModel.users[index].lastName)
-                                    .scaleEffect(readModel.fetchDataStatus ? 1 : 0)
-                                //.animation(.easeInOut(duration: 0.5)) don't use, use only withAnimat{}
-                            }
-                            .transition(.opacity)
-                        }
+                                ForEach(readModel.users.indices, id: \.self)
+                                { index in
+                                    textViewRow(name: readModel.users[index].name, lastName: readModel.users[index].lastName)
+                                        .scaleEffect(readModel.fetchDataStatus ? 1 : 0)
+                                        .padding(4)
+                                        .transition(.opacity)
+                                }
+                            }// LazyHGrid
+                            .padding()
+                        }//scrollvIEW
                         
                     }// Section with data
-                    .padding(.vertical, 6)
+                    .navigationTitle("NavigationNameTestRow")
+                    //.padding(.vertical, 6)
             
                 }// main VStack
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }// main ScrollView
-            .background(Color("BackgroundLeftLoginView").opacity(0.35))
+            //.background(Color("BackgroundLeftLoginView").opacity(0.35))
         }// main ZStack
         .navigationTitle("testName")
         
@@ -67,30 +75,42 @@ struct TestView: View
 }
 
 
-struct textViewRow: View {
+struct textViewRow: View
+{
     var name: String
     var lastName: String
     
-    var body: some View {
-        VStack {
+    var body: some View
+    {
+        VStack
+        {
+            Spacer()
+         
             Text("\(name)")
                 .font(.title)
             Text("\(lastName)")
                 .font(.subheadline)
+            
+            Spacer()
+            
+            VStack
+            {
+                Text("Test text in bottom")
+            }
+            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity)
+            .background(Color.green)
+            .cornerRadius (10, corners: [.bottomRight, .bottomLeft])
+            .clipped()
         }
         .foregroundColor(Color.white)
-        .padding()
-        .frame(maxWidth: 290, maxHeight: 230)
-        .background(Color.black.opacity(0.4))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(
-                    LinearGradient(gradient: Gradient(colors: [Color.red.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing),
-                    lineWidth: 2
-                )
+        .frame(width: 250, height: 150)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.thinMaterial)
+                .shadow(radius: 8)
         )
-        .cornerRadius(12)
-        .shadow(radius: 12)
+        .padding()
     }
 }
 
@@ -100,3 +120,5 @@ struct textViewRow: View {
 {
     TestView()
 }
+
+

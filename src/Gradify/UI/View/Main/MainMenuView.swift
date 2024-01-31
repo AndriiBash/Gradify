@@ -49,7 +49,7 @@ struct MainMenuView: View
                             Label("Item 1", systemImage: "circle.fill")
                         }
                         
-                        NavigationLink(destination: SettingView(), tag: "Item2", selection: $selection)
+                        NavigationLink(destination: TempView(), tag: "Item2", selection: $selection)
                         {
                             Label("Item 2", systemImage: "square.fill")
                         }

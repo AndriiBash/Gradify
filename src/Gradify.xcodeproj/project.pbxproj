@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50964552B6A85A00084050C /* TempView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50964542B6A85A00084050C /* TempView.swift */; };
+		B50964592B6AA2770084050C /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50964582B6AA2770084050C /* ViewExtension.swift */; };
 		B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */; };
 		B551A4802B45EB5C00B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4822B45EB5C00B9E928 /* Localizable.strings */; };
 		B551A4862B46C9F500B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4882B46C9F500B9E928 /* Localizable.strings */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		B5060CD82B63F6A600316802 /* DataObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObjectModel.swift; sourceTree = "<group>"; };
+		B50964542B6A85A00084050C /* TempView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempView.swift; sourceTree = "<group>"; };
+		B50964582B6AA2770084050C /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBehindWindow.swift; sourceTree = "<group>"; };
 		B551A4832B45EB5E00B9E928 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B551A4872B46C9F500B9E928 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -92,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B50964562B6AA23A0084050C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B50964582B6AA2770084050C /* ViewExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B512AC5F2B36F90100E9A09A /* VisualEffects */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +257,9 @@
 		B5B55EDA2B30CE8E002E0F4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B50964562B6AA23A0084050C /* Extensions */,
 				B5A6F37C2B52CAE30044DFF8 /* TestView.swift */,
+				B50964542B6A85A00084050C /* TempView.swift */,
 				B5B55EE82B30CEC8002E0F4D /* Start */,
 				B5B55EE32B30CEBB002E0F4D /* PopUp */,
 				B5B55EDB2B30CE99002E0F4D /* Main */,
@@ -398,7 +412,9 @@
 				B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */,
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
 				B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */,
+				B50964592B6AA2770084050C /* ViewExtension.swift in Sources */,
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguageView.swift in Sources */,
+				B50964552B6A85A00084050C /* TempView.swift in Sources */,
 				B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
