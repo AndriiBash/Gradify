@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-struct UsersView: View {
-    var body: some View {
-        VStack
-        {
-            Text("hello")
-        }
-    }
-}
-
-
-
 struct MainMenuView: View
 {
     @State private var selection: String? = "Item1"
@@ -44,9 +33,9 @@ struct MainMenuView: View
                 {
                     Section("Test item")
                     {
-                        NavigationLink(destination: TestView(), tag: "Item1", selection: $selection)
+                        NavigationLink(destination: GroupInfoView(), tag: "Item1", selection: $selection)
                         {
-                            Label("Item 1", systemImage: "circle.fill")
+                            Label("Групи", systemImage: "person.3.fill")
                         }
                         
                         NavigationLink(destination: TempView(), tag: "Item2", selection: $selection)
@@ -54,7 +43,7 @@ struct MainMenuView: View
                             Label("Item 2", systemImage: "square.fill")
                         }
                         
-                        NavigationLink(destination:  ScrollView{Text("Item 3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
+                        NavigationLink(destination:  ScrollView{Text("Item3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
                         {
                             HStack
                             {
@@ -112,6 +101,16 @@ struct MainMenuView: View
         //.toolbarBackground(Color.red, for: .windowToolbar)
         .toolbar
         {
+            Button
+            {
+                
+            }
+            label:
+            {
+                
+            }// expand all list card in some view
+            .help("Розгорнути усі списки")
+            
             Button(action: {})
             {
                 Text("TestButton")

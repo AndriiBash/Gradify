@@ -17,7 +17,7 @@ struct Student: Identifiable
     var surname: String = ""
     
     var dateBirth: Date = Date()
-    var contactNumber: String = "" // or can use "mobileNumber" ¯\_(ツ)_/¯
+    var contactNumber: String = "" // or can use "mobileNumber" for name var ¯\_(ツ)_/¯
     var passportNumber: String = ""
     var residenceAddress: String = ""
     
@@ -37,7 +37,7 @@ struct Group: Identifiable
     
     var studentList: [Student] = []
     
-    var startYear: Int = 2000       // maybe use Data ?
+    var startYear: Int = 2000       // maybe use Date ?
     var endYear: Int = 2000
 
 }// struct Group: Identifiable

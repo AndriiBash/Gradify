@@ -39,4 +39,4 @@ public class EventMonitorController
             monitor = nil
         }
     }
-}
+}// public class EventMonitorController

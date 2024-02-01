@@ -12,6 +12,14 @@ struct TestView: View
     @ObservedObject private var readModel = ReadModel()
     @State private var scaleLevel: Int = 0
 
+    @State var gridLayout: [GridItem] = [ GridItem() ]
+
+    private let adaptiveColumns = [ GridItem(.adaptive(minimum: 160)) ]
+    
+    @State private var isScrollViewOpen: Bool = false
+    @State private var isAnimateButtonScrollview: Bool = false
+    @State private var scrollViewHeight: CGFloat = 0
+    
     var body: some View
     {
         ZStack
@@ -39,29 +47,79 @@ struct TestView: View
                 
                 VStack
                 {
-                    Section
+                    VStack(spacing: 0) // work's!!!
                     {
+                        HStack
+                        {
+                            Text("GroupName")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                //.background(Color.red)
+                            
+                            Button
+                            {
+                                isAnimateButtonScrollview.toggle()
+                                
+                                withAnimation(Animation.easeInOut(duration: 0.2))
+                                {
+                                    self.isScrollViewOpen.toggle()
+                                    
+                                    scrollViewHeight = isScrollViewOpen ? 180 : 0
+                                    
+                                    
+                                }
+                            }
+                            label:
+                            {
+                                Image(systemName: isAnimateButtonScrollview ? "chevron.down" : "chevron.right")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 15, height: 15, alignment: .center)
+                                    //.background(Color.red)
+                                //.padding(.top, 2)
+                            }// button for hide or unhine card with info
+                            .buttonStyle(PlainButtonStyle())
+                            
+                            Spacer()
+                        }//HStack with group name
+                        .padding(.horizontal, 20)
                         
-                        //LazyHGrid(rows: [GridItem(.flexible())], spacing: 4) {}
-
-                        //ScrollView(.horizontal)
+                        //if isScrollViewOpen
+                        //{
                         ScrollView(.horizontal, showsIndicators: false)
                         {
-                            LazyHGrid(rows: [GridItem(.flexible())], spacing: 6)
+                            LazyHGrid(rows: adaptiveColumns, spacing: 20)
                             {
                                 ForEach(readModel.users.indices, id: \.self)
                                 { index in
                                     textViewRow(name: readModel.users[index].name, lastName: readModel.users[index].lastName)
                                         .scaleEffect(readModel.fetchDataStatus ? 1 : 0)
-                                        .padding(4)
+                                    //.padding(4)
                                         .transition(.opacity)
-                                }
+                                }// ForEach
                             }// LazyHGrid
-                            .padding()
-                        }//scrollvIEW
+                            //.background(Color.red)
+                            .padding(.horizontal, 17)
+                        }// ScrollView
+                        //.background(Color.green)
+                        .frame(height: scrollViewHeight)
+                        //}// if
                         
-                    }// Section with data
-                    .navigationTitle("NavigationNameTestRow")
+                        HStack
+                        {
+                            Text("NextGroupName")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Spacer()
+                        }// HStack with name next Group
+                        .padding(.horizontal, 20)
+                        
+                        
+                        //.matchedGeometryEffect(id: "scrollView", in: .global(), isSource: isScrollViewOpen)
+                        
+                        
+                    }// Test VStack
                     //.padding(.vertical, 6)
             
                 }// main VStack
@@ -77,6 +135,8 @@ struct TestView: View
 
 struct textViewRow: View
 {
+    @State private var isHovered: Bool = false
+
     var name: String
     var lastName: String
     
@@ -100,9 +160,9 @@ struct textViewRow: View
             .padding(.vertical, 6)
             .frame(maxWidth: .infinity)
             .background(Color.green)
-            .cornerRadius (10, corners: [.bottomRight, .bottomLeft])
+            .cornerRadius(10, corners: [.bottomRight, .bottomLeft])
             .clipped()
-        }
+        }// main vstack
         .foregroundColor(Color.white)
         .frame(width: 250, height: 150)
         .background(
@@ -110,9 +170,102 @@ struct textViewRow: View
                 .fill(.thinMaterial)
                 .shadow(radius: 8)
         )
-        .padding()
+        .padding(.leading, 4)
+        .overlay( // edit info in row button
+            
+            HStack
+            {
+
+                Button
+                {
+                    //self.didTap = true
+                }
+                label:
+                {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(.white)
+                }
+                .frame(width: 25, height: 25)
+                .cornerRadius(12)
+                .opacity(isHovered ? 1.0 : 0.0) // Скрываем кнопку, если нет наведения
+                //.animation(.easeInOut(duration: 0.2)) // Анимация появления/исчезания
+                .buttonStyle(PressedEditCardButtonStyle())
+                
+                Button
+                {
+                    
+                }
+                label:
+                {
+                    Image(systemName: "pencil")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }// edit button
+                .frame(width: 25, height: 25)
+                .background(Color.yellow)
+                .cornerRadius(12)
+                .opacity(isHovered ? 1.0 : 0.0) // Скрываем кнопку, если нет наведения
+                .buttonStyle(PlainButtonStyle())
+                //.animation(.easeInOut(duration: 0.2)) // Анимация появления/исчезания
+
+                
+                Button
+                {
+                    
+                }
+                label:
+                {
+                    Image(systemName: "info")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 13, height: 13)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }// edit button
+                .frame(width: 25, height: 25)
+                .background(Color.green)
+                .cornerRadius(12)
+                .opacity(isHovered ? 1.0 : 0.0) // Скрываем кнопку, если нет наведения
+                .buttonStyle(PlainButtonStyle())
+                //.animation(.easeInOut(duration: 0.2)) // Анимация появления/исчезания
+
+                
+            }
+            
+            ,alignment: .topLeading)
+        
+        .onHover
+        { hovering in
+            withAnimation(Animation.easeInOut(duration: 0.2).delay(hovering ? 0.3 : 0))
+            {
+                self.isHovered = hovering
+            }
+        }
+
+        
+
     }
 }
+
+
+struct PressedEditCardButtonStyle: ButtonStyle
+{
+    func makeBody(configuration: Self.Configuration) -> some View
+    {
+        configuration.label
+            .padding()
+            .background(configuration.isPressed ? Color.blue : Color.red)
+            //.foregroundColor(.white)
+            //.cornerRadius(10)
+    }
+}
+
 
 
 
