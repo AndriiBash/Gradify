@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct PopOverView: View {
-    @Namespace var animation
+struct PopOverView: View
+{
+    //@Namespace var animation
     //var animation: Namespace.ID
 
     var body: some View

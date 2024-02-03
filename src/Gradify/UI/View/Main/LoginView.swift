@@ -217,7 +217,7 @@ struct LoginView: View
                 ZStack
                 {
                     Color("BackgroundRightLoginView")
-                        .opacity(0.8)
+                        .opacity(0.6)
                     
                     Image("Image")
                         .resizable()

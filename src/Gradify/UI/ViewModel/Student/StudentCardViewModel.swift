@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct GroupViewModel: View
+struct StudentCardViewModel: View
 {
     @State private var isHovered: Bool = false
 
     var name: String
     var lastName: String
+    var group: String
     
     var body: some View
     {
@@ -24,6 +25,8 @@ struct GroupViewModel: View
             Text("\(name)")
                 .font(.title)
             Text("\(lastName)")
+                .font(.subheadline)
+            Text("\(group)")
                 .font(.subheadline)
             
             Spacer()
@@ -49,7 +52,6 @@ struct GroupViewModel: View
         .overlay( // button on card
             HStack
             {
-
                 Button
                 {
                     //self.didTap = true
@@ -74,12 +76,11 @@ struct GroupViewModel: View
                 }
                 label:
                 {
-                    Image(systemName: "pencil")
+                    Image(systemName: "pencil.line")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(.white)
-                        .cornerRadius(10)
                 }// edit button
                 .frame(width: 25, height: 25)
                 .cornerRadius(12)
@@ -98,7 +99,6 @@ struct GroupViewModel: View
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 13, height: 13)
                         .foregroundColor(.white)
-                        .cornerRadius(10)
                 }// edit button
                 .frame(width: 25, height: 25)
                 .cornerRadius(12)
@@ -106,11 +106,12 @@ struct GroupViewModel: View
                 .shadow(radius: 6)
                 .buttonStyle(PressedInfoButtonStyle())
             }// HStack with buttons
-            .padding(.top, 4)
+            .padding(.top, -6)
+            .zIndex(1)
             ,alignment: .topLeading)// end overlay
         .onHover
         { hovering in
-            withAnimation(Animation.easeInOut(duration: 0.2).delay(hovering ? 0.3 : 0))
+            withAnimation(Animation.easeInOut(duration: 0.2).delay(hovering ? 0.2 : 0))
             {
                 self.isHovered = hovering
             }

@@ -13,6 +13,9 @@ struct MainMenuView: View
     @State private var searchText: String = ""
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
 
+    @State private var expandAllList: Bool = false
+    
+    
     @State var sideBarVisibility: NavigationSplitViewVisibility = .doubleColumn
 
     
@@ -31,11 +34,11 @@ struct MainMenuView: View
                 
                 List
                 {
-                    Section("Test item")
+                    Section("Списки та записи")
                     {
-                        NavigationLink(destination: GroupInfoView(), tag: "Item1", selection: $selection)
+                        NavigationLink(destination: StudentInfoView(), tag: "Item1", selection: $selection)
                         {
-                            Label("Групи", systemImage: "person.3.fill")
+                            Label("Студенти", systemImage: "graduationcap")
                         }
                         
                         NavigationLink(destination: TempView(), tag: "Item2", selection: $selection)
@@ -99,26 +102,6 @@ struct MainMenuView: View
         //.background(Color.red)
         //.toolbarBackground(Color.pink, for: .automatic)
         //.toolbarBackground(Color.red, for: .windowToolbar)
-        .toolbar
-        {
-            Button
-            {
-                
-            }
-            label:
-            {
-                
-            }// expand all list card in some view
-            .help("Розгорнути усі списки")
-            
-            Button(action: {})
-            {
-                Text("TestButton")
-                Image(systemName: "person")
-            }
-            .help("what does this button!!")
-        }
-        
         .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
         .navigationTitle(selection ?? "Не обрано")
         .sheet(isPresented: $isShowTestWindow)

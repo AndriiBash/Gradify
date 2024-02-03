@@ -7,6 +7,20 @@
 
 import AppKit
 
+/*
+ _____               _ _  __
+|  __ \             | (_)/ _|
+| |  \/_ __ __ _  __| |_| |_ _   _
+| | __| '__/ _` |/ _` | |  _| | | |
+| |_\ \ | | (_| | (_| | | | | |_| |
+ \____/_|  \__,_|\__,_|_|_|  \__, |
+                              __/ |
+                             |___/
+ 
+ gitHub: https://github.com/AndriiBash/Gradify
+ author: Andrii Izbash (Andrii Bash)
+ */
+
 final class GradifyApp
 {
     init()
