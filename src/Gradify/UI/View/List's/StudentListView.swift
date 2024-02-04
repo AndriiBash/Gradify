@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct StudentListView: View
 {
@@ -22,11 +23,6 @@ struct StudentListView: View
     {
         HStack
         {
-            Text(studentList.name)
-                .foregroundColor(Color("MainTextForBlur"))
-                .font(.title)
-                .fontWeight(.bold)
-            
             Button
             {
                 isAnimateButtonScrollview.toggle()
@@ -39,11 +35,21 @@ struct StudentListView: View
             }
             label:
             {
-                Image(systemName: isAnimateButtonScrollview ? "chevron.down" : "chevron.right")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 15, height: 15, alignment: .center)
-                    .foregroundColor(Color("MainTextForBlur"))
+                HStack
+                {
+                    Text(studentList.name)
+                        .foregroundColor(Color("MainTextForBlur"))
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    Image(systemName: isAnimateButtonScrollview ? "chevron.down" : "chevron.right")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15, alignment: .center)
+                        .foregroundColor(Color("MainTextForBlur"))
+                }//Hstack button label
+                .background(Color.clear)
+                .contentShape(Rectangle())
             }// button for hide or unhine card with info
             .buttonStyle(PlainButtonStyle())
 
@@ -81,7 +87,7 @@ struct StudentListView: View
 
 struct StudentListView_Previews: PreviewProvider
 {
-    @State private static var listGroup = StudentGroup(name: "Some Group", students: [User]())
+    @State private static var listGroup = StudentGroup(name: "Some Group", students: [Student]())
     @State private static var isExapndAllList: Bool = false
     
     static var previews: some View

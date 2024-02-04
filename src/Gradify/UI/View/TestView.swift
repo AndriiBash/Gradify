@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TestView: View
 {
-    @ObservedObject private var readModel = ReadModel()
+    @ObservedObject private var readModel = ReadWriteModel()
     @State private var scaleLevel: Int = 0
 
     @State var gridLayout: [GridItem] = [ GridItem() ]
@@ -34,7 +34,7 @@ struct TestView: View
                     {
                         do
                         {
-                            await readModel.fetchData()
+                            await readModel.fetchStudentData()
                         }
                     }// Task
                 }
@@ -90,9 +90,9 @@ struct TestView: View
                         {
                             LazyHGrid(rows: adaptiveColumns, spacing: 20)
                             {
-                                ForEach(readModel.users.indices, id: \.self)
+                                ForEach(readModel.students.indices, id: \.self)
                                 { index in
-                                    textViewRow(name: readModel.users[index].name, lastName: readModel.users[index].lastName)
+                                    textViewRow(name: readModel.students[index].name, lastName: readModel.students[index].lastName)
                                         .scaleEffect(readModel.fetchDataStatus ? 1 : 0)
                                     //.padding(4)
                                         .transition(.opacity)

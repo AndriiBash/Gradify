@@ -64,11 +64,11 @@ struct StudentCardViewModel: View
                         .frame(width: 15, height: 15)
                         .foregroundColor(.white)
                 }
+                .buttonStyle(PressedDeleteButtonStyle())
                 .frame(width: 25, height: 25)
                 .cornerRadius(12)
                 .opacity(isHovered ? 1.0 : 0.0)
                 .shadow(radius: 6)
-                .buttonStyle(PressedDeleteButtonStyle())
                 
                 Button
                 {
@@ -82,11 +82,11 @@ struct StudentCardViewModel: View
                         .frame(width: 15, height: 15)
                         .foregroundColor(.white)
                 }// edit button
+                .buttonStyle(PressedEditButtonStyle())
                 .frame(width: 25, height: 25)
                 .cornerRadius(12)
                 .opacity(isHovered ? 1.0 : 0.0)
                 .shadow(radius: 6)
-                .buttonStyle(PressedEditButtonStyle())
                 
                 Button
                 {
@@ -97,14 +97,14 @@ struct StudentCardViewModel: View
                     Image(systemName: "info")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 13, height: 13)
+                        .frame(width: 15, height: 15)
                         .foregroundColor(.white)
                 }// edit button
+                .buttonStyle(PressedInfoButtonStyle())
                 .frame(width: 25, height: 25)
                 .cornerRadius(12)
                 .opacity(isHovered ? 1.0 : 0.0)
                 .shadow(radius: 6)
-                .buttonStyle(PressedInfoButtonStyle())
             }// HStack with buttons
             .padding(.top, -6)
             .zIndex(1)

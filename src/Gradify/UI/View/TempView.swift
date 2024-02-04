@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TempView: View
 {
-    @ObservedObject private var readModel = ReadModel()
+    @ObservedObject private var readModel = ReadWriteModel()
     @State private var scaleLevel: Int = 0
     @State private var offset: CGSize = .zero
 

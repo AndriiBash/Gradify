@@ -8,15 +8,15 @@
 import Foundation
 
 
-struct Student: Identifiable
+struct Student: Identifiable, Sendable
 {
-    var id: String = UUID().uuidString // maybe to fix for all struct data object
+    var id: Int = 0// maybe to fix for all struct data object
     
     var lastName: String = ""
     var name: String = ""
     var surname: String = ""
     
-    var dateBirth: Date = Date()
+    var dateBirth: Date = Date.from(year: 2000, month: 00, day: 01)!
     var contactNumber: String = "" // or can use "mobileNumber" for name var ¯\_(ツ)_/¯
     var passportNumber: String = ""
     var residenceAddress: String = ""
@@ -25,9 +25,9 @@ struct Student: Identifiable
 }// struct Student: Identifiable
 
 
-struct Group: Identifiable
+struct Group: Identifiable, Sendable
 {
-    var id: String = UUID().uuidString // !
+    var id: Int = 0 // !
 
     var name: String = ""
     
@@ -43,15 +43,15 @@ struct Group: Identifiable
 }// struct Group: Identifiable
 
 
-struct Teacher: Identifiable
+struct Teacher: Identifiable, Sendable
 {
-    var id: String = UUID().uuidString
+    var id: Int = 0
 
     var lastName: String = ""
     var name: String = ""
     var surname: String = ""
     
-    var dateBirth: Date = Date()
+    var dateBirth: Date = Date.from(year: 2000, month: 00, day: 01)!
     var contactNumber: String = ""
     var passportNumber: String = ""
     var residenceAddress: String = ""
@@ -63,9 +63,9 @@ struct Teacher: Identifiable
 }// struct Teacher: Identifiable
 
 
-struct Department: Identifiable // cafedra
+struct Department: Identifiable, Sendable // cafedra
 {
-    var id: String = UUID().uuidString
+    var id: Int = 0
 
     var name: String = ""
     
@@ -81,9 +81,9 @@ struct Department: Identifiable // cafedra
 }// struct Department: Identifiable
 
 
-struct Subject: Identifiable
+struct Subject: Identifiable, Sendable
 {
-    var id: String = UUID().uuidString
+    var id: Int = 0
     
     var name: String = ""
     var type: String = ""
@@ -100,9 +100,9 @@ struct Subject: Identifiable
 }// struct Subject: Identifiable
 
 
-struct Grades: Identifiable
+struct Grades: Identifiable, Sendable
 {
-    var id: String = UUID().uuidString
+    var id: Int = 0
     
     var subject: Subject = Subject()
     var recipient: Student = Student()

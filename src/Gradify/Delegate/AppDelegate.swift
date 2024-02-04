@@ -81,27 +81,10 @@ class AppDelegate: NSObject, NSApplicationDelegate
         eventMonitor?.stop()
     }// func closePopover(sender: Any?)
     
-    
-    
     @IBAction func newWindowForTab(_ sender: Any?)
     {
         windowController.addNewTab()
     } // @IBAction func newWindowForTab(_ sender: Any?)
-
-    func applicationDidEnterBackground(_ notification: Notification)
-    {
-       // popOver.performClose(nil)
-    }// func applicationDidEnterBackground(_ notification: Notification)
-    
-    func applicationDidResignActive(_ notification: Notification)
-    {
-      //  popOver.performClose(nil)
-    }// func applicationDidResignActive(_ notification: Notification)
-    
-    func applicationDidBecomeActive(_ notification: Notification)
-    {
-       // popOver.performClose(nil)
-    }// func applicationDidBecomeActive(_ notification: Notification)
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
     {

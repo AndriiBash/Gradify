@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginView: View
 {
     @ObservedObject var loginData: LoginModel
-    var windowController: WindowController
+    @ObservedObject var windowController: WindowController
     
     @State private var isRemberMe:          Bool = false
     @State private var forgetPassAlertShow: Bool = false
@@ -229,7 +229,6 @@ struct LoginView: View
             }// VStack with photo
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(BlurBehindWindow())
-            
         }//Main HStack
         .ignoresSafeArea(.all, edges: .all)
         .frame(minWidth: 780, maxWidth: .infinity,

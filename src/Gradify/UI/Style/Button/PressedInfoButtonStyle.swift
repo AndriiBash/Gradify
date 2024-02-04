@@ -13,7 +13,8 @@ struct PressedInfoButtonStyle: ButtonStyle
     func makeBody(configuration: Self.Configuration) -> some View
     {
         configuration.label
-            .padding()
+            .padding(6)
             .background(configuration.isPressed ? Color("PressedInfoButton") : Color("InfoButton"))
+            .cornerRadius(12)
     }
 }

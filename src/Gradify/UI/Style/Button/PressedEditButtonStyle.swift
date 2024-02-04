@@ -13,7 +13,8 @@ struct PressedEditButtonStyle: ButtonStyle
     func makeBody(configuration: Self.Configuration) -> some View
     {
         configuration.label
-            .padding()
+            .padding(6)
             .background(configuration.isPressed ? Color("PressedEditButton") : Color("EditButton"))
+            .cornerRadius(12)
     }
 }

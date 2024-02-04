@@ -10,7 +10,7 @@ import SwiftUI
 struct StartView: View
 {
     @State private var animateStatus: Bool = true
-    var windowController: WindowController
+    @ObservedObject var windowController: WindowController
     
     var body: some View
     {

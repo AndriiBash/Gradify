@@ -247,7 +247,6 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         sixthMenu.addItem(withTitle: String(localized: "Довідка Gradify"), action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
         sixthMenu.addItem(.separator())
         sixthMenu.addItem(withTitle: String(localized: "Онлайн довідка"), action: #selector(NSApplication.showHelp(_:)), keyEquivalent: "")
-
     }// func initMenuBar()
     
     @objc func showSettingAppAction(_ sender: Any?)

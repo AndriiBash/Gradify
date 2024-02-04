@@ -9,9 +9,11 @@ import SwiftUI
 
 struct StudentInfoView: View
 {
-    @StateObject private var readModel = ReadModel()
+    @StateObject private var readModel = ReadWriteModel()
     
-    @State private var isExpandAllList: Bool = true
+    @State private var isExpandAllList: Bool = false
+    @State private var isShowAddStudentPanel: Bool = false
+    @State private var statusSave: Bool = false
    // @State private var selectedGroup: StudentGroup? // long proccess make function...
 
     var body: some View
@@ -25,17 +27,18 @@ struct StudentInfoView: View
             {                
                 VStack(spacing: 0)
                 {
-                    ForEach($readModel.studentGroups)
-                    { $group in
-                        StudentListView(studentList: $group, isExpandList: $isExpandAllList)
+                    ForEach($readModel.studentGroups.indices, id:\.self)
+                    { index in
+                        StudentListView(studentList: $readModel.studentGroups[index], isExpandList: $isExpandAllList)
                     }//  ForEach stundet's grouping on group
+                    .padding(.top, 4)
                 }// VStack with list group student's
                 .padding(.vertical)
                 .onAppear
                 {
                     Task
                     {
-                        await readModel.fetchData()
+                        await readModel.fetchStudentData()
                     }// need add wait view (monitor)
                 }
                 
@@ -43,14 +46,39 @@ struct StudentInfoView: View
         }// main ZStack
         .navigationTitle("Студенти")
         .navigationSubtitle("\(readModel.countRecords) студентів")
+        .sheet(isPresented: $isShowAddStudentPanel)
+        {
+            AddStudentView(isShowForm: $isShowAddStudentPanel, statusSave: $statusSave, writeModel: readModel)
+        }
+        .sheet(isPresented: $statusSave)
+        {
+            if statusSave
+            {
+                SuccessSaveView(isAnimated: $statusSave)
+                    .onAppear
+                    {
+                        Task
+                        {
+                            await readModel.fetchStudentData()
+                        }// need add wait view (monitor)
+                    }
+            }
+            else
+            {
+                ErrorSaveView(isAnimated: $statusSave)
+            }
+        }
         .toolbar
         {
-            Button(action: {})
+            Button
             {
-                Text("TestButton")
-                Image(systemName: "visionpro")
+                isShowAddStudentPanel.toggle()
             }
-            .help("what does this button!!")
+            label:
+            {
+                Image(systemName: "plus.square")
+            }
+            .help("Додати нову запис")
             
             Button
             {
@@ -61,8 +89,8 @@ struct StudentInfoView: View
                 Image(systemName: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
             }// expand all list card in some view
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
-
         }//.toolBar for main ZStack
+        .frame(minWidth: 300, minHeight: 170)
     }// body
 }// struct GroupInfoView: View
 
