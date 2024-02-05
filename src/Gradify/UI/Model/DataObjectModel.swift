@@ -21,25 +21,23 @@ struct Student: Identifiable, Sendable
     var passportNumber: String = ""
     var residenceAddress: String = ""
     
+    var educationProgram: String = ""
     var group: String = ""
 }// struct Student: Identifiable
 
 
 struct Group: Identifiable, Sendable
 {
-    var id: Int = 0 // !
+    var id: UUID = UUID()
 
     var name: String = ""
     
     var curator: String = ""
     var groupLeader: String = ""
     var departmentName: String = ""
+    var educationProgram: String = ""
     
     var studentList: [Student] = []
-    
-    var startYear: Int = 2000       // maybe use Date ?
-    var endYear: Int = 2000
-
 }// struct Group: Identifiable
 
 
@@ -59,23 +57,24 @@ struct Teacher: Identifiable, Sendable
     var staffCategory: [String] = []
     var subjectSpecialization: [String] = []
     
-    var profilePhoto: String = "" // realese ONLY on diplome
+    var profilePhoto: String = "" // realese ONLY on diploma
 }// struct Teacher: Identifiable
 
 
 struct Department: Identifiable, Sendable // cafedra
 {
-    var id: Int = 0
+    var id: UUID = UUID()
 
     var name: String = ""
     
     var description: String = ""
-    var academicFocusArea: String = ""
-    var leader: String = ""             // departmentLeader
+    var specialization: String = ""
+    
+    var departmentLeader: String = ""
     var viceLeader: String = ""
     
     var teacherList: [Teacher] = []
-    var facultyOffice: String = ""      // departament room
+    var facultyOffice: String = ""
     
     var creationYear: Int = 2000
 }// struct Department: Identifiable
@@ -83,12 +82,14 @@ struct Department: Identifiable, Sendable // cafedra
 
 struct Subject: Identifiable, Sendable
 {
-    var id: Int = 0
-    
+    var id: UUID = UUID()
+
     var name: String = ""
     var type: String = ""
     
     var teacherList: [Teacher] = []
+    
+    var departamentSubject: Department = Department() // maybe use string
     
     var totalHours: Int = 0
     var lectureHours: Int = 0
@@ -102,8 +103,8 @@ struct Subject: Identifiable, Sendable
 
 struct Grades: Identifiable, Sendable
 {
-    var id: Int = 0
-    
+    var id: UUID = UUID()
+
     var subject: Subject = Subject()
     var recipient: Student = Student()
     var grader: Teacher = Teacher()
@@ -115,3 +116,49 @@ struct Grades: Identifiable, Sendable
     var comment: String = ""
 } // struct Grades: Identifiable
 
+
+struct Faculty: Identifiable, Sendable
+{
+    var id: UUID = UUID()
+    
+    var name: String
+    var dean: String // Decan
+    
+    var description: String
+    var departments: [Department] = []
+}// struct Faculty: Identifiable, Sendable
+
+
+struct Specialization: Identifiable, Sendable
+{
+    var id: UUID = UUID()
+
+    var name: String = ""
+    var description: String = ""
+    var field: String
+}// struct Specialization: Identifiable, Sendable
+
+
+struct Specialty: Identifiable, Sendable
+{
+    var id: UUID = UUID()
+
+    var name: String = ""
+    var duration: String = ""
+    var tuitionCost: Int
+    var subjects: [String] = []
+    var specialization: String = ""
+}// struct Specialty: Identifiable, Sendable
+
+
+struct EducationalProgram: Identifiable, Sendable
+{
+    var id: UUID = UUID()
+
+    var name: String = ""
+    
+    var specialty: String = ""
+    var level: String = ""
+    var duration: String = ""
+    var description: String = ""
+}// struct EducationalProgram: Identifiable, Sendable

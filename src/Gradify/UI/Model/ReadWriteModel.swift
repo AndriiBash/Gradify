@@ -38,6 +38,22 @@ class ReadWriteModel: ObservableObject
     
     var ref = Database.database().reference()
     var db = Firestore.firestore()
+    
+    
+    
+    
+    func getEducatProgramNameList() async -> [String]
+    {
+        return ["program1", "program2"]
+    }// func getEducatProgramNameList() async -> [String]
+    
+    
+    
+    func getGroupNameList() async -> [String]
+    {
+        return ["group1", "group2"]
+    }// func getGroupName() async -> [String]
+    
         
     func fetchStudentData() async
     {
@@ -68,27 +84,18 @@ class ReadWriteModel: ObservableObject
                     let name = data["name"] as? String ?? ""
                     let lastName = data["lastName"] as? String ?? ""
                     let surname = data["surname"] as? String ?? ""
-                    
+                                        
+                    let date: Date = dateFormatter.date(from: (data["dateBirth"] as? String) ?? "") ?? Date.from(year: 2000, month: 12, day: 12)!
 
-                    let date: Date
-                    
-                    if let dateBirthTimestamp = data["dateBirth"] as? TimeInterval
-                    {
-                        date = Date(timeIntervalSince1970: dateBirthTimestamp)
-                    }
-                    else
-                    {
-                        date = Date.from(year: 2000, month: 1, day: 1)!
-                    }
-                    
                     let contactNumber = data["contactNumber"] as? String ?? "+380 000 000 000"
                     let passportNumber = data["passportNumber"] as? String ?? ""
                     
                     let residenceAddress = data["residenceAddress"] as? String ?? ""
 
+                    let educationProgram = data ["educationProgram"] as? String ?? "Немає програми"
                     let group = data["group"] as? String ?? "Немає групи"
-
-                    return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, group: group)
+                
+                    return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
                 }, by: { $0.group })
 
                 self.studentGroups = groupedUsers.map
@@ -130,7 +137,7 @@ class ReadWriteModel: ObservableObject
     
     
     
-    func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, group: String) -> Bool
+    func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
     {
         var status: Bool = true
         
@@ -144,6 +151,7 @@ class ReadWriteModel: ObservableObject
             "contactNumber": contactNumber,
             "passportNumber": passportNumber,
             "residenceAddress": residenceAddress,
+            "educationProgram": educationProgram,
             "group": group
         ]
 

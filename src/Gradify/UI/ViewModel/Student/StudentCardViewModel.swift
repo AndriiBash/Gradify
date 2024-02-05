@@ -12,9 +12,10 @@ struct StudentCardViewModel: View
 {
     @State private var isHovered: Bool = false
 
-    var name: String
-    var lastName: String
-    var group: String
+    @State private var showAboutStudent: Bool = false
+    @State private var showEditotStudent: Bool = false
+
+    var student: Student
     
     var body: some View
     {
@@ -22,15 +23,70 @@ struct StudentCardViewModel: View
         {
             Spacer()
          
-            Text("\(name)")
-                .font(.title)
-            Text("\(lastName)")
-                .font(.subheadline)
-            Text("\(group)")
-                .font(.subheadline)
+            HStack
+            {
+                Text("\(student.lastName)")
+                    .font(.title2)
+                Text("\(student.name)")
+                    .font(.title2)
+                Text("\(student.surname)")
+                    .font(.title2)
+            }// HStack with main info
+            
+            VStack
+            {
+                HStack
+                {
+                    Image(systemName: "birthday.cake")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+
+                    Text("\(dateFormatter.string(from: student.dateBirth))")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with contact number
+                
+                HStack
+                {
+                    Image(systemName: "phone.down")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(student.contactNumber)")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with contact number
+
+                HStack
+                {
+                    Image(systemName: "house")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(student.residenceAddress)")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with residence address
+
+                
+            }// VStack with another info
+            .padding(.horizontal, 6)
+            .padding(.top, 4)
+            
             
             Spacer()
+            Spacer()
             
+            /*
             VStack
             {
                 Text("Test text in bottom")
@@ -40,6 +96,9 @@ struct StudentCardViewModel: View
             .background(Color.green)
             .cornerRadius(10, corners: [.bottomRight, .bottomLeft])
             .clipped()
+            
+            
+            */
         }// main vstack
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 250, height: 150)
@@ -90,7 +149,7 @@ struct StudentCardViewModel: View
                 
                 Button
                 {
-                    // nothing...
+                    showAboutStudent.toggle()
                 }
                 label:
                 {
@@ -115,6 +174,10 @@ struct StudentCardViewModel: View
             {
                 self.isHovered = hovering
             }
+        }
+        .sheet(isPresented: $showAboutStudent)
+        {
+            RowStudentView(isShowView: $showAboutStudent, student: student)
         }
 
     }

@@ -42,6 +42,10 @@
 		B5CC2B152B6FBF0B001E86BD /* AddStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B142B6FBF0B001E86BD /* AddStudentView.swift */; };
 		B5CC2B192B6FF9F1001E86BD /* SuccessSaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B182B6FF9F1001E86BD /* SuccessSaveView.swift */; };
 		B5CC2B1B2B6FFF0D001E86BD /* ErrorSaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B1A2B6FFF0D001E86BD /* ErrorSaveView.swift */; };
+		B5CC2B1D2B71343B001E86BD /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B1C2B71343B001E86BD /* Formatter.swift */; };
+		B5CC2B202B7136E9001E86BD /* EditStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */; };
+		B5CC2B242B713729001E86BD /* RowStudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B232B713729001E86BD /* RowStudentView.swift */; };
+		B5CC2B262B714534001E86BD /* AppKitFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2B252B714534001E86BD /* AppKitFunc.swift */; };
 		B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */; };
 		B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
@@ -93,6 +97,10 @@
 		B5CC2B142B6FBF0B001E86BD /* AddStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B182B6FF9F1001E86BD /* SuccessSaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessSaveView.swift; sourceTree = "<group>"; };
 		B5CC2B1A2B6FFF0D001E86BD /* ErrorSaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSaveView.swift; sourceTree = "<group>"; };
+		B5CC2B1C2B71343B001E86BD /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentView.swift; sourceTree = "<group>"; };
+		B5CC2B232B713729001E86BD /* RowStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowStudentView.swift; sourceTree = "<group>"; };
+		B5CC2B252B714534001E86BD /* AppKitFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitFunc.swift; sourceTree = "<group>"; };
 		B5E956D32B67F79900C00529 /* EventMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorController.swift; path = Gradify/Controller/EventMonitorController.swift; sourceTree = SOURCE_ROOT; };
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		B5EEF3332B4845C800B8C73D /* RespectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespectView.swift; sourceTree = "<group>"; };
@@ -199,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				B58FCE762B5AE1FB00B5226F /* CursorHandler.swift */,
+				B5CC2B1C2B71343B001E86BD /* Formatter.swift */,
+				B5CC2B252B714534001E86BD /* AppKitFunc.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -307,6 +317,8 @@
 			isa = PBXGroup;
 			children = (
 				B5CC2B172B6FC4CD001E86BD /* MenuBar */,
+				B5CC2B212B713700001E86BD /* ViewRow */,
+				B5CC2B1E2B7136CB001E86BD /* EditRow */,
 				B5CC2B162B6FBF10001E86BD /* AddRow */,
 				B5CC2B112B6E53FB001E86BD /* List's */,
 				B5A5C8AC2B6BD2CC008F03D5 /* Information */,
@@ -373,6 +385,22 @@
 				B5EEF3312B48459800B8C73D /* AboutAppView.swift */,
 			);
 			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		B5CC2B1E2B7136CB001E86BD /* EditRow */ = {
+			isa = PBXGroup;
+			children = (
+				B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */,
+			);
+			path = EditRow;
+			sourceTree = "<group>";
+		};
+		B5CC2B212B713700001E86BD /* ViewRow */ = {
+			isa = PBXGroup;
+			children = (
+				B5CC2B232B713729001E86BD /* RowStudentView.swift */,
+			);
+			path = ViewRow;
 			sourceTree = "<group>";
 		};
 		B5EEF3372B4D608500B8C73D /* Ukranian */ = {
@@ -472,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */,
+				B5CC2B262B714534001E86BD /* AppKitFunc.swift in Sources */,
 				B5CC2B132B6EA13F001E86BD /* DateExtension.swift in Sources */,
 				B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */,
 				B5A5C8AE2B6BD2DF008F03D5 /* StudentInfoView.swift in Sources */,
@@ -492,6 +521,7 @@
 				B5A5C8B62B6BD33B008F03D5 /* PressedEditButtonStyle.swift in Sources */,
 				B5CC2B192B6FF9F1001E86BD /* SuccessSaveView.swift in Sources */,
 				B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */,
+				B5CC2B202B7136E9001E86BD /* EditStudentView.swift in Sources */,
 				B5CC2B1B2B6FFF0D001E86BD /* ErrorSaveView.swift in Sources */,
 				B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */,
 				B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */,
@@ -499,9 +529,11 @@
 				B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */,
 				B5A5C8B22B6BD30A008F03D5 /* PressedDeleteButtonStyle.swift in Sources */,
 				B5B55EDE2B30CE9F002E0F4D /* MainMenuView.swift in Sources */,
+				B5CC2B1D2B71343B001E86BD /* Formatter.swift in Sources */,
 				B5B55EB42B30C4AF002E0F4D /* main.swift in Sources */,
 				B50964592B6AA2770084050C /* ViewExtension.swift in Sources */,
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguageView.swift in Sources */,
+				B5CC2B242B713729001E86BD /* RowStudentView.swift in Sources */,
 				B50964552B6A85A00084050C /* TempView.swift in Sources */,
 				B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */,
 			);

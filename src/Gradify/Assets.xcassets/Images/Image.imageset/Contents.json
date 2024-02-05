@@ -1,7 +1,18 @@
 {
   "images" : [
     {
-      "filename" : "Безымянный 4 (1).svg",
+      "filename" : "зображення1 1.svg",
+      "idiom" : "mac",
+      "scale" : "1x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Безымянный 4 (4).svg",
       "idiom" : "mac",
       "scale" : "1x"
     },
@@ -10,13 +21,13 @@
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
       "idiom" : "mac",
-      "locale" : "uk",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "mac",
-      "locale" : "uk",
       "scale" : "2x"
     }
   ],

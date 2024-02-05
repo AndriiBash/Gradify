@@ -9,29 +9,30 @@ import SwiftUI
 
 struct AddStudentView: View
 {
-    @State private var name: String = ""
-    @State private var lastName: String = ""
-    @State private var surname: String = ""
-    @State private var selectedDate: Date = Date()
-    @State private var contactNumber: String = ""
-    @State private var passportNumber: String = ""
-    @State private var residenceAddress: String = ""
-    @State private var group: String = "Без групи"
-
-    @State private var isWrongName: Bool = false
-    @State private var isWrongLastName: Bool = false
-    @State private var isWrongSurname: Bool = false
-    //@State private var isWrongSelectedDate: Bool = false
-    @State private var isWrongContactNumber: Bool = false
-    @State private var isWrongPassportNumber:Bool = false
+    @State private var name:                    String = ""
+    @State private var lastName:                String = ""
+    @State private var surname:                 String = ""
+    @State private var selectedDate:            Date = Date()
+    @State private var contactNumber:           String = ""
+    @State private var passportNumber:          String = ""
+    @State private var residenceAddress:        String = ""
+    @State private var group:                   String = "Без групи"
+    @State private var educationProgram:        String = "Без програми"
+        
+    @State private var isWrongName:             Bool = false
+    @State private var isWrongLastName:         Bool = false
+    @State private var isWrongSurname:          Bool = false
+    @State private var isWrongContactNumber:    Bool = false
+    @State private var isWrongPassportNumber:   Bool = false
     @State private var isWrongResidenceAddress: Bool = false
-    //@State private var isWrongGroup: Bool = false
 
-    @Binding var isShowForm: Bool
-    @Binding var statusSave: Bool
-    @ObservedObject var writeModel: ReadWriteModel
+    @State private var groupList:               [String] = []
+    @State private var educatProgramList:       [String] = []
+
+    @Binding var isShowForm:                    Bool
+    @Binding var statusSave:                    Bool
+    @ObservedObject var writeModel:             ReadWriteModel
     
-    let groups = ["Group 1", "Group 2", "Group 3"] // temp
     
     var body: some View
     {
@@ -57,7 +58,7 @@ struct AddStudentView: View
                                 {
                                     Text("Біллі")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
                     
@@ -71,7 +72,7 @@ struct AddStudentView: View
                                 {
                                     Text("Геррінґтон")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
                     
@@ -85,7 +86,7 @@ struct AddStudentView: View
                                 {
                                     Text("Андрійович")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
                 }
@@ -104,7 +105,7 @@ struct AddStudentView: View
                                 {
                                     Text("+380 000 00 00 00")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
                             .onChange(of: contactNumber)
@@ -123,7 +124,7 @@ struct AddStudentView: View
                                 {
                                     Text("000000000")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
                             .onChange(of: passportNumber)
@@ -143,9 +144,24 @@ struct AddStudentView: View
                                 {
                                     Text("Вул.Січових Гачистів 4")
                                         .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 8)
+                                        .padding(.horizontal, 12)
                                 }
                             })
+                    
+                    Picker("Навчальна програма", selection: $educationProgram)
+                    {
+                        Text("Без програми")
+                                .tag("Без програми")
+                        
+                        Divider()
+                        
+                        ForEach(educatProgramList, id: \.self)
+                        {
+                            Text($0)
+                                .tag($0)
+                        }
+                    }// Picker for select educationProgram
+                    
                     
                     Picker("Група", selection: $group)
                     {
@@ -154,12 +170,12 @@ struct AddStudentView: View
 
                         Divider()
                         
-                        ForEach(groups, id: \.self)
+                        ForEach(groupList, id: \.self)
                         {
                             Text($0)
                                 .tag($0)
                         }
-                    }
+                    }// Picker for select group
                 }
             }// Form with info and TextField
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -198,7 +214,10 @@ struct AddStudentView: View
                     {
                         isShowForm = false
                         
-                        statusSave = writeModel.addNewStudent(name: name, lastName: lastName, surname: surname, dateBirth:  dateFormatter.string(from: selectedDate), contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, group: group)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
+                        {
+                            statusSave = writeModel.addNewStudent(name: name, lastName: lastName, surname: surname, dateBirth:  dateFormatter.string(from: selectedDate), contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
+                        }
                     }
                     else
                     {
@@ -246,15 +265,22 @@ struct AddStudentView: View
             .padding(.vertical, 6)
             .padding(.bottom, 8)
         }// Main VStack
-        .frame(width: 400, height: 520)
+        .frame(width: 400, height: 550)
+        .onAppear
+        {
+            fetchGroupsAndEducationPrograms()
+        }
     }
     
-    private var dateFormatter: DateFormatter
+    
+    private func fetchGroupsAndEducationPrograms()
     {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }// private var dateFormatter: DateFormatter
+        Task
+        {
+            self.groupList = await writeModel.getGroupNameList()
+            self.educatProgramList = await writeModel.getEducatProgramNameList()
+        }
+    }// private func fetchGroupsAndEducationPrograms()
 }
 
 /*

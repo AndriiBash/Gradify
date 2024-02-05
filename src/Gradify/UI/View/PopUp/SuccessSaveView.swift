@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SuccessSaveView: View
 {
-    @Binding var isAnimated: Bool
     @State var startAnimate: Bool = true
-    
+    @Binding var isAnimated: Bool
+
     var body: some View
     {
         VStack

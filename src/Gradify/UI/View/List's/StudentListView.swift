@@ -61,7 +61,8 @@ struct StudentListView: View
             isAnimateButtonScrollview = newValue
             isScrollViewOpen = newValue
             
-            withAnimation(Animation.easeInOut(duration: 0.2)) {
+            withAnimation(Animation.easeInOut(duration: 0.2))
+            {
                 scrollViewHeight = newValue ? 190 : 0
             }
         }
@@ -72,14 +73,13 @@ struct StudentListView: View
             {
                 ForEach(studentList.students)
                 { student in
-                    StudentCardViewModel(name: student.name, lastName: student.lastName, group: student.group)
+                    StudentCardViewModel(student: student)
                         .transition(.opacity)
                 }
             }
             .padding(.horizontal, 17)
         }
         .frame(height: scrollViewHeight)
-        
     }
 }
 
