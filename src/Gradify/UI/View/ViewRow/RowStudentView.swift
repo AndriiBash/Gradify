@@ -12,7 +12,6 @@ struct RowStudentView: View
     @State private var hoverOnName:             Bool = false
     @State private var hoverOnLastName:         Bool = false
     @State private var hoverOnSurname:          Bool = false
-    @State private var hoverOnSelectedDate:     Bool = false
     @State private var hoverOnContactNumber:    Bool = false
     @State private var hoverOnPassportNumber:   Bool = false
     @State private var hoverOnResidenceAddress: Bool = false
@@ -20,10 +19,12 @@ struct RowStudentView: View
     @State private var hoverOnEducationProgram: Bool = false
     @State private var hoverOnBirthDay:         Bool = false
     
-    //@State private var hoverOnEducationProgram: Bool = false
+    @State private var statusCopyString:        String  = "Скопіювати"
+    @State private var maxWidthForButton:       CGFloat = .zero
 
-    
     @Binding var isShowView: Bool
+    @Binding var isEditView: Bool
+    
     
     var student: Student
     
@@ -31,11 +32,18 @@ struct RowStudentView: View
     {
         VStack
         {
-            Text("[\(student.id)] \(student.lastName) \(student.name) \(student.surname)")
-                .font(.system(size: 13))
-                .fontWeight(.bold)
-                .padding(.top, 8)
-            
+            HStack(alignment: .center)
+            {
+                Spacer()
+
+                Text("[\(student.id)] \(student.lastName) \(student.name) \(student.surname)")
+                    .font(.system(size: 13))
+                    .fontWeight(.bold)
+
+                Spacer()
+            }// HStack navigation panel
+            .padding(.top, 8)
+
             Form
             {
                 Section(header: Text("Головне"))
@@ -330,7 +338,7 @@ struct RowStudentView: View
                                 }
                             }
                     }// Hstack with group student
-                }
+                }// Section with additional info student
             }// Form with info and TextField
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
@@ -340,44 +348,87 @@ struct RowStudentView: View
             
             HStack
             {
-                Spacer()
-                
                 Button
                 {
                     isShowView = false
-                    //isShowForm = false
+                    isEditView = true
                 }
                 label:
                 {
-                    Text("Скасувати")
+                    Image(systemName: "square.and.pencil")
+                        //.resizable()
+                        //.aspectRatio(contentMode: .fit)
+                        //.frame(width: 20, height: 20)
+                }// button for edit row
+                .padding(.trailing, 12)
+                .help("Редагувати запис")
+                .onHover
+                { isHovered in
+                    changePointingHandCursor(shouldChangeCursor: isHovered)
+                }
+
+                Spacer()
+                                
+                Button
+                {
+                    let allInfo = """
+                            [\(student.id)] \(student.lastName) \(student.name) \(student.surname)
+                            ===========================================
+                            Ім'я: \(student.name)
+                            Прізвище: \(student.lastName)
+                            По батькові: \(student.surname)
+                            Дата народження: \(dateFormatter.string(from: student.dateBirth))
+                            Номер телефону: \(student.contactNumber)
+                            Номер паспорту: \(student.passportNumber)
+                            Адреса проживання: \(student.residenceAddress)
+                            Навчальна програма: \(student.educationProgram)
+                            Група: \(student.group)
+                            ===========================================
+                            """
+                            
+                    copyInBuffer(text: allInfo)
+                    statusCopyString = "Скопійовано!"
+                }
+                label:
+                {
+                    Text("\(statusCopyString)")
+                        .frame(minWidth: maxWidthForButton)
                 }
                 .onHover
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
+                .help("Скопіювати усю інформацію студента")
+                .padding(.horizontal, 12)
                 
                 Button
                 {
-                    
-                    
-                    
+                    isShowView = false
                 }
                 label:
                 {
-                    Text("Редагувати")
+                    Text("Готово")
+                        .frame(minWidth: maxWidthForButton)
                 }
                 .onHover
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
                 .keyboardShortcut(.defaultAction)
-                .padding(.horizontal, 12)
             }// HStack with button's for manipulate form
             .padding(.vertical, 6)
             .padding(.bottom, 8)
+            .padding(.horizontal, 22)
         }// Main VStack
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 560)
+        .frame(width: 400, height: 565)
+        .onAppear
+        {
+            let buttonWidth = getWidthFromString(for: "Скопіювати")
+            let doneButtonWidth = getWidthFromString(for: "Готово")
+
+            maxWidthForButton = max(buttonWidth, doneButtonWidth)
+        }
     }
 }
 

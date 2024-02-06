@@ -49,6 +49,7 @@
 		B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */; };
 		B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
+		B5E7FBD32B72EC9B00218E9F /* AcceptDeleteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */; };
 		B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E956D32B67F79900C00529 /* EventMonitorController.swift */; };
 		B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3312B48459800B8C73D /* AboutAppView.swift */; };
 		B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3332B4845C800B8C73D /* RespectView.swift */; };
@@ -101,6 +102,7 @@
 		B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B232B713729001E86BD /* RowStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B252B714534001E86BD /* AppKitFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitFunc.swift; sourceTree = "<group>"; };
+		B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRow.swift; sourceTree = "<group>"; };
 		B5E956D32B67F79900C00529 /* EventMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorController.swift; path = Gradify/Controller/EventMonitorController.swift; sourceTree = SOURCE_ROOT; };
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		B5EEF3332B4845C800B8C73D /* RespectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespectView.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				B5F3412E2B4D956300AC5751 /* AcceptChangeLanguageView.swift */,
 				B5CC2B182B6FF9F1001E86BD /* SuccessSaveView.swift */,
 				B5CC2B1A2B6FFF0D001E86BD /* ErrorSaveView.swift */,
+				B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */,
 				B5CC2B262B714534001E86BD /* AppKitFunc.swift in Sources */,
 				B5CC2B132B6EA13F001E86BD /* DateExtension.swift in Sources */,
+				B5E7FBD32B72EC9B00218E9F /* AcceptDeleteRow.swift in Sources */,
 				B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */,
 				B5A5C8AE2B6BD2DF008F03D5 /* StudentInfoView.swift in Sources */,
 				B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */,

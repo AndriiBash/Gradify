@@ -1,16 +1,19 @@
 //
-//  AcceptChangeLanguage.swift
+//  AcceptDeleteRow.swift
 //  Gradify
 //
-//  Created by Андрiй on 09.01.2024.
+//  Created by Андрiй on 07.02.2024.
 //
 
 import SwiftUI
 
-struct AcceptChangeLanguageView: View
+struct AcceptDeleteRow: View
 {
-    @Binding var showStatus: Bool
-    @Binding var selectedLanguage: Language
+    @Binding var student:               Student
+    @Binding var isShowSelfView:        Bool
+    @Binding var isUpdateListStudent:   Bool
+    @ObservedObject var writeModel:     ReadWriteModel
+    
     
     var body: some View
     {
@@ -20,13 +23,12 @@ struct AcceptChangeLanguageView: View
             
             ZStack
             {
-                Color.blue
+                Color.red
                     .cornerRadius(12)
                 
-                Image(systemName: "globe")
+                Image(systemName: "trash")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    //.frame(width: 80, height: 80, alignment: .center)
                     .foregroundColor(Color.white)
                     .shadow(radius: 8)
                     .padding(12)
@@ -38,22 +40,23 @@ struct AcceptChangeLanguageView: View
             
             VStack(spacing: 12)
             {
-                Text(String(localized: "Основну мову застосунку зміненно. Перезапустити застосунок зараз?"))
+                Text(String(localized: "Справді видалити цей запис?"))
                     .fontWeight(.bold)
                 
-                Text(String(localized: "Застосунок не зможе використовувати нову мову до перезапуску."))
+                Text(String(localized: "Цей запис буде видалено назавжди, та відновити її буде неможливо."))
                     .font(.system(size: 12))
                 
                 VStack(spacing: 6)
                 {
                     Button
                     {
-                        UserDefaults.standard.set(["\(selectedLanguage)"], forKey: "AppleLanguages")
-                        restartApp()
+                        writeModel.deleteStudent(withId: student.id)
+                        isUpdateListStudent.toggle()
+                        isShowSelfView = false
                     }
                     label:
                     {
-                        Text(String(localized: "Перезапустити"))
+                        Text(String(localized: "Видалити запис"))
                             .frame(width: 260)
                             .padding(.vertical, 4)
                             .foregroundColor(Color.red)
@@ -66,12 +69,11 @@ struct AcceptChangeLanguageView: View
 
                     Button
                     {
-                        UserDefaults.standard.set(["\(selectedLanguage)"], forKey: "AppleLanguages")
-                        showStatus = false;
+                        isShowSelfView = false;
                     }
                     label:
                     {
-                        Text(String(localized: "Не перезапускати"))
+                        Text(String(localized: "Скасувати"))
                             .padding(.vertical, 4)
                             .frame(width: 260)
                     }// button cansel restart
@@ -93,15 +95,8 @@ struct AcceptChangeLanguageView: View
     }
 }
 
-/* bruh not working
-struct AcceptChangeLanguage_Previews: PreviewProvider
-{
-    @State private var closeStatus = false
-        
-    static var previews: some View
-    {
-        AcceptChangeLanguage(closeStatus: $closeStatus)
-    }
+/*
+#Preview {
+    AcceptDeleteRow()
 }
 */
-

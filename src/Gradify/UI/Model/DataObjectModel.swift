@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Student: Identifiable, Sendable
+struct Student: Identifiable, Sendable, Equatable, Hashable
 {
     var id: Int = 0// maybe to fix for all struct data object
     

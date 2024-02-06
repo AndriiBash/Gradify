@@ -10,13 +10,16 @@ import FirebaseAuth
 
 struct StudentListView: View
 {
-    @Binding var studentList: StudentGroup // Change type to StudentGroup
+    @Binding var studentList:  StudentGroup // Change type to StudentGroup
     @Binding var isExpandList: Bool
+    @Binding var isUpdateList: Bool
     
     @State private var isScrollViewOpen: Bool = false
     @State private var isAnimateButtonScrollview: Bool = false
     @State private var scrollViewHeight: CGFloat = 0
-    
+
+    @ObservedObject var writeModel: ReadWriteModel
+
     private let adaptiveColumns = [GridItem(.adaptive(minimum: 160))]
     
     var body: some View
@@ -71,9 +74,9 @@ struct StudentListView: View
         {
             LazyHGrid(rows: adaptiveColumns, spacing: 20)
             {
-                ForEach(studentList.students)
+                ForEach(studentList.students, id: \.id)
                 { student in
-                    StudentCardViewModel(student: student)
+                    StudentCardViewModel(student: .constant(student), updateList: $isUpdateList, writeModel: writeModel)
                         .transition(.opacity)
                 }
             }
@@ -89,9 +92,11 @@ struct StudentListView_Previews: PreviewProvider
 {
     @State private static var listGroup = StudentGroup(name: "Some Group", students: [Student]())
     @State private static var isExapndAllList: Bool = false
+    @State private static var isUpdateList: Bool = false
+    @StateObject private static var writeModel = ReadWriteModel()
     
     static var previews: some View
     {
-        StudentListView(studentList: $listGroup, isExpandList: $isExapndAllList)
+        StudentListView(studentList: $listGroup, isExpandList: $isExapndAllList, isUpdateList: $isUpdateList, writeModel: writeModel)
     }
 }

@@ -9,12 +9,14 @@ import SwiftUI
 
 struct StudentInfoView: View
 {
-    @StateObject private var readModel = ReadWriteModel()
+    @StateObject private var readModel              = ReadWriteModel()
     
-    @State private var isExpandAllList: Bool = false
-    @State private var isShowAddStudentPanel: Bool = false
-    @State private var statusSave: Bool = false
-   // @State private var selectedGroup: StudentGroup? // long proccess make function...
+    @State private var isExpandAllList: Bool        = false
+    @State private var isShowAddStudentPanel: Bool  = false
+    @State private var statusSave: Bool             = false
+    @State private var statusSaveEdit: Bool          = false
+   // @State private var selectedGroup: StudentGroup
+    // long proccess make function...
 
     var body: some View
     {
@@ -27,10 +29,10 @@ struct StudentInfoView: View
             {                
                 VStack(spacing: 0)
                 {
-                    ForEach($readModel.studentGroups.indices, id:\.self)
-                    { index in
-                        StudentListView(studentList: $readModel.studentGroups[index], isExpandList: $isExpandAllList)
-                    }//  ForEach stundet's grouping on group
+                    ForEach(readModel.studentGroups.sorted(by: { $0.name < $1.name }), id: \.self)
+                    { studentGroup in
+                        StudentListView(studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!], isExpandList: $isExpandAllList, isUpdateList: $statusSaveEdit, writeModel: readModel)
+                    }
                     .padding(.top, 4)
                 }// VStack with list group student's
                 .padding(.vertical)
@@ -91,6 +93,19 @@ struct StudentInfoView: View
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
         }//.toolBar for main ZStack
         .frame(minWidth: 300, minHeight: 170)
+        .onChange(of: statusSaveEdit)
+        { _,newValue in
+            if statusSaveEdit
+            {
+                Task
+                {
+                    await readModel.fetchStudentData()
+                }// need add wait view (monitor)
+                
+                statusSaveEdit = false
+            }
+
+        }
     }// body
 }// struct GroupInfoView: View
 

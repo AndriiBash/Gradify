@@ -10,26 +10,25 @@ import SwiftUI
 
 struct StudentCardViewModel: View
 {
-    @State private var isHovered: Bool = false
+    @State private var isHovered:        Bool = false
 
     @State private var showAboutStudent: Bool = false
-    @State private var showEditotStudent: Bool = false
-
-    var student: Student
+    @State private var showEditStudent:  Bool = false
+    @State private var showDeleteStudent:Bool = false
+    
+    @Binding var student:                Student
+    @Binding var updateList:             Bool
+    @ObservedObject var writeModel:      ReadWriteModel
     
     var body: some View
     {
         VStack
         {
             Spacer()
-         
+            
             HStack
             {
-                Text("\(student.lastName)")
-                    .font(.title2)
-                Text("\(student.name)")
-                    .font(.title2)
-                Text("\(student.surname)")
+                Text("\(student.lastName) \(student.name) \(student.surname)")
                     .font(.title2)
             }// HStack with main info
             
@@ -42,7 +41,7 @@ struct StudentCardViewModel: View
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
-
+                    
                     Text("\(dateFormatter.string(from: student.dateBirth))")
                         .font(.subheadline)
                     
@@ -62,7 +61,7 @@ struct StudentCardViewModel: View
                     
                     Spacer()
                 }// Hstack with contact number
-
+                
                 HStack
                 {
                     Image(systemName: "house")
@@ -76,7 +75,7 @@ struct StudentCardViewModel: View
                     
                     Spacer()
                 }// Hstack with residence address
-
+                
                 
             }// VStack with another info
             .padding(.horizontal, 6)
@@ -87,18 +86,16 @@ struct StudentCardViewModel: View
             Spacer()
             
             /*
-            VStack
-            {
-                Text("Test text in bottom")
-            }
-            .padding(.vertical, 6)
-            .frame(maxWidth: .infinity)
-            .background(Color.green)
-            .cornerRadius(10, corners: [.bottomRight, .bottomLeft])
-            .clipped()
-            
-            
-            */
+             VStack
+             {
+             Text("Test text in bottom")
+             }
+             .padding(.vertical, 6)
+             .frame(maxWidth: .infinity)
+             .background(Color.green)
+             .cornerRadius(10, corners: [.bottomRight, .bottomLeft])
+             .clipped()
+             */
         }// main vstack
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 250, height: 150)
@@ -113,7 +110,7 @@ struct StudentCardViewModel: View
             {
                 Button
                 {
-                    //self.didTap = true
+                    showDeleteStudent.toggle()
                 }
                 label:
                 {
@@ -131,7 +128,7 @@ struct StudentCardViewModel: View
                 
                 Button
                 {
-                    // star wars
+                    showEditStudent.toggle()
                 }
                 label:
                 {
@@ -165,8 +162,8 @@ struct StudentCardViewModel: View
                 .opacity(isHovered ? 1.0 : 0.0)
                 .shadow(radius: 6)
             }// HStack with buttons
-            .padding(.top, -6)
-            .zIndex(1)
+                .padding(.top, -6)
+                .zIndex(1)
             ,alignment: .topLeading)// end overlay
         .onHover
         { hovering in
@@ -177,8 +174,15 @@ struct StudentCardViewModel: View
         }
         .sheet(isPresented: $showAboutStudent)
         {
-            RowStudentView(isShowView: $showAboutStudent, student: student)
+            RowStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, student: student)
         }
-
+        .sheet(isPresented: $showEditStudent)
+        {
+            EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $updateList, student: $student, writeModel: writeModel)
+        }
+        .sheet(isPresented: $showDeleteStudent)
+        {
+            AcceptDeleteRow(student: $student, isShowSelfView: $showDeleteStudent, isUpdateListStudent: $updateList, writeModel: writeModel)
+        }
     }
 }

@@ -12,8 +12,22 @@ import FirebaseFirestore
 import SwiftUI
 
 
-struct StudentGroup: Identifiable, Sendable
+struct StudentGroup: Identifiable, Sendable, Hashable
 {
+    static func == (lhs: StudentGroup, rhs: StudentGroup) -> Bool
+    {
+        return lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.students == rhs.students
+    }
+
+    func hash(into hasher: inout Hasher)
+    {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(students)
+    }
+    
     var id = UUID()
     var name: String
     var students: [Student]
@@ -25,22 +39,13 @@ class ReadWriteModel: ObservableObject
     @Published var students = [Student]()
 
     @Published var maxIdStudent: Int = 0
-    
-   // @Published var studentGroups: [StudentGroup] = []
-    
-    @Published var valueFromInternet: String?
-    
-    
-    @Published var fetchDataStatus = false
-    
     @Published var countRecords: Int = 0
     
-    
-    var ref = Database.database().reference()
-    var db = Firestore.firestore()
-    
-    
-    
+    @Published var fetchDataStatus = false
+
+    private var ref = Database.database().reference()
+    private var db = Firestore.firestore()
+
     
     func getEducatProgramNameList() async -> [String]
     {
@@ -51,7 +56,7 @@ class ReadWriteModel: ObservableObject
     
     func getGroupNameList() async -> [String]
     {
-        return ["group1", "group2"]
+        return ["Group 1", "group1", "group2", "IPZ-19"]
     }// func getGroupName() async -> [String]
     
         
@@ -119,7 +124,7 @@ class ReadWriteModel: ObservableObject
         {
             print("Error fetching data: \(error)")
         }
-    }
+    }// func fetchStudentData() async
 
     
     // just example for me
@@ -131,11 +136,7 @@ class ReadWriteModel: ObservableObject
         ]
         
         db.collection("test").addDocument(data: object)
-        
-        //ref.child("test").setValue(object)
     }
-    
-    
     
     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
     {
@@ -157,7 +158,7 @@ class ReadWriteModel: ObservableObject
 
         db.collection("students").addDocument(data: object)
         { error in
-            if let error = error
+            if error != nil
             {
                 status = false
             }
@@ -167,25 +168,108 @@ class ReadWriteModel: ObservableObject
         
         return status
     }// func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, group: String) -> Bool
-
     
     
-    func readValue()
+    func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
     {
-        ref.child("test").observeSingleEvent(of: .value, with: 
-        { snapshot in
+        var status = true
+        
+        let object: [String: Any] =
+        [
+            "id": id,
+            "name": name,
+            "lastName": lastName,
+            "surname": surname,
+            "dateBirth": dateBirth,
+            "contactNumber": contactNumber,
+            "passportNumber": passportNumber,
+            "residenceAddress": residenceAddress,
+            "educationProgram": educationProgram,
+            "group": group
+        ]
+
+        
+        db.collection("students").whereField("id", isEqualTo: id).getDocuments
+        {(snapshot, error) in
             
-            guard let value = snapshot.value as? [String: Any]
-            else
+            if error != nil
             {
+                print ("Error in update data")
+                status = false
                 return
             }
             
-            self.valueFromInternet = value["name"] as? String ?? "noGet"
+            guard let documents = snapshot?.documents else
+            {
+                print("No documents")
+                status = false
+                return
+            }
             
-            print(value["name"] ?? "nil")
-            print("myValue : " + (self.valueFromInternet ?? ""))
-        })
-    }// func readValue()
+            if documents.count == 1
+            {
+                let document = documents[0]
+                let studentRef = self.db.collection("students").document(document.documentID)
+                
+                studentRef.updateData(object)
+                { updateError in
+                    
+                    if let updateError = updateError
+                    {
+                        print("Error updating document : \(updateError)")
+                        status = false
+                    }
+                    else
+                    {
+                        // Document successfully updated
+                        //print("Document successfully updated")
+                        status = true
+                    }
+                }
+            }
+            else
+            {
+                print("Error : Multiple documents found for the given ID")
+                status = false
+            }
+        }
+            
+        return status
+    }//     func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
+    
+    func deleteStudent(withId studentId: Int)
+    {
+        db.collection("students").whereField("id", isEqualTo: studentId).getDocuments
+        { (snapshot, error) in
+            if let error = error {
+                print("Error in get data : \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = snapshot?.documents
+            else
+            {
+                print("No doc")
+                return
+            }
+
+            for document in documents
+            {
+                document.reference.delete
+                { error in
+                    if let error = error
+                    {
+                        print("error in delete student: \(error.localizedDescription)")
+                    }
+                    else
+                    {
+                        // good it's work!
+                    }
+                }
+            }
+            
+        }
+    }// func deleteStudent(withId studentId: Int)
+
 }
 

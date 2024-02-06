@@ -17,7 +17,7 @@ struct AddStudentView: View
     @State private var passportNumber:          String = ""
     @State private var residenceAddress:        String = ""
     @State private var group:                   String = "Без групи"
-    @State private var educationProgram:        String = "Без програми"
+    @State private var educationProgram:        String = "Немає програми"
         
     @State private var isWrongName:             Bool = false
     @State private var isWrongLastName:         Bool = false
@@ -31,8 +31,7 @@ struct AddStudentView: View
 
     @Binding var isShowForm:                    Bool
     @Binding var statusSave:                    Bool
-    @ObservedObject var writeModel:             ReadWriteModel
-    
+    @ObservedObject var writeModel:             ReadWriteModel    
     
     var body: some View
     {
@@ -150,8 +149,8 @@ struct AddStudentView: View
                     
                     Picker("Навчальна програма", selection: $educationProgram)
                     {
-                        Text("Без програми")
-                                .tag("Без програми")
+                        Text("Немає програми")
+                                .tag("Немає програми")
                         
                         Divider()
                         
