@@ -14,7 +14,7 @@ import SwiftUI
 
 struct StudentGroup: Identifiable, Sendable, Hashable
 {
-    static func == (lhs: StudentGroup, rhs: StudentGroup) -> Bool
+    static func == (lhs: StudentGroup, rhs: StudentGroup) -> Bool // maybe delte async
     {
         return lhs.id == rhs.id &&
         lhs.name == rhs.name &&
@@ -60,10 +60,10 @@ class ReadWriteModel: ObservableObject
     }// func getGroupName() async -> [String]
     
         
+
     func fetchStudentData() async
     {
-        do
-        {
+        do {
             DispatchQueue.main.async
             {
                 self.isLoadingFetchData = true
@@ -72,48 +72,42 @@ class ReadWriteModel: ObservableObject
             
             let querySnapshot = try await db.collection("students").getDocuments()
             
-            DispatchQueue.main.async
-            {
+            let groupedUsers = Dictionary(grouping: querySnapshot.documents.map
+                                          {queryDocumentSnapshot in
+                let data = queryDocumentSnapshot.data()
                 
-                let groupedUsers = Dictionary(grouping: querySnapshot.documents.map
-                { queryDocumentSnapshot in
-                    let data = queryDocumentSnapshot.data()
-                        
-                    let id = data["id"] as? Int ?? 0
-                    
-                    if self.maxIdStudent <= id
+                let id = data["id"] as? Int ?? -1
+                if self.maxIdStudent <= id
+                {
+                    DispatchQueue.main.async
                     {
                         self.maxIdStudent = id + 1
                     }
-                    
-                    let name = data["name"] as? String ?? ""
-                    let lastName = data["lastName"] as? String ?? ""
-                    let surname = data["surname"] as? String ?? ""
-                                        
-                    let date: Date = dateFormatter.date(from: (data["dateBirth"] as? String) ?? "") ?? Date.from(year: 2000, month: 12, day: 12)!
-
-                    let contactNumber = data["contactNumber"] as? String ?? "+380 000 000 000"
-                    let passportNumber = data["passportNumber"] as? String ?? ""
-                    
-                    let residenceAddress = data["residenceAddress"] as? String ?? ""
-
-                    let educationProgram = data ["educationProgram"] as? String ?? "Немає програми"
-                    let group = data["group"] as? String ?? "Немає групи"
+                }
                 
-                    return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
-                }, by: { $0.group })
-
+                let name = data["name"] as? String ?? ""
+                let lastName = data["lastName"] as? String ?? ""
+                let surname = data["surname"] as? String ?? ""
+                let date: Date = dateFormatter.date(from: (data["dateBirth"] as? String) ?? "") ?? Date.from(year: 2000, month: 12, day: 12)!
+                let contactNumber = data["contactNumber"] as? String ?? "+380 000 000 000"
+                let passportNumber = data["passportNumber"] as? String ?? ""
+                let residenceAddress = data["residenceAddress"] as? String ?? ""
+                let educationProgram = data["educationProgram"] as? String ?? "Немає програми"
+                let group = data["group"] as? String ?? "Немає групи"
+                
+                return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
+            }, by: { $0.group })
+            
+            DispatchQueue.main.async
+            {
                 self.studentGroups = groupedUsers.map
                 { group, users in
                     StudentGroup(name: group, students: users)
                 }
                 
                 self.countRecords = self.studentGroups.flatMap { $0.students }.count
-            }
-
-            
-            DispatchQueue.main.async
-            {
+                
+                // Выключаем индикатор загрузки после обновления данных
                 withAnimation(Animation.easeOut(duration: 0.5))
                 {
                     self.isLoadingFetchData = false
@@ -122,28 +116,20 @@ class ReadWriteModel: ObservableObject
         }
         catch
         {
-            print("Error fetching data: \(error)")
+            DispatchQueue.main.async
+            {
+                print("Error fetching data: \(error)")
+                self.isLoadingFetchData = false
+            }
         }
     }// func fetchStudentData() async
+    
+    
 
     
-    // just example for me
-    func addEnrty()
+    func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     {
-        let object: [String: Any] =
-        [ "name" : "macOS test" as NSObject,
-          "YouTube" : "yep"
-        ]
-        
-        db.collection("test").addDocument(data: object)
-    }
-    
-    func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
-    {
-        var status: Bool = true
-        
-        let object: [String: Any] =
-        [
+        let object: [String: Any] = [
             "id": maxIdStudent,
             "name": name,
             "lastName": lastName,
@@ -156,87 +142,86 @@ class ReadWriteModel: ObservableObject
             "group": group
         ]
 
-        db.collection("students").addDocument(data: object)
-        { error in
-            if error != nil
-            {
-                status = false
-            }
+        do
+        {
+            try await db.collection("students").addDocument(data: object)
+            maxIdStudent += 1
+            return true
         }
+        catch
+        {
+            return false
+        }
+    }//     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
 
-        maxIdStudent += 1
+
+    
+    
+    
+    
+    func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
+    {    let object: [String: Any] = [
+        "id": id,
+        "name": name,
+        "lastName": lastName,
+        "surname": surname,
+        "dateBirth": dateBirth,
+        "contactNumber": contactNumber,
+        "passportNumber": passportNumber,
+        "residenceAddress": residenceAddress,
+        "educationProgram": educationProgram,
+        "group": group
+    ]
         
-        return status
-    }// func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, group: String) -> Bool
-    
-    
-    func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
+        do
+        {
+            let snapshot = try await db.collection("students").whereField("id", isEqualTo: id).getDocuments(
+            )
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("students").document(document.documentID).updateData(object)
+            return true
+        } catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+    }// func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
+
+    func deleteStudent(withId studentId: Int) async
     {
-        var status = true
-        
-        let object: [String: Any] =
-        [
-            "id": id,
-            "name": name,
-            "lastName": lastName,
-            "surname": surname,
-            "dateBirth": dateBirth,
-            "contactNumber": contactNumber,
-            "passportNumber": passportNumber,
-            "residenceAddress": residenceAddress,
-            "educationProgram": educationProgram,
-            "group": group
-        ]
-
-        
-        db.collection("students").whereField("id", isEqualTo: id).getDocuments
-        {(snapshot, error) in
+        do {
+            let snapshot = try await db.collection("students").whereField("id", isEqualTo: studentId).getDocuments()
             
-            if error != nil
+            if snapshot.documents.isEmpty
             {
-                print ("Error in update data")
-                status = false
+                print("No documents found")
                 return
             }
             
-            guard let documents = snapshot?.documents else
+            for document in snapshot.documents
             {
-                print("No documents")
-                status = false
-                return
-            }
-            
-            if documents.count == 1
-            {
-                let document = documents[0]
-                let studentRef = self.db.collection("students").document(document.documentID)
-                
-                studentRef.updateData(object)
-                { updateError in
-                    
-                    if let updateError = updateError
-                    {
-                        print("Error updating document : \(updateError)")
-                        status = false
-                    }
-                    else
-                    {
-                        // Document successfully updated
-                        //print("Document successfully updated")
-                        status = true
-                    }
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete student: \(error.localizedDescription)")
                 }
             }
-            else
-            {
-                print("Error : Multiple documents found for the given ID")
-                status = false
-            }
         }
-            
-        return status
-    }//     func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) -> Bool
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteStudent(withId studentId: Int) async {
     
+
     func deleteStudent(withId studentId: Int)
     {
         db.collection("students").whereField("id", isEqualTo: studentId).getDocuments

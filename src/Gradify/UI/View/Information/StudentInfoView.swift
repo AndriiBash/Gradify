@@ -103,9 +103,8 @@ struct StudentInfoView: View
         
             Spacer()
         }//.toolBar for main ZStack
-        .frame(minWidth: 300, minHeight: 170)
+        .frame(minWidth: 400, minHeight: 300)
         .searchable(text: $searchString) {}
-        
         .onChange(of: statusSaveEdit)
         { _,newValue in
             if statusSaveEdit

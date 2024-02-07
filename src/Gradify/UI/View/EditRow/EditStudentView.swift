@@ -240,11 +240,14 @@ struct EditStudentView: View
                 {
                     if !editedName.isEmpty && !editedLastName.isEmpty && !editedSurname.isEmpty && !editedContactNumber.isEmpty && editedContactNumber.count >= 12 && editedPassportNumber.count == 8 && !editedResidenceAddress.isEmpty
                     {
-                        let status = writeModel.updateStudent(id: student.id, name: editedName, lastName: editedLastName, surname: editedSurname, dateBirth: dateFormatter.string(from: editedBirthDayDate), contactNumber: editedContactNumber, passportNumber: editedPassportNumber, residenceAddress: editedResidenceAddress, educationProgram: editedEducationProgram, group: editedGroup)
-                        
-                        isUpdateListStudent.toggle()
-                        
-                        statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                        Task
+                        {
+                            let status = await writeModel.updateStudent(id: student.id, name: editedName, lastName: editedLastName, surname: editedSurname, dateBirth: dateFormatter.string(from: editedBirthDayDate), contactNumber: editedContactNumber, passportNumber: editedPassportNumber, residenceAddress: editedResidenceAddress, educationProgram: editedEducationProgram, group: editedGroup)
+                            
+                            isUpdateListStudent.toggle()
+                            
+                            statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                        }
                     }
                     else
                     {

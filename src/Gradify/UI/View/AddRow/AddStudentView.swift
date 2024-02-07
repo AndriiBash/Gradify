@@ -213,9 +213,9 @@ struct AddStudentView: View
                     {
                         isShowForm = false
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
+                        Task
                         {
-                            statusSave = writeModel.addNewStudent(name: name, lastName: lastName, surname: surname, dateBirth:  dateFormatter.string(from: selectedDate), contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
+                            statusSave = await writeModel.addNewStudent(name: name, lastName: lastName, surname: surname, dateBirth:  dateFormatter.string(from: selectedDate), contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
                         }
                     }
                     else

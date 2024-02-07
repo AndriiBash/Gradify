@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct StudentListView: View
 {
@@ -17,14 +16,18 @@ struct StudentListView: View
     
     @State private var isScrollViewOpen:          Bool = false
     @State private var isAnimateButtonScrollview: Bool = false
-    @State private var areCardsVisible:           Bool = false
-    @State private var areSearchCardsVisible:     Bool = false
     @State private var hasResult:                 Bool = true
     @State private var scrollViewHeight:          CGFloat = 0
+    
+    @State private var areCardsVisible:           Bool = false
+    @State private var areSearchCardsVisible:     Bool = false
+    
+    @State private var cardVisibility:            [Bool] = []
+    @State private var cardSearchCardsVisible:    [Bool] = []
 
     @ObservedObject var writeModel: ReadWriteModel
     
-    private let adaptiveColumns = [GridItem(.adaptive(minimum: 160))]
+    private let adaptiveColumns = [GridItem(.adaptive(minimum: 120))]
     
     var body: some View
     {
