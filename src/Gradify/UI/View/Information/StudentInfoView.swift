@@ -16,6 +16,8 @@ struct StudentInfoView: View
     @State private var statusSave: Bool             = false
     @State private var statusSaveEdit: Bool         = false
     @State private var searchString: String         = ""
+    @State private var oldSearchString: String      = ""
+
    // @State private var selectedGroup: StudentGroup
     // long proccess make function...
     
@@ -60,9 +62,14 @@ struct StudentInfoView: View
                 SuccessSaveView(isAnimated: $statusSave)
                     .onAppear
                     {
+                        oldSearchString = searchString
+                        searchString = ""
+
                         Task
                         {
                             await readModel.fetchStudentData()
+                            searchString = oldSearchString
+
                         }// need add wait view (monitor)
                     }
             }
@@ -98,18 +105,24 @@ struct StudentInfoView: View
         }//.toolBar for main ZStack
         .frame(minWidth: 300, minHeight: 170)
         .searchable(text: $searchString) {}
+        
         .onChange(of: statusSaveEdit)
         { _,newValue in
             if statusSaveEdit
             {
+                oldSearchString = searchString
+                searchString = ""
+
                 Task
                 {
                     await readModel.fetchStudentData()
+                    
+                    searchString = oldSearchString
+
                 }// need add wait view (monitor)
                 
                 statusSaveEdit = false
             }
-
         }
         .overlay
         {

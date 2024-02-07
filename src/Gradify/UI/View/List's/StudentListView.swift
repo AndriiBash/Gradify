@@ -76,22 +76,25 @@ struct StudentListView: View
                 }
                 
             }
-            .onChange(of: searchString)
+            /*.onChange(of: searchString)
             { _, newValue in
                 if !searchString.isEmpty
                 {
-                    hasResult = !searchString.isEmpty && studentList.students.contains
-                    { student in
-                        return student.name.lowercased().contains(searchString.lowercased()) ||
-                        student.lastName.lowercased().contains(searchString.lowercased()) ||
-                        student.surname.lowercased().contains(searchString.lowercased())
+                    Task
+                    {
+                        hasResult = !searchString.isEmpty && studentList.students.contains
+                        { student in
+                            return student.name.lowercased().contains(searchString.lowercased()) ||
+                            student.lastName.lowercased().contains(searchString.lowercased()) ||
+                            student.surname.lowercased().contains(searchString.lowercased())
+                        }
                     }
                 }
                 else
                 {
                     hasResult = true
                 }
-            }
+            }*/
         }
         
         ScrollView(.horizontal, showsIndicators: false)
@@ -122,7 +125,14 @@ struct StudentListView: View
                         }
                         
                     }
-                    else if student.name.lowercased().contains(searchString.lowercased()) || student.lastName.lowercased().contains(searchString.lowercased()) || student.surname.lowercased().contains(searchString.lowercased())
+                    else if student.name.lowercased().contains(searchString.lowercased()) ||
+                        student.lastName.lowercased().contains(searchString.lowercased()) ||
+                        student.surname.lowercased().contains(searchString.lowercased()) ||
+                        student.contactNumber.lowercased().contains(searchString.lowercased()) ||
+                        student.passportNumber.lowercased().contains(searchString.lowercased()) ||
+                        student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+                        student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+                        student.group.lowercased().contains(searchString.lowercased())
                         {
                             StudentCardViewModel(student: .constant(student), updateList: $isUpdateList, writeModel: writeModel)
                                 .opacity(areSearchCardsVisible ? 1 : 0)
@@ -149,7 +159,14 @@ struct StudentListView: View
             }// ScrollView
                 .onChange(of: searchString)
                 { _, newValue in
-                    if !searchString.isEmpty
+                    if searchString.isEmpty
+                    {
+                        withAnimation
+                        {
+                            hasResult = true
+                        }
+                    }
+                    else
                     {
                         withAnimation
                         {
@@ -157,7 +174,12 @@ struct StudentListView: View
                             { student in
                                 return student.name.lowercased().contains(searchString.lowercased()) ||
                                 student.lastName.lowercased().contains(searchString.lowercased()) ||
-                                student.surname.lowercased().contains(searchString.lowercased())
+                                student.surname.lowercased().contains(searchString.lowercased()) ||
+                                student.contactNumber.lowercased().contains(searchString.lowercased()) ||
+                                student.passportNumber.lowercased().contains(searchString.lowercased()) ||
+                                student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+                                student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+                                student.group.lowercased().contains(searchString.lowercased())
                             }
                         }
                         
@@ -173,11 +195,7 @@ struct StudentListView: View
                             
                         }
                     }
-                    else
-                    {
-                        hasResult = true
-                    }
-                }
+                }// onChange
             .frame(height: scrollViewHeight)
     }
 }
