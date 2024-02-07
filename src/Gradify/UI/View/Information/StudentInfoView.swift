@@ -13,11 +13,11 @@ struct StudentInfoView: View
     
     @State private var isExpandAllList: Bool        = false
     @State private var isShowAddStudentPanel: Bool  = false
-    @State private var statusSave: Bool             = false
-    @State private var statusSaveEdit: Bool         = false
-    @State private var searchString: String         = ""
+    @State private var statusSave:      Bool        = false
+    @State private var statusSaveEdit:  Bool        = false
+    @State private var searchString:    String      = ""
     @State private var oldSearchString: String      = ""
-
+    
    // @State private var selectedGroup: StudentGroup
     // long proccess make function...
     
@@ -34,7 +34,17 @@ struct StudentInfoView: View
                 {
                     ForEach(readModel.studentGroups.sorted(by: { $0.name < $1.name }), id: \.self)
                     { studentGroup in
-                        StudentListView(studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!], isExpandList: $isExpandAllList, isUpdateList: $statusSaveEdit, searchString: $searchString, writeModel: readModel)
+                        StudentListView(
+                            studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!],
+                            isExpandListForAll: $isExpandAllList,
+                            isUpdateList: $statusSaveEdit,
+                            searchString: $searchString,
+                            writeModel: readModel)
+                        .onAppear
+                        {
+                            //itOpenList += 1
+                            //openListStatus.append(false)
+                        }
                     }// ForEach with list student
                     .padding(.top, 4)
                 }// VStack with list group student's
@@ -103,7 +113,7 @@ struct StudentInfoView: View
         
             Spacer()
         }//.toolBar for main ZStack
-        .frame(minWidth: 400, minHeight: 300)
+        .frame(minWidth: 300, minHeight: 200)
         .searchable(text: $searchString) {}
         .onChange(of: statusSaveEdit)
         { _,newValue in

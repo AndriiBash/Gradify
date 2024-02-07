@@ -81,21 +81,7 @@ struct StudentCardViewModel: View
             .padding(.horizontal, 6)
             .padding(.top, 4)
             
-            
             Spacer()
-            Spacer()
-            
-            /*
-             VStack
-             {
-             Text("Test text in bottom")
-             }
-             .padding(.vertical, 6)
-             .frame(maxWidth: .infinity)
-             .background(Color.green)
-             .cornerRadius(10, corners: [.bottomRight, .bottomLeft])
-             .clipped()
-             */
         }// main vstack
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 250, height: 150)

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct StudentListView: View
 {
-    @Binding var studentList:  StudentGroup // Change type to StudentGroup
-    @Binding var isExpandList: Bool
-    @Binding var isUpdateList: Bool
-    @Binding var searchString: String
+    @Binding var studentList:        StudentGroup
+    @Binding var isExpandListForAll: Bool
+    @Binding var isUpdateList:       Bool
+    @Binding var searchString:       String
     
     @State private var isScrollViewOpen:          Bool = false
     @State private var isAnimateButtonScrollview: Bool = false
@@ -68,7 +68,7 @@ struct StudentListView: View
                 Spacer()
             }//HStack Button for expand list group student's
             .padding(.horizontal, 20)
-            .onChange(of: isExpandList)
+            .onChange(of: isExpandListForAll)
             { _,newValue in
                 isAnimateButtonScrollview = newValue
                 isScrollViewOpen = newValue
@@ -200,6 +200,26 @@ struct StudentListView: View
                     }
                 }// onChange
             .frame(height: scrollViewHeight)
+            .onAppear
+            {
+                if UserDefaults.standard.bool(forKey: "list-status-open-\(studentList.name)")
+                {
+                    isScrollViewOpen = true
+                    isAnimateButtonScrollview = true
+
+                    withAnimation(Animation.easeInOut(duration: 0.2))
+                    {
+                        scrollViewHeight = 190
+                    }
+                }
+                print("status open \(studentList.name) : \(isScrollViewOpen)")
+            }
+            .onChange(of: isScrollViewOpen)
+            { oldValue, newValue in
+                UserDefaults.standard.set(newValue, forKey: "list-status-open-\(studentList.name)")
+                
+                print("change status open \(studentList.name) : \(isScrollViewOpen)")
+            }
     }
 }
 
@@ -215,6 +235,6 @@ struct StudentListView_Previews: PreviewProvider
     
     static var previews: some View
     {
-        StudentListView(studentList: $listGroup, isExpandList: $isExapndAllList, isUpdateList: $isUpdateList, searchString: $searchString, writeModel: writeModel)
+        StudentListView(studentList: $listGroup, isExpandListForAll: $isExapndAllList, isUpdateList: $isUpdateList, searchString: $searchString, writeModel: writeModel)
     }
 }
