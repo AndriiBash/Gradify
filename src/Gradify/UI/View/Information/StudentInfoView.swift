@@ -14,10 +14,11 @@ struct StudentInfoView: View
     @State private var isExpandAllList: Bool        = false
     @State private var isShowAddStudentPanel: Bool  = false
     @State private var statusSave: Bool             = false
-    @State private var statusSaveEdit: Bool          = false
+    @State private var statusSaveEdit: Bool         = false
+    @State private var searchString: String         = ""
    // @State private var selectedGroup: StudentGroup
     // long proccess make function...
-
+    
     var body: some View
     {
         ZStack
@@ -31,8 +32,8 @@ struct StudentInfoView: View
                 {
                     ForEach(readModel.studentGroups.sorted(by: { $0.name < $1.name }), id: \.self)
                     { studentGroup in
-                        StudentListView(studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!], isExpandList: $isExpandAllList, isUpdateList: $statusSaveEdit, writeModel: readModel)
-                    }
+                        StudentListView(studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!], isExpandList: $isExpandAllList, isUpdateList: $statusSaveEdit, searchString: $searchString, writeModel: readModel)
+                    }// ForEach with list student
                     .padding(.top, 4)
                 }// VStack with list group student's
                 .padding(.vertical)
@@ -74,25 +75,29 @@ struct StudentInfoView: View
         {
             Button
             {
-                isShowAddStudentPanel.toggle()
-            }
-            label:
-            {
-                Image(systemName: "plus.square")
-            }
-            .help("Додати нову запис")
-            
-            Button
-            {
                 isExpandAllList.toggle()
             }
             label:
             {
-                Image(systemName: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
+                Label(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки", systemImage: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
             }// expand all list card in some view
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
+            .padding(.leading, 160)
+            
+            Button
+            {
+                isShowAddStudentPanel.toggle()
+            }
+            label:
+            {
+                Label("Додати нову запис", systemImage: "plus.square")
+            }
+            .help("Додати нову запис")
+        
+            Spacer()
         }//.toolBar for main ZStack
         .frame(minWidth: 300, minHeight: 170)
+        .searchable(text: $searchString) {}
         .onChange(of: statusSaveEdit)
         { _,newValue in
             if statusSaveEdit
@@ -105,6 +110,13 @@ struct StudentInfoView: View
                 statusSaveEdit = false
             }
 
+        }
+        .overlay
+        {
+            if readModel.isLoadingFetchData
+            {
+                LoadingScreen()
+            }
         }
     }// body
 }// struct GroupInfoView: View

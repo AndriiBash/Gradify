@@ -41,7 +41,7 @@ class ReadWriteModel: ObservableObject
     @Published var maxIdStudent: Int = 0
     @Published var countRecords: Int = 0
     
-    @Published var fetchDataStatus = false
+    @Published var isLoadingFetchData = false
 
     private var ref = Database.database().reference()
     private var db = Firestore.firestore()
@@ -66,7 +66,7 @@ class ReadWriteModel: ObservableObject
         {
             DispatchQueue.main.async
             {
-                self.fetchDataStatus = false
+                self.isLoadingFetchData = true
                 self.countRecords = 0
             }
             
@@ -116,7 +116,7 @@ class ReadWriteModel: ObservableObject
             {
                 withAnimation(Animation.easeOut(duration: 0.5))
                 {
-                    self.fetchDataStatus = true
+                    self.isLoadingFetchData = false
                 }
             }
         }

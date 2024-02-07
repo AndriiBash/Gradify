@@ -93,7 +93,7 @@ struct TestView: View
                                 ForEach(readModel.students.indices, id: \.self)
                                 { index in
                                     textViewRow(name: readModel.students[index].name, lastName: readModel.students[index].lastName)
-                                        .scaleEffect(readModel.fetchDataStatus ? 1 : 0)
+                                        .scaleEffect(readModel.isLoadingFetchData ? 1 : 0)
                                     //.padding(4)
                                         .transition(.opacity)
                                 }// ForEach
