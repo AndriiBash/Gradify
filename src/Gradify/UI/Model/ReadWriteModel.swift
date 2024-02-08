@@ -62,31 +62,28 @@ class ReadWriteModel: ObservableObject
     
         
 
+
+    
     func fetchStudentData() async
     {
         do
         {
-            DispatchQueue.main.async
-            {
-                self.isLoadingFetchData = true
-                self.countRecords = 0
-            }
-            
+            self.isLoadingFetchData = true
+            self.countRecords = 0
+
             let querySnapshot = try await db.collection("students").getDocuments()
-            
+
             let groupedUsers = Dictionary(grouping: querySnapshot.documents.map
-                                          {queryDocumentSnapshot in
+            { queryDocumentSnapshot in
+            
                 let data = queryDocumentSnapshot.data()
-                
+
                 let id = data["id"] as? Int ?? -1
                 if self.maxIdStudent <= id
                 {
-                    DispatchQueue.main.async
-                    {
-                        self.maxIdStudent = id + 1
-                    }
+                    self.maxIdStudent = id + 1
                 }
-                
+
                 let name = data["name"] as? String ?? ""
                 let lastName = data["lastName"] as? String ?? ""
                 let surname = data["surname"] as? String ?? ""
@@ -96,36 +93,43 @@ class ReadWriteModel: ObservableObject
                 let residenceAddress = data["residenceAddress"] as? String ?? ""
                 let educationProgram = data["educationProgram"] as? String ?? "Немає програми"
                 let group = data["group"] as? String ?? "Немає групи"
-                
+
                 return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
             }, by: { $0.group })
-            
+
+            self.studentGroups = groupedUsers.map
+            { group, users in
+                StudentGroup(name: group, students: users)
+            }
+
+            self.countRecords = self.studentGroups.flatMap { $0.students }.count
+
             DispatchQueue.main.async
             {
-                self.studentGroups = groupedUsers.map
-                { group, users in
-                    StudentGroup(name: group, students: users)
-                }
-                
-                self.countRecords = self.studentGroups.flatMap { $0.students }.count
-                
                 withAnimation(Animation.easeOut(duration: 0.5))
                 {
                     self.isLoadingFetchData = false
                 }
             }
         }
+        catch let error as NSError
+        {
+            DispatchQueue.main.async
+            {
+                print("error Firestore : \(error.localizedDescription)")
+                self.isLoadingFetchData = false
+            }
+        }
         catch
         {
             DispatchQueue.main.async
             {
-                print("Error fetching data: \(error)")
+                print("Not anotteted error : \(error)")
                 self.isLoadingFetchData = false
             }
         }
     }// func fetchStudentData() async
-    
-    
+
 
     
     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool

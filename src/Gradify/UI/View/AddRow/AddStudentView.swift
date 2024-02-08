@@ -209,7 +209,7 @@ struct AddStudentView: View
                 
                 Button
                 {
-                    if !name.isEmpty && !lastName.isEmpty && !surname.isEmpty && !contactNumber.isEmpty && contactNumber.count >= 12 && passportNumber.count == 8 && !residenceAddress.isEmpty
+                    if !name.isEmpty && !lastName.isEmpty && !surname.isEmpty && !contactNumber.isEmpty && contactNumber.count == 13 && passportNumber.count == 8 && !residenceAddress.isEmpty
                     {
                         isShowForm = false
                                                 
@@ -236,7 +236,7 @@ struct AddStudentView: View
                             {
                                 isWrongSurname = true
                             }
-                            if contactNumber.isEmpty || contactNumber.count < 12
+                            if contactNumber.isEmpty || contactNumber.count < 13
                             {
                                 isWrongContactNumber = true
                             }
