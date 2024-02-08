@@ -212,13 +212,12 @@ struct StudentListView: View
                         scrollViewHeight = 190
                     }
                 }
-                print("status open \(studentList.name) : \(isScrollViewOpen)")
+                //print("status open \(studentList.name) : \(isScrollViewOpen)")
             }
             .onChange(of: isScrollViewOpen)
             { oldValue, newValue in
                 UserDefaults.standard.set(newValue, forKey: "list-status-open-\(studentList.name)")
-                
-                print("change status open \(studentList.name) : \(isScrollViewOpen)")
+                //print("change status open \(studentList.name) : \(isScrollViewOpen)")
             }
     }
 }

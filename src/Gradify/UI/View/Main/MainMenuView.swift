@@ -41,7 +41,7 @@ struct MainMenuView: View
                             Label("Студенти", systemImage: "graduationcap")
                         }
                         
-                        NavigationLink(destination: TempView(), tag: "Item2", selection: $selection)
+                        NavigationLink(destination: ButtonViewModel(), tag: "Item2", selection: $selection)
                         {
                             Label("Item 2", systemImage: "square.fill")
                         }

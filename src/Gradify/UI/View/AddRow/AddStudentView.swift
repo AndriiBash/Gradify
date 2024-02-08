@@ -212,11 +212,13 @@ struct AddStudentView: View
                     if !name.isEmpty && !lastName.isEmpty && !surname.isEmpty && !contactNumber.isEmpty && contactNumber.count >= 12 && passportNumber.count == 8 && !residenceAddress.isEmpty
                     {
                         isShowForm = false
-                        
+                                                
                         Task
                         {
                             statusSave = await writeModel.addNewStudent(name: name, lastName: lastName, surname: surname, dateBirth:  dateFormatter.string(from: selectedDate), contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
                         }
+                        
+                        statusSave = false
                     }
                     else
                     {

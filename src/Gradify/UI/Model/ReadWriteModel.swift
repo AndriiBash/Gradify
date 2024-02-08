@@ -47,6 +47,7 @@ class ReadWriteModel: ObservableObject
     private var db = Firestore.firestore()
 
     
+    
     func getEducatProgramNameList() async -> [String]
     {
         return ["program1", "program2"]
@@ -63,7 +64,8 @@ class ReadWriteModel: ObservableObject
 
     func fetchStudentData() async
     {
-        do {
+        do
+        {
             DispatchQueue.main.async
             {
                 self.isLoadingFetchData = true
@@ -107,7 +109,6 @@ class ReadWriteModel: ObservableObject
                 
                 self.countRecords = self.studentGroups.flatMap { $0.students }.count
                 
-                // Выключаем индикатор загрузки после обновления данных
                 withAnimation(Animation.easeOut(duration: 0.5))
                 {
                     self.isLoadingFetchData = false
@@ -141,11 +142,11 @@ class ReadWriteModel: ObservableObject
             "educationProgram": educationProgram,
             "group": group
         ]
-
+        
         do
         {
             try await db.collection("students").addDocument(data: object)
-            maxIdStudent += 1
+            self.maxIdStudent += 1
             return true
         }
         catch
@@ -222,6 +223,7 @@ class ReadWriteModel: ObservableObject
     }// func deleteStudent(withId studentId: Int) async {
     
 
+    /*
     func deleteStudent(withId studentId: Int)
     {
         db.collection("students").whereField("id", isEqualTo: studentId).getDocuments
@@ -255,6 +257,6 @@ class ReadWriteModel: ObservableObject
             
         }
     }// func deleteStudent(withId studentId: Int)
-
+     */
 }
 

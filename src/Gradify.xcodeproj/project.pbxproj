@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B50964552B6A85A00084050C /* TempView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50964542B6A85A00084050C /* TempView.swift */; };
 		B50964592B6AA2770084050C /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50964582B6AA2770084050C /* ViewExtension.swift */; };
 		B512AC612B36F93100E9A09A /* BlurBehindWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */; };
 		B551A4802B45EB5C00B9E928 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B551A4822B45EB5C00B9E928 /* Localizable.strings */; };
@@ -20,7 +19,6 @@
 		B5A5C8B42B6BD331008F03D5 /* PressedInfoButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8B32B6BD331008F03D5 /* PressedInfoButtonStyle.swift */; };
 		B5A5C8B62B6BD33B008F03D5 /* PressedEditButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8B52B6BD33B008F03D5 /* PressedEditButtonStyle.swift */; };
 		B5A5C8B82B6BD8AC008F03D5 /* StudentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8B72B6BD8AC008F03D5 /* StudentCardViewModel.swift */; };
-		B5A6F37D2B52CAE30044DFF8 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37C2B52CAE30044DFF8 /* TestView.swift */; };
 		B5A6F37F2B52CD8E0044DFF8 /* ReadWriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6F37E2B52CD8E0044DFF8 /* ReadWriteModel.swift */; };
 		B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EA42B30C442002E0F4D /* AppDelegate.swift */; };
 		B5B55EA92B30C444002E0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B55EA82B30C444002E0F4D /* Assets.xcassets */; };
@@ -60,7 +58,6 @@
 
 /* Begin PBXFileReference section */
 		B5060CD82B63F6A600316802 /* DataObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObjectModel.swift; sourceTree = "<group>"; };
-		B50964542B6A85A00084050C /* TempView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempView.swift; sourceTree = "<group>"; };
 		B50964582B6AA2770084050C /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		B512AC602B36F93100E9A09A /* BlurBehindWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBehindWindow.swift; sourceTree = "<group>"; };
 		B551A4832B45EB5E00B9E928 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -73,7 +70,6 @@
 		B5A5C8B32B6BD331008F03D5 /* PressedInfoButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressedInfoButtonStyle.swift; sourceTree = "<group>"; };
 		B5A5C8B52B6BD33B008F03D5 /* PressedEditButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressedEditButtonStyle.swift; sourceTree = "<group>"; };
 		B5A5C8B72B6BD8AC008F03D5 /* StudentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCardViewModel.swift; sourceTree = "<group>"; };
-		B5A6F37C2B52CAE30044DFF8 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestView.swift; path = Gradify/UI/View/TestView.swift; sourceTree = SOURCE_ROOT; };
 		B5A6F37E2B52CD8E0044DFF8 /* ReadWriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadWriteModel.swift; sourceTree = "<group>"; };
 		B5B55EA12B30C442002E0F4D /* Gradify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gradify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B55EA42B30C442002E0F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -325,8 +321,6 @@
 				B5CC2B112B6E53FB001E86BD /* List's */,
 				B5A5C8AC2B6BD2CC008F03D5 /* Information */,
 				B50964562B6AA23A0084050C /* Extensions */,
-				B5A6F37C2B52CAE30044DFF8 /* TestView.swift */,
-				B50964542B6A85A00084050C /* TempView.swift */,
 				B5B55EE32B30CEBB002E0F4D /* PopUp */,
 				B5B55EDB2B30CE99002E0F4D /* Main */,
 			);
@@ -520,7 +514,6 @@
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
 				B5A5C8B82B6BD8AC008F03D5 /* StudentCardViewModel.swift in Sources */,
-				B5A6F37D2B52CAE30044DFF8 /* TestView.swift in Sources */,
 				B5B55EDF2B30CE9F002E0F4D /* LoginView.swift in Sources */,
 				B5A5C8B62B6BD33B008F03D5 /* PressedEditButtonStyle.swift in Sources */,
 				B5CC2B192B6FF9F1001E86BD /* SuccessSaveView.swift in Sources */,
@@ -538,7 +531,6 @@
 				B50964592B6AA2770084050C /* ViewExtension.swift in Sources */,
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguageView.swift in Sources */,
 				B5CC2B242B713729001E86BD /* RowStudentView.swift in Sources */,
-				B50964552B6A85A00084050C /* TempView.swift in Sources */,
 				B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

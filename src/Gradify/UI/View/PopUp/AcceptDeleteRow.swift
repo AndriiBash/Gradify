@@ -50,9 +50,12 @@ struct AcceptDeleteRow: View
                 {
                     Button
                     {
-                        writeModel.deleteStudent(withId: student.id)
-                        isUpdateListStudent.toggle()
-                        isShowSelfView = false
+                        Task
+                        {
+                            await writeModel.deleteStudent(withId: student.id)
+                            isUpdateListStudent.toggle()
+                            isShowSelfView = false
+                        }
                     }
                     label:
                     {

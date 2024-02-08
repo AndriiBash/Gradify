@@ -15,11 +15,12 @@ struct StudentInfoView: View
     @State private var isShowAddStudentPanel: Bool  = false
     @State private var statusSave:      Bool        = false
     @State private var statusSaveEdit:  Bool        = false
+    @State private var showStatusSave:  Bool        = false
     @State private var searchString:    String      = ""
     @State private var oldSearchString: String      = ""
     
-   // @State private var selectedGroup: StudentGroup
-    // long proccess make function...
+    // @State private var selectedGroup: StudentGroup
+    // long proccess make this function...
     
     var body: some View
     {
@@ -40,11 +41,6 @@ struct StudentInfoView: View
                             isUpdateList: $statusSaveEdit,
                             searchString: $searchString,
                             writeModel: readModel)
-                        .onAppear
-                        {
-                            //itOpenList += 1
-                            //openListStatus.append(false)
-                        }
                     }// ForEach with list student
                     .padding(.top, 4)
                 }// VStack with list group student's
@@ -65,7 +61,18 @@ struct StudentInfoView: View
         {
             AddStudentView(isShowForm: $isShowAddStudentPanel, statusSave: $statusSave, writeModel: readModel)
         }
-        .sheet(isPresented: $statusSave)
+        .onChange(of: statusSave)
+        {
+            if statusSave
+            {
+                showStatusSave = true
+            }
+            else
+            {
+                showStatusSave = false
+            }
+        }
+        .sheet(isPresented: $showStatusSave)
         {
             if statusSave
             {
@@ -79,7 +86,6 @@ struct StudentInfoView: View
                         {
                             await readModel.fetchStudentData()
                             searchString = oldSearchString
-
                         }// need add wait view (monitor)
                     }
             }
@@ -125,7 +131,6 @@ struct StudentInfoView: View
                 Task
                 {
                     await readModel.fetchStudentData()
-                    
                     searchString = oldSearchString
 
                 }// need add wait view (monitor)
