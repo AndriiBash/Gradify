@@ -19,15 +19,25 @@ struct StudentListView: View
     @State private var hasResult:                 Bool = true
     @State private var scrollViewHeight:          CGFloat = 0
     
-    @State private var areCardsVisible:           Bool = false
-    @State private var areSearchCardsVisible:     Bool = false
-    
     @State private var cardVisibility:            [Bool] = []
-    @State private var cardSearchCardsVisible:    [Bool] = []
-
+    
     @ObservedObject var writeModel: ReadWriteModel
     
     private let adaptiveColumns = [GridItem(.adaptive(minimum: 120))]
+    
+    init(studentList: Binding<StudentGroup>, isExpandListForAll: Binding<Bool>, isUpdateList: Binding<Bool>, searchString: Binding<String>, writeModel: ReadWriteModel)
+    {
+           _studentList = studentList
+           _isExpandListForAll = isExpandListForAll
+           _isUpdateList = isUpdateList
+           _searchString = searchString
+           self.writeModel = writeModel
+
+        let initialCardVisibility = Array(repeating: true, count: studentList.wrappedValue.students.count)
+        self._cardVisibility = State(initialValue: initialCardVisibility)
+        //print("\(cardSearchVisibleList)")
+    }
+    
     
     var body: some View
     {
@@ -77,149 +87,138 @@ struct StudentListView: View
                 {
                     scrollViewHeight = newValue ? 190 : 0
                 }
-                
             }
-            /*.onChange(of: searchString)
-            { _, newValue in
-                if !searchString.isEmpty
-                {
-                    Task
-                    {
-                        hasResult = !searchString.isEmpty && studentList.students.contains
-                        { student in
-                            return student.name.lowercased().contains(searchString.lowercased()) ||
-                            student.lastName.lowercased().contains(searchString.lowercased()) ||
-                            student.surname.lowercased().contains(searchString.lowercased())
-                        }
-                    }
-                }
-                else
-                {
-                    hasResult = true
-                }
-            }*/
         }
         
         ScrollView(.horizontal, showsIndicators: false)
         {
             LazyHGrid(rows: adaptiveColumns, spacing: 20)
             {
-                ForEach(studentList.students, id: \.id)
-                { student in
+                ForEach(studentList.students.indices, id: \.self)
+                {index in
+                    let student = studentList.students[index]
+                    
                     if searchString.isEmpty
                     {
-                        StudentCardViewModel(student: .constant(student), updateList: $isUpdateList, writeModel: writeModel)
-                            .opacity(areCardsVisible ? 1 : 0)
-                            .scaleEffect(areCardsVisible ? 1 : 0.8)
+                        StudentCardViewModel(student: .constant(student), isUpdateStudent: $isUpdateList, writeModel: writeModel)
+                            .opacity(cardVisibility[index] ? 1 : 0)
+                            .scaleEffect(cardVisibility[index] ? 1 : 0.8)
                             .onAppear
                             {
                                 withAnimation
                                 {
-                                    areCardsVisible = true
+                                    cardVisibility[index] = true
                                     hasResult = true
                                 }
                             }
-                        .onDisappear
-                        {
-                            withAnimation
+                            .onDisappear
                             {
-                                areCardsVisible = false
-                            }
-                        }
-                        
-                    }
-                    else if student.name.lowercased().contains(searchString.lowercased()) ||
-                        student.lastName.lowercased().contains(searchString.lowercased()) ||
-                        student.surname.lowercased().contains(searchString.lowercased()) ||
-                        student.contactNumber.lowercased().contains(searchString.lowercased()) ||
-                        student.passportNumber.lowercased().contains(searchString.lowercased()) ||
-                        student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
-                        student.educationProgram.lowercased().contains(searchString.lowercased()) ||
-                        student.group.lowercased().contains(searchString.lowercased())
-                        {
-                            StudentCardViewModel(student: .constant(student), updateList: $isUpdateList, writeModel: writeModel)
-                                .opacity(areSearchCardsVisible ? 1 : 0)
-                                .scaleEffect(areSearchCardsVisible ? 1 : 0.8)
-                                .onAppear
+                                withAnimation
                                 {
-                                    withAnimation
-                                    {
-                                        hasResult = true
-                                        areSearchCardsVisible = true
-                                    }
+                                    cardVisibility[index] = false
                                 }
-                                .onDisappear
-                                {
-                                    withAnimation
-                                    {
-                                        areSearchCardsVisible = false
-                                    }
-                                }
-                        }
-                    }// ForEach
-                }// LazyHGrid(rows: adaptiveColumns, spacing: 20)
-                .padding(.horizontal, 17)
-            }// ScrollView
-                .onChange(of: searchString)
-                { _, newValue in
-                    if searchString.isEmpty
-                    {
-                        withAnimation
-                        {
-                            hasResult = true
-                        }
-                    }
-                    else
-                    {
-                        withAnimation
-                        {
-                            hasResult = !searchString.isEmpty && studentList.students.contains
-                            { student in
-                                return student.name.lowercased().contains(searchString.lowercased()) ||
-                                student.lastName.lowercased().contains(searchString.lowercased()) ||
-                                student.surname.lowercased().contains(searchString.lowercased()) ||
-                                student.contactNumber.lowercased().contains(searchString.lowercased()) ||
-                                student.passportNumber.lowercased().contains(searchString.lowercased()) ||
-                                student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
-                                student.educationProgram.lowercased().contains(searchString.lowercased()) ||
-                                student.group.lowercased().contains(searchString.lowercased())
                             }
-                        }
-                        
-                        if !hasResult
-                        {
-                            isAnimateButtonScrollview = false
-                            isScrollViewOpen = false
-                            
-                            withAnimation(Animation.easeInOut(duration: 0.2))
+                    }
+                    else if matchesSearch(student)
+                    {
+                        StudentCardViewModel(student: .constant(student), isUpdateStudent: $isUpdateList, writeModel: writeModel)
+                        /* AHTUNG to use, anomaly in UI!!
+                            .opacity(cardVisibility[index] ? 1 : 0)
+                            .scaleEffect(cardVisibility[index] ? 1 : 0.8)
+                            .onAppear
                             {
-                                scrollViewHeight = 0
+                                withAnimation
+                                {
+                                    hasResult = true
+                                    cardVisibility[index] = true
+                                }
                             }
-                            
-                        }
-                    }
-                }// onChange
-            .frame(height: scrollViewHeight)
-            .onAppear
-            {
-                if UserDefaults.standard.bool(forKey: "list-status-open-\(studentList.name)")
+                            .onDisappear
+                            {
+                                withAnimation
+                                {
+                                    cardVisibility[index] = false
+                                }
+                            }
+                         */
+                    }// else if
+                }// ForEach
+            }// LazyHGrid(rows: adaptiveColumns, spacing: 20)
+            .padding(.horizontal, 17)
+        }// ScrollView
+            .onChange(of: searchString)
+            { _, newValue in
+                if searchString.isEmpty
                 {
-                    isScrollViewOpen = true
-                    isAnimateButtonScrollview = true
-
-                    withAnimation(Animation.easeInOut(duration: 0.2))
+                    withAnimation
                     {
-                        scrollViewHeight = 190
+                        hasResult = true
                     }
                 }
-                //print("status open \(studentList.name) : \(isScrollViewOpen)")
+                else
+                {
+                    withAnimation
+                    {
+                        hasResult = !searchString.isEmpty && studentList.students.contains
+                        { student in
+                            return student.name.lowercased().contains(searchString.lowercased()) ||
+                            student.lastName.lowercased().contains(searchString.lowercased()) ||
+                            student.surname.lowercased().contains(searchString.lowercased()) ||
+                            student.contactNumber.lowercased().contains(searchString.lowercased()) ||
+                            student.passportNumber.lowercased().contains(searchString.lowercased()) ||
+                            student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+                            student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+                            student.group.lowercased().contains(searchString.lowercased())
+                        }
+                    }
+                    
+                    if !hasResult
+                    {
+                        isAnimateButtonScrollview = false
+                        isScrollViewOpen = false
+                        
+                        withAnimation(Animation.easeInOut(duration: 0.2))
+                        {
+                            scrollViewHeight = 0
+                        }
+                        
+                    }
+                }
+            }// onChange
+        .frame(height: scrollViewHeight)
+        .onAppear
+        {
+            if UserDefaults.standard.bool(forKey: "list-status-open-\(studentList.name)")
+            {
+                isScrollViewOpen = true
+                isAnimateButtonScrollview = true
+
+                withAnimation(Animation.easeInOut(duration: 0.2))
+                {
+                    scrollViewHeight = 190
+                }
             }
-            .onChange(of: isScrollViewOpen)
-            { oldValue, newValue in
-                UserDefaults.standard.set(newValue, forKey: "list-status-open-\(studentList.name)")
-                //print("change status open \(studentList.name) : \(isScrollViewOpen)")
-            }
+            //print("status open \(studentList.name) : \(isScrollViewOpen)")
+        }
+        .onChange(of: isScrollViewOpen)
+        { oldValue, newValue in
+            UserDefaults.standard.set(newValue, forKey: "list-status-open-\(studentList.name)")
+            //print("change status open \(studentList.name) : \(isScrollViewOpen)")
+        }
     }
+    
+    private func matchesSearch(_ student: Student) -> Bool
+    {
+        return student.name.lowercased().contains(searchString.lowercased()) ||
+               student.lastName.lowercased().contains(searchString.lowercased()) ||
+               student.surname.lowercased().contains(searchString.lowercased()) ||
+               student.contactNumber.lowercased().contains(searchString.lowercased()) ||
+               student.passportNumber.lowercased().contains(searchString.lowercased()) ||
+               student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+               student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+               student.group.lowercased().contains(searchString.lowercased())
+    }// private func matchesSearch(_ student: Student) -> Bool
+    
 }
 
 

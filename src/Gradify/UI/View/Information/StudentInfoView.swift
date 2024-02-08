@@ -52,7 +52,6 @@ struct StudentInfoView: View
                         await readModel.fetchStudentData()
                     }// need add wait view (monitor)
                 }
-                
             }// Main ScrollView
         }// main ZStack
         .navigationTitle("Студенти")

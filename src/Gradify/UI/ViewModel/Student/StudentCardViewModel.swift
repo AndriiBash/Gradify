@@ -17,7 +17,7 @@ struct StudentCardViewModel: View
     @State private var showDeleteStudent:Bool = false
     
     @Binding var student:                Student
-    @Binding var updateList:             Bool
+    @Binding var isUpdateStudent:        Bool
     @ObservedObject var writeModel:      ReadWriteModel
     
     var body: some View
@@ -164,11 +164,11 @@ struct StudentCardViewModel: View
         }
         .sheet(isPresented: $showEditStudent)
         {
-            EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $updateList, student: $student, writeModel: writeModel)
+            EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $isUpdateStudent, student: $student, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteStudent)
         {
-            AcceptDeleteRow(student: $student, isShowSelfView: $showDeleteStudent, isUpdateListStudent: $updateList, writeModel: writeModel)
+            AcceptDeleteRow(student: $student, isShowSelfView: $showDeleteStudent, isUpdateListStudent: $isUpdateStudent, writeModel: writeModel)
         }
     }
 }

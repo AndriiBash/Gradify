@@ -53,16 +53,11 @@ class ReadWriteModel: ObservableObject
         return ["program1", "program2"]
     }// func getEducatProgramNameList() async -> [String]
     
-    
-    
     func getGroupNameList() async -> [String]
     {
         return ["Group 1", "group1", "group2", "IPZ-19"]
     }// func getGroupName() async -> [String]
     
-        
-
-
     
     func fetchStudentData() async
     {
@@ -130,8 +125,7 @@ class ReadWriteModel: ObservableObject
         }
     }// func fetchStudentData() async
 
-
-    
+        
     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -227,40 +221,5 @@ class ReadWriteModel: ObservableObject
     }// func deleteStudent(withId studentId: Int) async {
     
 
-    /*
-    func deleteStudent(withId studentId: Int)
-    {
-        db.collection("students").whereField("id", isEqualTo: studentId).getDocuments
-        { (snapshot, error) in
-            if let error = error {
-                print("Error in get data : \(error.localizedDescription)")
-                return
-            }
-
-            guard let documents = snapshot?.documents
-            else
-            {
-                print("No doc")
-                return
-            }
-
-            for document in documents
-            {
-                document.reference.delete
-                { error in
-                    if let error = error
-                    {
-                        print("error in delete student: \(error.localizedDescription)")
-                    }
-                    else
-                    {
-                        // good it's work!
-                    }
-                }
-            }
-            
-        }
-    }// func deleteStudent(withId studentId: Int)
-     */
 }
 
