@@ -220,6 +220,20 @@ class ReadWriteModel: ObservableObject
         }
     }// func deleteStudent(withId studentId: Int) async {
     
+    
+    
+    func matchesSearch(student: Student, searchString: String) -> Bool
+    {
+        return student.name.lowercased().contains(searchString.lowercased()) ||
+               student.lastName.lowercased().contains(searchString.lowercased()) ||
+               student.surname.lowercased().contains(searchString.lowercased()) ||
+               student.contactNumber.lowercased().contains(searchString.lowercased()) ||
+               student.passportNumber.lowercased().contains(searchString.lowercased()) ||
+               student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+               student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+               student.group.lowercased().contains(searchString.lowercased())
+    }// private func matchesSearch(_ student: Student) -> Bool
+
 
 }
 

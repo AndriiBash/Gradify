@@ -11,14 +11,14 @@ struct StudentInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
     
-    @State private var isExpandAllList: Bool        = false
-    @State private var isShowAddStudentPanel: Bool  = false
-    @State private var statusSave:      Bool        = false
-    @State private var statusSaveEdit:  Bool        = false
-    @State private var showStatusSave:  Bool        = false
-    @State private var searchString:    String      = ""
-    @State private var oldSearchString: String      = ""
-    
+    @State private var isExpandAllList:             Bool = false
+    @State private var isShowAddStudentPanel:       Bool = false
+    @State private var statusSave:                  Bool = false
+    @State private var statusSaveEdit:              Bool = false
+    @State private var showStatusSave:              Bool = false
+    @State private var searchString:                String = ""
+    @State private var oldSearchString:             String = ""
+    @State private var countSearchedStudent:        Int = 0
     // @State private var selectedGroup: StudentGroup
     // long proccess make this function...
     
@@ -55,7 +55,7 @@ struct StudentInfoView: View
             }// Main ScrollView
         }// main ZStack
         .navigationTitle("Студенти")
-        .navigationSubtitle("\(readModel.countRecords) студентів")
+        .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) студентів" : "Знайдено \(countSearchedStudent) студентів")
         .sheet(isPresented: $isShowAddStudentPanel)
         {
             AddStudentView(isShowForm: $isShowAddStudentPanel, statusSave: $statusSave, writeModel: readModel)
@@ -119,9 +119,29 @@ struct StudentInfoView: View
             Spacer()
         }//.toolBar for main ZStack
         .frame(minWidth: 300, minHeight: 200)
-        .searchable(text: $searchString) {}
+        .searchable(text: $searchString){}
+        .onChange(of: searchString)
+        { oldValue,newValue in
+            
+            countSearchedStudent = 0
+
+            if !searchString.isEmpty
+            {
+                for group in readModel.studentGroups
+                {
+                    for student in group.students
+                    {
+                        if readModel.matchesSearch(student: student, searchString: searchString)
+                        {
+                            countSearchedStudent += 1
+                        }
+                    }
+                }
+            }
+            
+        }// onChange(of: searchString)
         .onChange(of: statusSaveEdit)
-        { _,newValue in
+        { _, newValue in
             if statusSaveEdit
             {
                 oldSearchString = searchString
@@ -143,7 +163,7 @@ struct StudentInfoView: View
             {
                 LoadingScreen()
             }
-        }
+        }// onChange(of: statusSaveEdit)
     }// body
 }// struct GroupInfoView: View
 
