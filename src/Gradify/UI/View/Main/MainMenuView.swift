@@ -34,46 +34,112 @@ struct MainMenuView: View
                 
                 List
                 {
-                    Section("Списки та записи")
+                    Section("Студенство")
                     {
-                        NavigationLink(destination: StudentInfoView(), tag: "Item1", selection: $selection)
+                        NavigationLink
+                        {
+                            StudentInfoView()
+                        }
+                        label:
                         {
                             Label("Студенти", systemImage: "graduationcap")
-                        }
+                        }// NavigationLink with student's
                         
-                        NavigationLink(destination: ButtonViewModel(), tag: "Item2", selection: $selection)
+                        NavigationLink
                         {
-                            Label("Item 2", systemImage: "square.fill")
+                            EmptyView()
                         }
-                        
-                        NavigationLink(destination:  ScrollView{Text("Item3").background(Color.red).frame(maxWidth: .infinity, maxHeight: .infinity)}, tag: "Item3", selection: $selection)
+                        label:
                         {
-                            HStack
-                            {
-                                Image(systemName: "doc.fill")
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 30, height: 30, alignment: .center)
-                                
-                                VStack
-                                {
-                                    Text("Title")
-                                        .font(.body.bold())
-                                    
-                                    Text("Body")
-                                        .font(.callout)
-                                }
-                            }//HStack test in SideBar
-                            .padding(.horizontal, 4)
-                        }
-                        
-                        NavigationLink(destination: ButtonViewModel(), tag: "AnimationButton", selection: $selection)
-                        {
-                            Label("Item 2", systemImage: "square.fill")
-                        }
-                        
-                        
+                            Label("Групи", systemImage: "person.3.fill")
+                        }// NavigationLink with groups
                     }// Section 1
-                } // List
+                    
+                    
+                    Section("Навчання")
+                    {
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Оцінки", systemImage: "list.star")
+                        }// NavigationLink with grades
+
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Предмети", systemImage: "book.pages")
+                        }// NavigationLink with subjects
+                    }// Section about learning and teaching
+                    
+                    
+                    Section("Наукові відділи")
+                    {
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Викладачі", systemImage: "person")
+                        }// NavigationLink with teacher's
+                        
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Кафедра", systemImage: "globe.desk")
+                        }// NavigationLink with chair's
+
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Факультет", systemImage: "building.columns.fill")
+                        }// NavigationLink with faculty's
+
+                    }// Section with about teacher's and departament
+                    
+                    
+                    Section("Спеціалізації")
+                    {
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Спеціалізація", systemImage: "doc.text.magnifyingglass")
+                        }// NavigationLink with Specialization
+                        
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Спеціальність", systemImage: "hammer.fill")
+                        }// NavigationLink with Specialty
+                        
+                        NavigationLink
+                        {
+                            EmptyView()
+                        }
+                        label:
+                        {
+                            Label("Освітня програма", systemImage: "book.and.wrench.fill")
+                        }// NavigationLink with Specialty
+                    }// Section with specialization and teach programm
+                } // List with section
                 .safeAreaInset(edge: .bottom)
                 {
                     Button
@@ -83,8 +149,8 @@ struct MainMenuView: View
                     }
                     label:
                     {
-                        Image(systemName: "gearshape.fill")
-                        Text("Налаштування")
+                        Image(systemName: "photo.circle.fill")
+                        Text("ПІ юзера з аватаркою зліва")
                     }
                     //.keyboardShortcut(.defaultAction)
                     .padding(.bottom)

@@ -222,8 +222,8 @@ struct LoginView: View
                     Image("Image")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .padding(100)
-                        .padding(.leading, -140)
+                        .padding(80)
+                        .padding(.leading, -125)
                         .shadow(radius: 14)
                 }// ZStack for opacity and blur behind effect
             }// VStack with photo

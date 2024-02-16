@@ -27,7 +27,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
         windowController.setCurrentWindow(ofType: .main) //.login
         windowController.showWindow(nil)
         
-        
         // set popOver menu in right part menuBar
         let menuView = PopOverView()
                 
