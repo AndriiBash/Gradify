@@ -16,11 +16,13 @@ struct StudentInfoView: View
     @State private var statusSave:                  Bool = false
     @State private var statusSaveEdit:              Bool = false
     @State private var showStatusSave:              Bool = false
+    @State private var isSotredList:                Bool = false
     @State private var searchString:                String = ""
     @State private var oldSearchString:             String = ""
     @State private var countSearchedStudent:        Int = 0
-    // @State private var selectedGroup: StudentGroup
     // long proccess make this function...
+    // @State private var selectedGroup: StudentGroup
+    
     
     var body: some View
     {
@@ -104,7 +106,30 @@ struct StudentInfoView: View
                 Label(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки", systemImage: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
             }// expand all list card in some view
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
-            .padding(.leading, 160)
+            .padding(.leading, 45)
+            
+            
+            Button
+            {
+                isSotredList.toggle()
+            }
+            label:
+            {
+                Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: "arrow.up.arrow.down.circle")
+            }
+            .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
+
+            
+            Button
+            {
+                
+            }
+            label:
+            {
+                Label("Фільтрація", systemImage: "line.3.horizontal.decrease.circle")
+            }
+            .help("Фільтрація")
+
             
             Button
             {

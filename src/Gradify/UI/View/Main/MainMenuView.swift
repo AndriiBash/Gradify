@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainMenuView: View
 {
-    @State private var selection: String? = "Item1"
     @State private var searchText: String = ""
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
 
@@ -161,15 +160,18 @@ struct MainMenuView: View
         } // NavigationSplitView(columnVisibility: $columnVisibility)
         detail:
         {
-            Text("Go auth")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack
+            {
+                Text("Go auth")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationTitle("startView")
         }//detail if no selected
         
         //.background(Color.red)
         //.toolbarBackground(Color.pink, for: .automatic)
         //.toolbarBackground(Color.red, for: .windowToolbar)
         .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
-        .navigationTitle(selection ?? "Не обрано")
         .sheet(isPresented: $isShowTestWindow)
         {
             ButtonViewModel()

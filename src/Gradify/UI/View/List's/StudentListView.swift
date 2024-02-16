@@ -199,6 +199,12 @@ struct StudentListView: View
                     scrollViewHeight = 190
                 }
             }
+            
+            // for animation when list's in start a closed
+            for index in studentList.students.indices
+            {
+                cardVisibility[index] = false
+            }
             //print("status open \(studentList.name) : \(isScrollViewOpen)")
         }
         .onChange(of: isScrollViewOpen)
