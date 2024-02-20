@@ -10,14 +10,14 @@ import Foundation
 
 struct Student: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: Int = 0// maybe to fix for all struct data object
+    var id: Int = 0
     
     var lastName: String = ""
     var name: String = ""
     var surname: String = ""
     
     var dateBirth: Date = Date.from(year: 2000, month: 00, day: 01)!
-    var contactNumber: String = "" // or can use "mobileNumber" for name var ¯\_(ツ)_/¯
+    var contactNumber: String = ""
     var passportNumber: String = ""
     var residenceAddress: String = ""
     
@@ -157,6 +157,8 @@ struct EducationalProgram: Identifiable, Sendable
 
     var name: String = ""
     
+    var specializations: [String] = []
+
     var specialty: String = ""
     var level: String = ""
     var duration: String = ""
