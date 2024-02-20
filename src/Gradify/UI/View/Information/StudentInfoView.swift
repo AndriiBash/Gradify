@@ -17,6 +17,8 @@ struct StudentInfoView: View
     @State private var statusSaveEdit:              Bool = false
     @State private var showStatusSave:              Bool = false
     @State private var isSotredList:                Bool = false
+    @State private var isFilterShow:                Bool = false
+
     @State private var searchString:                String = ""
     @State private var oldSearchString:             String = ""
     @State private var countSearchedStudent:        Int = 0
@@ -35,7 +37,7 @@ struct StudentInfoView: View
             {                
                 VStack(spacing: 0)
                 {
-                    ForEach(readModel.studentGroups.sorted(by: { $0.name < $1.name }), id: \.self)
+                    ForEach(readModel.studentGroups.sorted(by: {isSotredList ? $0.name < $1.name : $0.name > $1.name }), id: \.self)
                     { studentGroup in
                         StudentListView(
                             studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!],
@@ -108,28 +110,30 @@ struct StudentInfoView: View
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
             .padding(.leading, 45)
             
-            
             Button
             {
                 isSotredList.toggle()
             }
             label:
             {
-                Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: "arrow.up.arrow.down.circle")
+                Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: isSotredList ? "arrow.down.circle" : "arrow.up.circle")
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
-
             
             Button
             {
-                
+                isFilterShow.toggle()
             }
             label:
             {
                 Label("Фільтрація", systemImage: "line.3.horizontal.decrease.circle")
             }
             .help("Фільтрація")
-
+            .popover(isPresented: $isFilterShow, arrowEdge: .bottom)
+            {
+                EmptyView()
+                    .frame(width: 100, height: 100)// temp
+            }
             
             Button
             {
@@ -147,7 +151,6 @@ struct StudentInfoView: View
         .searchable(text: $searchString){}
         .onChange(of: searchString)
         { oldValue,newValue in
-            
             countSearchedStudent = 0
 
             if !searchString.isEmpty
