@@ -1,13 +1,9 @@
-//
-//  main.swift
-//  Gradify
-//
-//  Created by Андрiй on 18.12.2023.
-//
-
-import AppKit
-
 /*
+  main.swift
+  Gradify
+
+  Created by Андрiй on 18.12.2023.
+
  _____               _ _  __
 |  __ \             | (_)/ _|
 | |  \/_ __ __ _  __| |_| |_ _   _
@@ -20,6 +16,8 @@ import AppKit
  gitHub: https://github.com/AndriiBash/Gradify
  author: Andrii Izbash (Andrii Bash)
  */
+
+import AppKit
 
 final class GradifyApp
 {

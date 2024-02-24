@@ -10,6 +10,7 @@ import SwiftUI
 struct StudentInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
+    @ObservedObject var filterModel:                FilterViewModel
     
     @State private var isExpandAllList:             Bool = false
     @State private var isShowAddStudentPanel:       Bool = false
@@ -122,17 +123,17 @@ struct StudentInfoView: View
             
             Button
             {
-                isFilterShow.toggle()
+                filterModel.isShow.toggle()
+                //isFilterShow.toggle()
             }
             label:
             {
                 Label("Фільтрація", systemImage: "line.3.horizontal.decrease.circle")
             }
             .help("Фільтрація")
-            .popover(isPresented: $isFilterShow, arrowEdge: .bottom)
+            .popover(isPresented: $filterModel.isShow, arrowEdge: .bottom)
             {
-                EmptyView()
-                    .frame(width: 100, height: 100)// temp
+                FilterView(filterModel: filterModel)
             }
             
             Button
@@ -195,7 +196,10 @@ struct StudentInfoView: View
     }// body
 }// struct GroupInfoView: View
 
-#Preview
+struct StudentInfoView_Previews: PreviewProvider
 {
-    StudentInfoView()
+    static var previews: some View
+    {
+        StudentInfoView(filterModel: FilterViewModel())
+    }
 }

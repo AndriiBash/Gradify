@@ -136,7 +136,7 @@ struct Specialization: Identifiable, Sendable
     var name: String = ""
     var description: String = ""
     var field: String
-}// struct Specialization: Identifiable, Sendable
+}// struct Specialization: Identifiable, Sendableu
 
 
 struct Specialty: Identifiable, Sendable

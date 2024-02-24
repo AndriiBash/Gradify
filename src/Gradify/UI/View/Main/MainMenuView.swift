@@ -9,22 +9,19 @@ import SwiftUI
 
 struct MainMenuView: View
 {
+    // Temp trash
     @State private var searchText: String = ""
-    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-
     @State private var expandAllList: Bool = false
-    
-    
     @State var sideBarVisibility: NavigationSplitViewVisibility = .doubleColumn
-
-    
     @State private var isShowTestWindow = false
 
+    // Current, and used element
+    @State var filterModels:                        [FilterViewModel] = Array(repeating: FilterViewModel(), count: 10)
+    @State private var columnVisibility             = NavigationSplitViewVisibility.detailOnly
     
     
     var body: some View
     {
-        
         NavigationSplitView(columnVisibility: $columnVisibility)
         {
             ZStack
@@ -37,7 +34,7 @@ struct MainMenuView: View
                     {
                         NavigationLink
                         {
-                            StudentInfoView()
+                            StudentInfoView(filterModel: filterModels[0])
                         }
                         label:
                         {

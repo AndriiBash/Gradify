@@ -47,6 +47,9 @@
 		B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */; };
 		B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
+		B5DDC5DC2B88F88800CFAEDF /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDC5DB2B88F88800CFAEDF /* FilterView.swift */; };
+		B5DDC5DF2B890E2800CFAEDF /* ItemFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDC5DE2B890E2800CFAEDF /* ItemFilterViewModel.swift */; };
+		B5DDC5E12B89149500CFAEDF /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDC5E02B89149500CFAEDF /* FilterViewModel.swift */; };
 		B5E7FBD32B72EC9B00218E9F /* AcceptDeleteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */; };
 		B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E956D32B67F79900C00529 /* EventMonitorController.swift */; };
 		B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3312B48459800B8C73D /* AboutAppView.swift */; };
@@ -98,6 +101,9 @@
 		B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B232B713729001E86BD /* RowStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B252B714534001E86BD /* AppKitFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitFunc.swift; sourceTree = "<group>"; };
+		B5DDC5DB2B88F88800CFAEDF /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B5DDC5DE2B890E2800CFAEDF /* ItemFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFilterViewModel.swift; sourceTree = "<group>"; };
+		B5DDC5E02B89149500CFAEDF /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRow.swift; sourceTree = "<group>"; };
 		B5E956D32B67F79900C00529 /* EventMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorController.swift; path = Gradify/Controller/EventMonitorController.swift; sourceTree = SOURCE_ROOT; };
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 		B512AC642B3ACE1600E9A09A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B5DDC5DD2B890E1B00CFAEDF /* PopUp */,
 				B5CC2B0E2B6E51B5001E86BD /* Student */,
 				B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */,
 				B5B55EEA2B30CECF002E0F4D /* ButtonViewModel.swift */,
@@ -348,6 +355,7 @@
 				B5CC2B182B6FF9F1001E86BD /* SuccessSaveView.swift */,
 				B5CC2B1A2B6FFF0D001E86BD /* ErrorSaveView.swift */,
 				B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRow.swift */,
+				B5DDC5DB2B88F88800CFAEDF /* FilterView.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -398,6 +406,15 @@
 				B5CC2B232B713729001E86BD /* RowStudentView.swift */,
 			);
 			path = ViewRow;
+			sourceTree = "<group>";
+		};
+		B5DDC5DD2B890E1B00CFAEDF /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				B5DDC5DE2B890E2800CFAEDF /* ItemFilterViewModel.swift */,
+				B5DDC5E02B89149500CFAEDF /* FilterViewModel.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		B5EEF3372B4D608500B8C73D /* Ukranian */ = {
@@ -503,6 +520,7 @@
 				B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */,
 				B5A5C8AE2B6BD2DF008F03D5 /* StudentInfoView.swift in Sources */,
 				B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */,
+				B5DDC5DF2B890E2800CFAEDF /* ItemFilterViewModel.swift in Sources */,
 				B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */,
 				B5B55EED2B30CECF002E0F4D /* StartView.swift in Sources */,
 				B5B55EA52B30C442002E0F4D /* AppDelegate.swift in Sources */,
@@ -511,6 +529,7 @@
 				B5A5C8B42B6BD331008F03D5 /* PressedInfoButtonStyle.swift in Sources */,
 				B5CC2B152B6FBF0B001E86BD /* AddStudentView.swift in Sources */,
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
+				B5DDC5E12B89149500CFAEDF /* FilterViewModel.swift in Sources */,
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
 				B5A5C8B82B6BD8AC008F03D5 /* StudentCardViewModel.swift in Sources */,
@@ -532,6 +551,7 @@
 				B5F3412F2B4D956300AC5751 /* AcceptChangeLanguageView.swift in Sources */,
 				B5CC2B242B713729001E86BD /* RowStudentView.swift in Sources */,
 				B58FCE772B5AE1FB00B5226F /* CursorHandler.swift in Sources */,
+				B5DDC5DC2B88F88800CFAEDF /* FilterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,7 +733,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.25;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -746,7 +766,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.25;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
