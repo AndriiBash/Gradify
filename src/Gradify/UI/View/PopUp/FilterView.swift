@@ -62,13 +62,6 @@ struct FilterView: View
                     .padding(.leading, 12)
                     .help("Видалити усі умови")
                     .disabled(filterModel.itemConditionList.count == 0 ? true : false)
-                    .onHover
-                    { isHovered in
-                        if !self.filterModel.itemConditionList.isEmpty
-                        {
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
-                        }
-                    }
                     
                     Spacer()
                     
@@ -113,10 +106,6 @@ struct FilterView: View
                             .frame(minWidth: maxWidthForButton)
                     }// Button add if
                     .padding(.top, 2)
-                    .onHover
-                    { isHovered in
-                        changePointingHandCursor(shouldChangeCursor: isHovered)
-                    }
                     
                     Button
                     {
@@ -131,13 +120,6 @@ struct FilterView: View
                     .disabled(filterModel.itemConditionList.count == 0 ? true : false)
                     .padding(.top, 2)
                     .padding(.trailing, 12)
-                    .onHover
-                    { isHovered in
-                        if !self.filterModel.itemConditionList.isEmpty
-                        {
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
-                        }
-                    }
                     
                 }// HStack with button for edit filter
             }// Main VStack
