@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct itemCondition: Identifiable, Hashable
+
+struct itemCondition: Identifiable//, Equatable//, Hashable
 {
     var id:             UUID
     var column:         String
@@ -21,20 +22,27 @@ struct itemCondition: Identifiable, Hashable
         self.condition = condition
         self.conditionText = conditionText
     }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool
+    {
+        lhs.id == rhs.id
+    }
 }
+
 
 class FilterViewModel: ObservableObject
 {
     @Published var isShow:              Bool
     @Published var isShowMaxError:      Bool
-    @Published var viewSize:            CGSize = CGSize(width: 450, height: 60)
-    @Published var itemConditionList =  [itemCondition]()
-    
+    @Published var viewSize:            CGSize
+    @Published var itemConditionList:   [itemCondition]
     
     init()
     {
         self.isShow = false
         self.isShowMaxError = false
+        self.viewSize = CGSize(width: 450, height: 60)
+        self.itemConditionList = []
     }// init
     
     func addRecord(record: itemCondition)

@@ -16,8 +16,8 @@ struct MainMenuView: View
     @State private var isShowTestWindow = false
 
     // Current, and used element
-    @State var filterModels:                        [FilterViewModel] = Array(repeating: FilterViewModel(), count: 10)
-    @State private var columnVisibility             = NavigationSplitViewVisibility.detailOnly
+    @State private var filterModels:        [FilterViewModel] = Array(repeating: FilterViewModel(), count: 10)
+    @State private var columnVisibility     = NavigationSplitViewVisibility.detailOnly
     
     
     var body: some View

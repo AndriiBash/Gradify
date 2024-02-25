@@ -75,6 +75,11 @@ struct ItemFilterViewModel: View
                     .foregroundColor(.red)
             }
             .disabled(deleteIsClicker)
+            .onHover
+            { isHovered in
+                changePointingHandCursor(shouldChangeCursor: isHovered)
+            }
+            
         }//HStack
         .padding(.horizontal, 4)
     }

@@ -9,24 +9,30 @@ import SwiftUI
 
 struct FilterView: View
 {
-    @ObservedObject var filterModel:    FilterViewModel
+    @ObservedObject var filterModel:        FilterViewModel
     
+    @State private var maxWidthForButton:   CGFloat = .zero
+
     var body: some View
     {
         ScrollView(showsIndicators: false)
         {
             VStack
             {
-                
                 ForEach(filterModel.itemConditionList, id: \.id)
-                { record in
-                    ItemFilterViewModel(
-                        itemCondition: $filterModel.itemConditionList[filterModel.itemConditionList.firstIndex(of: record)!],
-                        onDelete: {
-                            removeRecord(record)
-                        }
-                    )
-                }// For each with condition for filter
+                { item in
+                    HStack {
+                        ItemFilterViewModel(
+                            itemCondition: $filterModel.itemConditionList.first(where: { $0.id == item.id })!,
+                            onDelete:
+                            {
+                                removeRecord(item)
+                            }
+                        )
+                        .id(item.id)
+                    }
+                }// ForEach with condition
+
                 
                 if filterModel.isShowMaxError
                 {
@@ -35,8 +41,35 @@ struct FilterView: View
                         .font(.subheadline)
                 }
                 
+                if !filterModel.itemConditionList.isEmpty
+                {
+                    Divider()
+                }
+                
                 HStack
                 {
+                    Button
+                    {
+                        self.filterModel.viewSize.height -= CGFloat(30 * self.filterModel.itemConditionList.count)
+
+                        filterModel.itemConditionList.removeAll()
+                        deleteMessageAboutMaxRecord()
+                    }
+                    label:
+                    {
+                        Image(systemName: "trash")
+                    }// Button for clear all
+                    .padding(.leading, 12)
+                    .help("Видалити усі умови")
+                    .disabled(filterModel.itemConditionList.count == 0 ? true : false)
+                    .onHover
+                    { isHovered in
+                        if !self.filterModel.itemConditionList.isEmpty
+                        {
+                            changePointingHandCursor(shouldChangeCursor: isHovered)
+                        }
+                    }
+                    
                     Spacer()
                     
                     Button
@@ -77,12 +110,35 @@ struct FilterView: View
                     label:
                     {
                         Text("Додати умову")
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
+                            .frame(minWidth: maxWidthForButton)
                     }// Button add if
                     .padding(.top, 2)
+                    .onHover
+                    { isHovered in
+                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                    }
                     
-                    Spacer()
+                    Button
+                    {
+                        
+                    }
+                    label:
+                    {
+                        Text("Застосувати")
+                            .frame(minWidth: maxWidthForButton)
+                    }// Button use filter
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(filterModel.itemConditionList.count == 0 ? true : false)
+                    .padding(.top, 2)
+                    .padding(.trailing, 12)
+                    .onHover
+                    { isHovered in
+                        if !self.filterModel.itemConditionList.isEmpty
+                        {
+                            changePointingHandCursor(shouldChangeCursor: isHovered)
+                        }
+                    }
+                    
                 }// HStack with button for edit filter
             }// Main VStack
             .padding(.vertical)
@@ -91,23 +147,23 @@ struct FilterView: View
         .frame(width: self.filterModel.viewSize.width, height: self.filterModel.viewSize.height)
         .onDisappear
         {
-            if filterModel.isShowMaxError
-            {
-                self.filterModel.viewSize.height -= 30
-            }
-            
-            filterModel.isShowMaxError = false
+            deleteMessageAboutMaxRecord()
+        }
+        .onAppear
+        {
+            let buttonWidth = getWidthFromString(for: "Додати умову")
+            let doneButtonWidth = getWidthFromString(for: "Застосувати")
+
+            maxWidthForButton = max(buttonWidth, doneButtonWidth)
         }
     }
     
 
     private func removeRecord(_ record: itemCondition)
     {
-        withAnimation(Animation.easeInOut(duration: 0.25))
-        {
-            filterModel.removeRecord(item: record)
-        }
-        
+        // no use withAnimation beacause swift have bugs :/
+        filterModel.removeRecord(item: record)
+
         if filterModel.isShowMaxError
         {
             withAnimation(Animation.easeOut(duration: 0.25))
@@ -122,33 +178,16 @@ struct FilterView: View
             filterModel.viewSize.height -= 30
         }
     }
-
     
-    /*
-    private func removeRecord(at record: String)
+    private func deleteMessageAboutMaxRecord()
     {
-        if self.filterModel.filteredRecords.firstIndex(of: record) != nil
+        if filterModel.isShowMaxError
         {
-            withAnimation(Animation.easeOut(duration: 0.25))
-            {
-                self.filterModel.removeRecord(record)
-            }
-
-            if filterModel.isShowMaxError
-            {
-                withAnimation(Animation.easeOut(duration: 0.25))
-                {
-                    filterModel.isShowMaxError = false
-                }
-                self.filterModel.viewSize.height -= 30 * 2
-            }
-            else
-            {
-                self.filterModel.viewSize.height -= 30
-            }
+            self.filterModel.viewSize.height -= 30
         }
-    }// private func removeRecord(at record: String)
-     */
+        
+        filterModel.isShowMaxError = false
+    }
 }
 
 struct FilterView_Previews: PreviewProvider

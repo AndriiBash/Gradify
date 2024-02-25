@@ -250,7 +250,6 @@ struct AddStudentView: View
                             }
                         }
                     }
-
                 }
                 label:
                 {
