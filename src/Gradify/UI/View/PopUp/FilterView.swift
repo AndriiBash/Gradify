@@ -7,12 +7,19 @@
 
 import SwiftUI
 
+
+
 struct FilterView: View
 {
     @ObservedObject var filterModel:        FilterViewModel
     
-    @State private var maxWidthForButton:   CGFloat = .zero
+    @State private var areConditionsValid:  Bool = true
+    @State private var isShowMaxError:      Bool = false
+    @State var isFiltered:                  Bool = false
 
+    @State private var maxWidthForButton:   CGFloat = .zero
+    
+    
     var body: some View
     {
         ScrollView(showsIndicators: false)
@@ -21,9 +28,13 @@ struct FilterView: View
             {
                 ForEach(filterModel.itemConditionList, id: \.id)
                 { item in
-                    HStack {
+                    HStack
+                    {
                         ItemFilterViewModel(
-                            itemCondition: $filterModel.itemConditionList.first(where: { $0.id == item.id })!,
+                            typeColumn: colummFilterType.student,
+                            itemCondition: $filterModel.itemConditionList.first(where: { $0.id == item.id })!, 
+                            statusFilter: $isFiltered,
+                            isShowError: $areConditionsValid,
                             onDelete:
                             {
                                 removeRecord(item)
@@ -33,10 +44,18 @@ struct FilterView: View
                     }
                 }// ForEach with condition
 
-                
-                if filterModel.isShowMaxError
+                if isShowMaxError
                 {
                     Text("Максимальна кількість умов 15 штук")
+                        .padding(.vertical, 6)
+                        .foregroundColor(Color.red)
+                        .font(.subheadline)
+                }
+                
+                if !areConditionsValid
+                {
+                    Text("Заповніть усі поля та оберіть колонки та умови")
+                        .padding(.vertical, 6)
                         .foregroundColor(Color.red)
                         .font(.subheadline)
                 }
@@ -53,6 +72,7 @@ struct FilterView: View
                         self.filterModel.viewSize.height -= CGFloat(30 * self.filterModel.itemConditionList.count)
 
                         filterModel.itemConditionList.removeAll()
+                        
                         deleteMessageAboutMaxRecord()
                     }
                     label:
@@ -69,7 +89,7 @@ struct FilterView: View
                     {
                         if self.filterModel.itemConditionList.count < 15
                         {
-                            withAnimation(Animation.easeOut(duration: 0.25)) 
+                            withAnimation(Animation.easeOut(duration: 0.25))
                             {
                                 let newRecord = itemCondition(
                                     id: UUID(),
@@ -78,27 +98,43 @@ struct FilterView: View
                                     conditionText: ""
                                 )
                                 filterModel.addRecord(record: newRecord)
-                                filterModel.isShowMaxError = false
+                                
+                                isShowMaxError = false
+                                
+                                if !areConditionsValid
+                                {
+                                    withAnimation(Animation.easeOut(duration: 0.25))
+                                    {
+                                        areConditionsValid = true
+                                    }
+                                    
+                                    filterModel.viewSize.height -= 30
+                                }
                             }
                             
                             self.filterModel.viewSize.height += 30
+                            
+                            //itemConditionsMatrix.append([true, true, true])
+                            //print(itemConditionsMatrix)
                         }
                         else
                         {
-                            if !filterModel.isShowMaxError
+                            if !isShowMaxError
                             {
                                 withAnimation(Animation.easeOut(duration: 0.25))
                                 {
-                                    filterModel.isShowMaxError = true
+                                    isShowMaxError = true
                                 }
                                 
-                                if filterModel.isShowMaxError
+                                self.filterModel.viewSize.height += 30
+                                /*
+                                if isShowMaxError
                                 {
                                     self.filterModel.viewSize.height += 30
                                 }
+                                 */
                             }
                         }
-                        
                     }
                     label:
                     {
@@ -109,11 +145,48 @@ struct FilterView: View
                     
                     Button
                     {
-                        
+                        if !areConditionsValid
+                        {
+                            withAnimation(Animation.easeOut(duration: 0.25))
+                            {
+                                areConditionsValid = true
+                            }
+                            
+                            filterModel.viewSize.height -= 30
+                        }
+                            
+                            
+                        var allItemsNonEmpty = true
+
+                        for index in filterModel.itemConditionList.indices
+                        {
+                            let item = filterModel.itemConditionList[index]
+                            
+                            if item.column == "Оберіть поле" || item.condition == "Оберіть умову" || item.conditionText.isEmpty
+                            {
+                                allItemsNonEmpty = false
+                                //break
+                            }
+                        }
+                            
+                        if allItemsNonEmpty
+                        {
+                            // interested!!!
+                            self.isFiltered.toggle()
+                        }
+                        else
+                        {
+                            withAnimation(Animation.easeOut(duration: 0.25))
+                            {
+                                areConditionsValid = false
+                            }
+                            
+                            filterModel.viewSize.height += 30
+                        }
                     }
                     label:
                     {
-                        Text("Застосувати")
+                        Text(!isFiltered ? "Застосувати" : "Скасувати")
                             .frame(minWidth: maxWidthForButton)
                     }// Button use filter
                     .keyboardShortcut(.defaultAction)
@@ -138,38 +211,63 @@ struct FilterView: View
 
             maxWidthForButton = max(buttonWidth, doneButtonWidth)
         }
+        .onChange(of: filterModel.itemConditionList.count)
+        { _, _ in
+            updateIsFiltered()
+        }
     }
     
-
+    private func updateIsFiltered()
+    {
+        if filterModel.itemConditionList.isEmpty
+        {
+            isFiltered = false
+        }
+    }// private func updateIsFiltered()
+    
     private func removeRecord(_ record: itemCondition)
     {
         // no use withAnimation beacause swift have bugs :/
         filterModel.removeRecord(item: record)
-
-        if filterModel.isShowMaxError
+        filterModel.viewSize.height -= 30
+        
+        if !areConditionsValid
         {
             withAnimation(Animation.easeOut(duration: 0.25))
             {
-                filterModel.isShowMaxError = false
+                areConditionsValid = true
             }
             
-            filterModel.viewSize.height -= 30 * 2
-        }
-        else
-        {
             filterModel.viewSize.height -= 30
         }
-    }
+        
+        if isShowMaxError
+        {
+            withAnimation(Animation.easeOut(duration: 0.25))
+            {
+                isShowMaxError = false
+            }
+            
+            filterModel.viewSize.height -= 30
+        }
+        
+    }// private func removeRecord(_ record: itemCondition)
     
     private func deleteMessageAboutMaxRecord()
     {
-        if filterModel.isShowMaxError
+        if isShowMaxError
         {
             self.filterModel.viewSize.height -= 30
         }
         
-        filterModel.isShowMaxError = false
-    }
+        if !areConditionsValid
+        {
+            self.filterModel.viewSize.height -= 30
+        }
+        
+        areConditionsValid = true
+        isShowMaxError = false
+    }// private func deleteMessageAboutMaxRecord()
 }
 
 struct FilterView_Previews: PreviewProvider

@@ -22,22 +22,27 @@ struct StudentListView: View
     @State private var cardVisibility:              [Bool] = []
     
     @ObservedObject var writeModel:                 ReadWriteModel
-    
+    @ObservedObject var filterModel:                FilterViewModel
+
     private let adaptiveColumns = [GridItem(.adaptive(minimum: 120))]
     
     
-    init(studentList: Binding<StudentGroup>, isExpandListForAll: Binding<Bool>, isUpdateList: Binding<Bool>, searchString: Binding<String>, writeModel: ReadWriteModel)
+    init(studentList: Binding<StudentGroup>, isExpandListForAll: Binding<Bool>, isUpdateList: Binding<Bool>, searchString: Binding<String>, writeModel: ReadWriteModel, filterModel: FilterViewModel)
         {
             _studentList = studentList
             _isExpandListForAll = isExpandListForAll
             _isUpdateList = isUpdateList
             _searchString = searchString
+            
             self.writeModel = writeModel
-
+            self.filterModel = filterModel
+            
             let initialCardVisibility = Array(repeating: true, count: studentList.wrappedValue.students.count)
             _cardVisibility = State(initialValue: initialCardVisibility)
             //print("\(cardSearchVisibleList)")
         }
+    
+    
     
     
     var body: some View
@@ -224,10 +229,12 @@ struct StudentListView_Previews: PreviewProvider
     @State private static var isExapndAllList: Bool = false
     @State private static var isUpdateList: Bool = false
     @State private static var searchString: String = ""
-    @StateObject private static var writeModel = ReadWriteModel()
     
+    @StateObject private static var writeModel      = ReadWriteModel()
+    @StateObject private static var filterViewModel = FilterViewModel()
+
     static var previews: some View
     {
-        StudentListView(studentList: $listGroup, isExpandListForAll: $isExapndAllList, isUpdateList: $isUpdateList, searchString: $searchString, writeModel: writeModel)
+        StudentListView(studentList: $listGroup, isExpandListForAll: $isExapndAllList, isUpdateList: $isUpdateList, searchString: $searchString, writeModel: writeModel, filterModel: filterViewModel)
     }
 }

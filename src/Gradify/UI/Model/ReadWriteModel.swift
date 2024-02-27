@@ -45,7 +45,6 @@ class ReadWriteModel: ObservableObject
 
     private var ref = Database.database().reference()
     private var db = Firestore.firestore()
-
     
     
     func getEducatProgramNameList() async -> [String]

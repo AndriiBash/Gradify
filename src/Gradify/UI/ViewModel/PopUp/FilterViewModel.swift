@@ -33,14 +33,12 @@ struct itemCondition: Identifiable//, Equatable//, Hashable
 class FilterViewModel: ObservableObject
 {
     @Published var isShow:              Bool
-    @Published var isShowMaxError:      Bool
     @Published var viewSize:            CGSize
     @Published var itemConditionList:   [itemCondition]
     
     init()
     {
         self.isShow = false
-        self.isShowMaxError = false
         self.viewSize = CGSize(width: 450, height: 60)
         self.itemConditionList = []
     }// init

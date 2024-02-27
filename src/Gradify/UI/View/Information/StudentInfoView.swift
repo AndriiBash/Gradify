@@ -45,7 +45,8 @@ struct StudentInfoView: View
                             isExpandListForAll: $isExpandAllList,
                             isUpdateList: $statusSaveEdit,
                             searchString: $searchString,
-                            writeModel: readModel)
+                            writeModel: readModel,
+                            filterModel: filterModel)
                     }// ForEach with list student
                     .padding(.top, 4)
                 }// VStack with list group student's
@@ -180,8 +181,7 @@ struct StudentInfoView: View
                 {
                     await readModel.fetchStudentData()
                     searchString = oldSearchString
-
-                }// need add wait view (monitor)
+                }
                 
                 statusSaveEdit = false
             }
