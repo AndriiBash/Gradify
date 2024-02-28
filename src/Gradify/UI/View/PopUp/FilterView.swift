@@ -8,17 +8,14 @@
 import SwiftUI
 
 
-
 struct FilterView: View
 {
     @ObservedObject var filterModel:        FilterViewModel
     
     @State private var areConditionsValid:  Bool = true
     @State private var isShowMaxError:      Bool = false
-    @State var isFiltered:                  Bool = false
 
     @State private var maxWidthForButton:   CGFloat = .zero
-    
     
     var body: some View
     {
@@ -33,7 +30,7 @@ struct FilterView: View
                         ItemFilterViewModel(
                             typeColumn: colummFilterType.student,
                             itemCondition: $filterModel.itemConditionList.first(where: { $0.id == item.id })!, 
-                            statusFilter: $isFiltered,
+                            statusFilter: $filterModel.isFiltered,
                             isShowError: $areConditionsValid,
                             onDelete:
                             {
@@ -127,12 +124,6 @@ struct FilterView: View
                                 }
                                 
                                 self.filterModel.viewSize.height += 30
-                                /*
-                                if isShowMaxError
-                                {
-                                    self.filterModel.viewSize.height += 30
-                                }
-                                 */
                             }
                         }
                     }
@@ -172,7 +163,7 @@ struct FilterView: View
                         if allItemsNonEmpty
                         {
                             // interested!!!
-                            self.isFiltered.toggle()
+                            self.filterModel.isFiltered.toggle()
                         }
                         else
                         {
@@ -186,7 +177,7 @@ struct FilterView: View
                     }
                     label:
                     {
-                        Text(!isFiltered ? "Застосувати" : "Скасувати")
+                        Text(!self.filterModel.isFiltered ? "Застосувати" : "Скасувати")
                             .frame(minWidth: maxWidthForButton)
                     }// Button use filter
                     .keyboardShortcut(.defaultAction)
@@ -221,7 +212,7 @@ struct FilterView: View
     {
         if filterModel.itemConditionList.isEmpty
         {
-            isFiltered = false
+            self.filterModel.isFiltered = false
         }
     }// private func updateIsFiltered()
     

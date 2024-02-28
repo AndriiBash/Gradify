@@ -35,12 +35,14 @@ class FilterViewModel: ObservableObject
     @Published var isShow:              Bool
     @Published var viewSize:            CGSize
     @Published var itemConditionList:   [itemCondition]
-    
+    @Published var isFiltered:          Bool
+
     init()
     {
         self.isShow = false
         self.viewSize = CGSize(width: 450, height: 60)
         self.itemConditionList = []
+        self.isFiltered = false
     }// init
     
     func addRecord(record: itemCondition)

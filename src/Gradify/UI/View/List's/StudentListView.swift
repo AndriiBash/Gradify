@@ -20,7 +20,7 @@ struct StudentListView: View
     @State private var scrollViewHeight:            CGFloat = 0
     
     @State private var cardVisibility:              [Bool] = []
-    
+    @State private var listVisibility:              Bool = true
     @ObservedObject var writeModel:                 ReadWriteModel
     @ObservedObject var filterModel:                FilterViewModel
 
@@ -28,72 +28,75 @@ struct StudentListView: View
     
     
     init(studentList: Binding<StudentGroup>, isExpandListForAll: Binding<Bool>, isUpdateList: Binding<Bool>, searchString: Binding<String>, writeModel: ReadWriteModel, filterModel: FilterViewModel)
-        {
-            _studentList = studentList
-            _isExpandListForAll = isExpandListForAll
-            _isUpdateList = isUpdateList
-            _searchString = searchString
-            
-            self.writeModel = writeModel
-            self.filterModel = filterModel
-            
-            let initialCardVisibility = Array(repeating: true, count: studentList.wrappedValue.students.count)
-            _cardVisibility = State(initialValue: initialCardVisibility)
-            //print("\(cardSearchVisibleList)")
-        }
-    
-    
+    {
+        _studentList = studentList
+        _isExpandListForAll = isExpandListForAll
+        _isUpdateList = isUpdateList
+        _searchString = searchString
+        
+        self.writeModel = writeModel
+        self.filterModel = filterModel
+        
+        let initialCardVisibility = Array(repeating: true, count: studentList.wrappedValue.students.count)
+        _cardVisibility = State(initialValue: initialCardVisibility)
+        //print("\(cardSearchVisibleList)")
+    }
     
     
     var body: some View
     {
         if hasSearchResult
         {
-            HStack
+            if listVisibility
             {
-                Button
+                
+                
+                HStack
                 {
-                    isAnimateButtonScrollview.toggle()
+                    Button
+                    {
+                        isAnimateButtonScrollview.toggle()
+                        
+                        withAnimation(Animation.easeInOut(duration: 0.2))
+                        {
+                            self.isScrollViewOpen.toggle()
+                            scrollViewHeight = isScrollViewOpen ? 190 : 0
+                        }
+                    }
+                    label:
+                    {
+                        HStack
+                        {
+                            Text(studentList.name)
+                                .foregroundColor(Color("MainTextForBlur"))
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Image(systemName: isAnimateButtonScrollview ? "chevron.down" : "chevron.right")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 15, height: 15, alignment: .center)
+                                .foregroundColor(Color("MainTextForBlur"))
+                        }//Hstack button label
+                        .background(Color.clear)
+                        .contentShape(Rectangle())
+                    }// button for hide or unhine card with info
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    Spacer()
+                }//HStack Button for expand list group student's
+                .padding(.horizontal, 20)
+                .onChange(of: isExpandListForAll)
+                { _,newValue in
+                    isAnimateButtonScrollview = newValue
+                    isScrollViewOpen = newValue
                     
                     withAnimation(Animation.easeInOut(duration: 0.2))
                     {
-                        self.isScrollViewOpen.toggle()
-                        scrollViewHeight = isScrollViewOpen ? 190 : 0
+                        scrollViewHeight = newValue ? 190 : 0
                     }
                 }
-                label:
-                {
-                    HStack
-                    {
-                        Text(studentList.name)
-                            .foregroundColor(Color("MainTextForBlur"))
-                            .font(.title)
-                            .fontWeight(.bold)
-                        
-                        Image(systemName: isAnimateButtonScrollview ? "chevron.down" : "chevron.right")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 15, height: 15, alignment: .center)
-                            .foregroundColor(Color("MainTextForBlur"))
-                    }//Hstack button label
-                    .background(Color.clear)
-                    .contentShape(Rectangle())
-                }// button for hide or unhine card with info
-                .buttonStyle(PlainButtonStyle())
-                
-                Spacer()
-            }//HStack Button for expand list group student's
-            .padding(.horizontal, 20)
-            .onChange(of: isExpandListForAll)
-            { _,newValue in
-                isAnimateButtonScrollview = newValue
-                isScrollViewOpen = newValue
-                
-                withAnimation(Animation.easeInOut(duration: 0.2))
-                {
-                    scrollViewHeight = newValue ? 190 : 0
-                }
-            }
+            }// if listVisibility
         }
         
         ScrollView(.horizontal, showsIndicators: false)
@@ -104,7 +107,7 @@ struct StudentListView: View
                 {index in
                     let student = studentList.students[index]
                     
-                    if searchString.isEmpty
+                    if searchString.isEmpty && !filterModel.isFiltered
                     {
                         StudentCardViewModel(student: .constant(student), isUpdateStudent: $isUpdateList, writeModel: writeModel)
                             .opacity(cardVisibility[index] ? 1 : 0)
@@ -148,14 +151,156 @@ struct StudentListView: View
                             }
                          */
                     }// else if
+                    else if filterModel.isFiltered && cardVisibility[index]
+                    {
+                        StudentCardViewModel(student: .constant(student), isUpdateStudent: $isUpdateList, writeModel: writeModel)
+                    }
                 }// ForEach
             }// LazyHGrid(rows: adaptiveColumns, spacing: 20)
             .padding(.horizontal, 17)
         }// ScrollView
         .frame(height: scrollViewHeight)
+        .onChange(of: filterModel.isFiltered)
+        { oldValue, newValue in
+            if filterModel.isFiltered
+            {
+                var hasResult: Bool = false
+                
+                let dictionary = ["name": "Ім'я",
+                                   "lastName": "Прізвище",
+                                   "surname": "По батькові",
+                                   "contactNumber": "Номер телефона",
+                                   "dateBirth": "Дата народження",
+                                   "educationProgram": "Освітня програма",
+                                   "group": "Група",
+                                   "passportNumber": "Номер паспорту",
+                                   "residenceAddress": "Адреса проживання"]
+                
+                for index in studentList.students.indices
+                {
+                    let mirror = Mirror(reflecting: studentList.students[index])
+                    var statusFilterItem: Bool = false
+
+                    for item in filterModel.itemConditionList
+                    {
+                        for (label, value) in mirror.children
+                        {
+                            if dictionary[label ?? ""] == item.column
+                            {
+                                var stringValue: String = ""
+                                
+                                if item.column != dictionary["dateBirth"]
+                                {
+                                    stringValue = value as? String ?? "nil"
+                                }
+                                else
+                                {
+                                    stringValue = dateFormatter.string(from: value as! Date)
+                                }
+                                
+                                if item.condition == ">"
+                                {
+                                    if stringValue > item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                                else if item.condition == ">="
+                                {
+                                    if stringValue >= item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                                else if item.condition == "=="
+                                {
+                                    if stringValue == item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                                else if item.condition == "<"
+                                {
+                                    if stringValue < item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                                else if item.condition == "<="
+                                {
+                                    if stringValue <= item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                                else if item.condition == "!="
+                                {
+                                    if stringValue != item.conditionText
+                                    {
+                                        statusFilterItem = true
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if !statusFilterItem
+                        {
+                            withAnimation
+                            {
+                                cardVisibility[index] = false
+                            }
+                        }
+                        else
+                        {
+                            cardVisibility[index] = true
+                            hasResult = true
+                            statusFilterItem = false
+                        }
+                        
+                    }
+                    
+                    if hasResult
+                    {
+                        withAnimation
+                        {
+                            listVisibility = true
+                        }
+                    }
+                    else
+                    {
+                        isAnimateButtonScrollview = false
+                        isScrollViewOpen = false
+                        
+                        withAnimation(Animation.easeInOut(duration: 0.2))
+                        {
+                            scrollViewHeight = 0
+                        }
+                        withAnimation
+                        {
+                            listVisibility = false
+                        }
+                    }
+                    
+                }
+            }
+            else if !newValue
+            {
+                for index in studentList.students.indices
+                {
+                    withAnimation
+                    {
+                        cardVisibility[index] = true
+                    }
+                }
+                
+                withAnimation
+                {
+                    listVisibility = true
+                }
+            }
+        }
         .onChange(of: searchString)
         { _, newValue in
-
             if searchString.isEmpty
             {
                 withAnimation
@@ -220,7 +365,6 @@ struct StudentListView: View
     }
     
 }
-
 
 
 struct StudentListView_Previews: PreviewProvider
