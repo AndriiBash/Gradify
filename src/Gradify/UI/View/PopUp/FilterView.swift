@@ -84,6 +84,15 @@ struct FilterView: View
                     
                     Button
                     {
+                        if self.filterModel.isFiltered
+                        {
+                            if filterModel.itemConditionList.isEmpty
+                            {
+                                self.filterModel.isFiltered = false
+                            }
+                        }
+                        
+                        
                         if self.filterModel.itemConditionList.count < 15
                         {
                             withAnimation(Animation.easeOut(duration: 0.25))

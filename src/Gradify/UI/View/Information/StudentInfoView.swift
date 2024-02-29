@@ -38,7 +38,7 @@ struct StudentInfoView: View
             {                
                 VStack(spacing: 0)
                 {
-                    ForEach(readModel.studentGroups.sorted(by: {isSotredList ? $0.name < $1.name : $0.name > $1.name }), id: \.self)
+                    ForEach(readModel.studentGroups, id: \.self)
                     { studentGroup in
                         StudentListView(
                             studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!],
@@ -122,6 +122,7 @@ struct StudentInfoView: View
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
             
+            
             Button
             {
                 filterModel.isShow.toggle()
@@ -134,7 +135,9 @@ struct StudentInfoView: View
             .help("Фільтрація")
             .popover(isPresented: $filterModel.isShow, arrowEdge: .bottom)
             {
-                FilterView(filterModel: filterModel)
+                //FilterView(filterModel: filterModel)
+                EmptyView()
+                    .frame(width: 100, height: 100)
             }
             
             Button
@@ -170,6 +173,13 @@ struct StudentInfoView: View
             }
             
         }// onChange(of: searchString)
+        .onChange(of: isSotredList)
+        { _, _ in
+            withAnimation
+            {
+                readModel.studentGroups.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+            }
+        }
         .onChange(of: statusSaveEdit)
         { _, newValue in
             if statusSaveEdit
