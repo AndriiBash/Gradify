@@ -26,9 +26,9 @@ struct Student: Identifiable, Sendable, Equatable, Hashable
 }// struct Student: Identifiable
 
 
-struct Group: Identifiable, Sendable
+struct Group: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var name: String = ""
     
@@ -37,11 +37,11 @@ struct Group: Identifiable, Sendable
     var departmentName: String = ""
     var educationProgram: String = ""
     
-    var studentList: [Student] = []
+    var studentList: [String] = [] //Student
 }// struct Group: Identifiable
 
 
-struct Teacher: Identifiable, Sendable
+struct Teacher: Identifiable, Sendable, Equatable, Hashable
 {
     var id: Int = 0
 
@@ -61,9 +61,9 @@ struct Teacher: Identifiable, Sendable
 }// struct Teacher: Identifiable
 
 
-struct Department: Identifiable, Sendable // cafedra
+struct Department: Identifiable, Sendable, Equatable, Hashable // cafedra
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var name: String = ""
     
@@ -80,9 +80,9 @@ struct Department: Identifiable, Sendable // cafedra
 }// struct Department: Identifiable
 
 
-struct Subject: Identifiable, Sendable
+struct Subject: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var name: String = ""
     var type: String = ""
@@ -101,9 +101,9 @@ struct Subject: Identifiable, Sendable
 }// struct Subject: Identifiable
 
 
-struct Grades: Identifiable, Sendable
+struct Grades: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var subject: Subject = Subject()
     var recipient: Student = Student()
@@ -117,9 +117,9 @@ struct Grades: Identifiable, Sendable
 } // struct Grades: Identifiable
 
 
-struct Faculty: Identifiable, Sendable
+struct Faculty: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
     
     var name: String
     var dean: String // Decan
@@ -129,9 +129,9 @@ struct Faculty: Identifiable, Sendable
 }// struct Faculty: Identifiable, Sendable
 
 
-struct Specialization: Identifiable, Sendable
+struct Specialization: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var name: String = ""
     var description: String = ""
@@ -139,9 +139,9 @@ struct Specialization: Identifiable, Sendable
 }// struct Specialization: Identifiable, Sendableu
 
 
-struct Specialty: Identifiable, Sendable
+struct Specialty: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
+    var id: Int = 0
 
     var name: String = ""
     var duration: String = ""
@@ -151,10 +151,10 @@ struct Specialty: Identifiable, Sendable
 }// struct Specialty: Identifiable, Sendable
 
 
-struct EducationalProgram: Identifiable, Sendable
+struct EducationalProgram: Identifiable, Sendable, Equatable, Hashable
 {
-    var id: UUID = UUID()
-
+    var id: Int = 0
+    
     var name: String = ""
     
     var specializations: [String] = []

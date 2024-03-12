@@ -10,13 +10,11 @@ import SwiftUI
 struct MainMenuView: View
 {
     // Temp trash
-    @State private var searchText: String = ""
+    //@State private var searchText: String = ""
     @State private var expandAllList: Bool = false
     @State var sideBarVisibility: NavigationSplitViewVisibility = .doubleColumn
-    @State private var isShowTestWindow = false
 
     // Current, and used element
-    @State private var filterModels:        [FilterViewModel] = Array(repeating: FilterViewModel(), count: 10)
     @State private var columnVisibility     = NavigationSplitViewVisibility.detailOnly
     
     
@@ -34,7 +32,7 @@ struct MainMenuView: View
                     {
                         NavigationLink
                         {
-                            StudentInfoView(filterModel: filterModels[0])
+                            StudentInfoView()
                         }
                         label:
                         {
@@ -43,7 +41,7 @@ struct MainMenuView: View
                         
                         NavigationLink
                         {
-                            EmptyView()
+                            GroupInfoView()
                         }
                         label:
                         {
@@ -56,7 +54,7 @@ struct MainMenuView: View
                     {
                         NavigationLink
                         {
-                            EmptyView()
+                            GradeInfoView()
                         }
                         label:
                         {
@@ -65,7 +63,7 @@ struct MainMenuView: View
 
                         NavigationLink
                         {
-                            EmptyView()
+                            SubjectInfoView()
                         }
                         label:
                         {
@@ -78,7 +76,7 @@ struct MainMenuView: View
                     {
                         NavigationLink
                         {
-                            EmptyView()
+                            TeacherInfoView()
                         }
                         label:
                         {
@@ -87,7 +85,7 @@ struct MainMenuView: View
                         
                         NavigationLink
                         {
-                            EmptyView()
+                            DepartamentInfoView()
                         }
                         label:
                         {
@@ -96,7 +94,7 @@ struct MainMenuView: View
 
                         NavigationLink
                         {
-                            EmptyView()
+                            FacultyInfoView()
                         }
                         label:
                         {
@@ -110,7 +108,7 @@ struct MainMenuView: View
                     {
                         NavigationLink
                         {
-                            EmptyView()
+                            SpecializationInfoView()
                         }
                         label:
                         {
@@ -119,7 +117,7 @@ struct MainMenuView: View
                         
                         NavigationLink
                         {
-                            EmptyView()
+                            SpecialtyInfoView()
                         }
                         label:
                         {
@@ -128,7 +126,7 @@ struct MainMenuView: View
                         
                         NavigationLink
                         {
-                            EmptyView()
+                            EducationalProgramInfoView()
                         }
                         label:
                         {
@@ -141,7 +139,7 @@ struct MainMenuView: View
                     Button
                     {
                         print("test setting")
-                        isShowTestWindow.toggle()
+                        //isShowTestWindow.toggle()
                     }
                     label:
                     {
@@ -168,12 +166,8 @@ struct MainMenuView: View
         //.background(Color.red)
         //.toolbarBackground(Color.pink, for: .automatic)
         //.toolbarBackground(Color.red, for: .windowToolbar)
-        .searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
-        .sheet(isPresented: $isShowTestWindow)
-        {
-            ButtonViewModel()
-        }
-        
+        //.searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
+
         //.sheet(item: $isShowTestWindow, content: ButtonView())
         //.frame(minWidth: 550)
          

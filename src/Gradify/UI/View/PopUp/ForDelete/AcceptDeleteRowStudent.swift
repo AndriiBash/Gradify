@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AcceptDeleteRow: View
+struct AcceptDeleteRowStudent: View
 {
     @Binding var student:               Student
     @Binding var isShowSelfView:        Bool
@@ -97,9 +97,3 @@ struct AcceptDeleteRow: View
         .padding()
     }
 }
-
-/*
-#Preview {
-    AcceptDeleteRow()
-}
-*/

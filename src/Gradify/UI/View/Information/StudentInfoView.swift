@@ -10,7 +10,6 @@ import SwiftUI
 struct StudentInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
-    @ObservedObject var filterModel:                FilterViewModel
     
     @State private var isExpandAllList:             Bool = false
     @State private var isShowAddStudentPanel:       Bool = false
@@ -22,7 +21,8 @@ struct StudentInfoView: View
 
     @State private var searchString:                String = ""
     @State private var oldSearchString:             String = ""
-    @State private var countSearchedStudent:        Int = 0
+    @State private var countSearched:               Int = 0
+   
     // long proccess make this function...
     // @State private var selectedGroup: StudentGroup
     
@@ -45,8 +45,7 @@ struct StudentInfoView: View
                             isExpandListForAll: $isExpandAllList,
                             isUpdateList: $statusSaveEdit,
                             searchString: $searchString,
-                            writeModel: readModel,
-                            filterModel: filterModel)
+                            writeModel: readModel)
                     }// ForEach with list student
                     .padding(.top, 4)
                 }// VStack with list group student's
@@ -57,11 +56,17 @@ struct StudentInfoView: View
                     {
                         await readModel.fetchStudentData()
                     }// need add wait view (monitor)
+                    
+                    withAnimation
+                    {
+                        readModel.studentGroups.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                    }
                 }
             }// Main ScrollView
         }// main ZStack
         .navigationTitle("Студенти")
-        .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) студентів" : "Знайдено \(countSearchedStudent) студентів")
+        .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) студентів" : "Знайдено \(countSearched) студентів")
+        .frame(minWidth: 300, minHeight: 200)
         .sheet(isPresented: $isShowAddStudentPanel)
         {
             AddStudentView(isShowForm: $isShowAddStudentPanel, statusSave: $statusSave, writeModel: readModel)
@@ -122,24 +127,6 @@ struct StudentInfoView: View
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
             
-            
-            Button
-            {
-                filterModel.isShow.toggle()
-                //isFilterShow.toggle()
-            }
-            label:
-            {
-                Label("Фільтрація", systemImage: "line.3.horizontal.decrease.circle")
-            }
-            .help("Фільтрація")
-            .popover(isPresented: $filterModel.isShow, arrowEdge: .bottom)
-            {
-                //FilterView(filterModel: filterModel)
-                EmptyView()
-                    .frame(width: 100, height: 100)
-            }
-            
             Button
             {
                 isShowAddStudentPanel.toggle()
@@ -152,11 +139,10 @@ struct StudentInfoView: View
         
             Spacer()
         }//.toolBar for main ZStack
-        .frame(minWidth: 300, minHeight: 200)
         .searchable(text: $searchString){}
         .onChange(of: searchString)
         { oldValue,newValue in
-            countSearchedStudent = 0
+            countSearched = 0
 
             if !searchString.isEmpty
             {
@@ -166,12 +152,11 @@ struct StudentInfoView: View
                     {
                         if readModel.matchesSearch(student: student, searchString: searchString)
                         {
-                            countSearchedStudent += 1
+                            countSearched += 1
                         }
                     }
                 }
             }
-            
         }// onChange(of: searchString)
         .onChange(of: isSotredList)
         { _, _ in
@@ -210,6 +195,6 @@ struct StudentInfoView_Previews: PreviewProvider
 {
     static var previews: some View
     {
-        StudentInfoView(filterModel: FilterViewModel())
+        StudentInfoView()
     }
 }

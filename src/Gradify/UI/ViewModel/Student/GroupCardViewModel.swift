@@ -1,24 +1,24 @@
 //
-//  Row.swift
+//  GroupCardViewModel.swift
 //  Gradify
 //
-//  Created by Андрiй on 01.02.2024.
+//  Created by Андрiй on 11.03.2024.
 //
 
-import Foundation
 import SwiftUI
 
-struct StudentCardViewModel: View
+struct GroupCardViewModel: View
 {
-    @State private var isHovered:        Bool = false
+    @State private var isHovered:           Bool = false
 
-    @State private var showAboutStudent: Bool = false
-    @State private var showEditStudent:  Bool = false
-    @State private var showDeleteStudent:Bool = false
+    @State private var showAboutGroup:      Bool = false
+    @State private var showEditGroup:       Bool = false
+    @State private var showDeleteGroup:     Bool = false
     
-    @Binding var student:                Student
-    @Binding var isUpdateStudent:        Bool
-    @ObservedObject var writeModel:      ReadWriteModel
+    @Binding var group:                     Group
+    @Binding var isUpdateGroup:             Bool
+    @ObservedObject var writeModel:         ReadWriteModel
+
     
     var body: some View
     {
@@ -28,7 +28,7 @@ struct StudentCardViewModel: View
             
             HStack
             {
-                Text("\(student.lastName) \(student.name) \(student.surname)")
+                Text("\(group.name)")
                     .font(.title2)
             }// HStack with main info
             
@@ -36,13 +36,13 @@ struct StudentCardViewModel: View
             {
                 HStack
                 {
-                    Image(systemName: "birthday.cake")
+                    Image(systemName: "person.bust.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(dateFormatter.string(from: student.dateBirth))")
+                    Text("\(group.curator)")
                         .font(.subheadline)
                     
                     Spacer()
@@ -50,13 +50,13 @@ struct StudentCardViewModel: View
                 
                 HStack
                 {
-                    Image(systemName: "phone.down")
+                    Image(systemName: "laurel.leading")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(student.contactNumber)")
+                    Text("\(group.groupLeader)")
                         .font(.subheadline)
                     
                     Spacer()
@@ -64,13 +64,13 @@ struct StudentCardViewModel: View
                 
                 HStack
                 {
-                    Image(systemName: "house")
+                    Image(systemName: "book.and.wrench.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(student.residenceAddress)")
+                    Text("\(group.educationProgram)")
                         .font(.subheadline)
                     
                     Spacer()
@@ -96,7 +96,7 @@ struct StudentCardViewModel: View
             {
                 Button
                 {
-                    showDeleteStudent.toggle()
+                    showDeleteGroup.toggle()
                 }
                 label:
                 {
@@ -114,7 +114,7 @@ struct StudentCardViewModel: View
                 
                 Button
                 {
-                    showEditStudent.toggle()
+                    showEditGroup.toggle()
                 }
                 label:
                 {
@@ -132,7 +132,7 @@ struct StudentCardViewModel: View
                 
                 Button
                 {
-                    showAboutStudent.toggle()
+                    showAboutGroup.toggle()
                 }
                 label:
                 {
@@ -158,17 +158,17 @@ struct StudentCardViewModel: View
                 self.isHovered = hovering
             }
         }
-        .sheet(isPresented: $showAboutStudent)
+        .sheet(isPresented: $showAboutGroup)
         {
-            RowStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, student: student)
+            RowGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, group: group)
         }
-        .sheet(isPresented: $showEditStudent)
+        .sheet(isPresented: $showEditGroup)
         {
-            EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $isUpdateStudent, student: $student, writeModel: writeModel)
+            //EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $isUpdateStudent, student: $student, writeModel: writeModel)
         }
-        .sheet(isPresented: $showDeleteStudent)
+        .sheet(isPresented: $showDeleteGroup)
         {
-            AcceptDeleteRowStudent(student: $student, isShowSelfView: $showDeleteStudent, isUpdateListStudent: $isUpdateStudent, writeModel: writeModel)
+            AcceptDeleteRowGroup(group: $group, isShowSelfView: $showDeleteGroup, isUpdateListGroup: $isUpdateGroup, writeModel: writeModel)
         }
     }
 }

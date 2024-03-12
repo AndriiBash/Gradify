@@ -25,8 +25,8 @@ struct RowStudentView: View
     @Binding var isShowView: Bool
     @Binding var isEditView: Bool
     
-    
     var student: Student
+    
     
     var body: some View
     {
