@@ -61,10 +61,3 @@ struct GradeInfoView: View
         }//.toolBar for main ZStack
     }
 }
-
-/*
-#Preview
-{
-    GradeInfoView()
-}
-*/

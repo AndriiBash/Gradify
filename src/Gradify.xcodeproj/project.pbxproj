@@ -35,6 +35,8 @@
 		B5979CFE2B9F51390040142D /* AcceptDeleteRowSpecialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5979CFD2B9F51390040142D /* AcceptDeleteRowSpecialization.swift */; };
 		B5979D002B9F51490040142D /* AcceptDeleteRowSpecialty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5979CFF2B9F51490040142D /* AcceptDeleteRowSpecialty.swift */; };
 		B5979D022B9F51520040142D /* AcceptDeleteRowEducationalProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5979D012B9F51520040142D /* AcceptDeleteRowEducationalProgram.swift */; };
+		B5979D042BA07F370040142D /* EditGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5979D032BA07F370040142D /* EditGroupView.swift */; };
+		B5979D062BA0BCE40040142D /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5979D052BA0BCE40040142D /* AddGroupView.swift */; };
 		B5A5C8AE2B6BD2DF008F03D5 /* StudentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8AD2B6BD2DF008F03D5 /* StudentInfoView.swift */; };
 		B5A5C8B22B6BD30A008F03D5 /* PressedDeleteButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8B12B6BD30A008F03D5 /* PressedDeleteButtonStyle.swift */; };
 		B5A5C8B42B6BD331008F03D5 /* PressedInfoButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A5C8B32B6BD331008F03D5 /* PressedInfoButtonStyle.swift */; };
@@ -106,6 +108,8 @@
 		B5979CFD2B9F51390040142D /* AcceptDeleteRowSpecialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRowSpecialization.swift; sourceTree = "<group>"; };
 		B5979CFF2B9F51490040142D /* AcceptDeleteRowSpecialty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRowSpecialty.swift; sourceTree = "<group>"; };
 		B5979D012B9F51520040142D /* AcceptDeleteRowEducationalProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRowEducationalProgram.swift; sourceTree = "<group>"; };
+		B5979D032BA07F370040142D /* EditGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupView.swift; sourceTree = "<group>"; };
+		B5979D052BA0BCE40040142D /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		B5A5C8AD2B6BD2DF008F03D5 /* StudentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInfoView.swift; sourceTree = "<group>"; };
 		B5A5C8B12B6BD30A008F03D5 /* PressedDeleteButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressedDeleteButtonStyle.swift; sourceTree = "<group>"; };
 		B5A5C8B32B6BD331008F03D5 /* PressedInfoButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressedInfoButtonStyle.swift; sourceTree = "<group>"; };
@@ -182,7 +186,7 @@
 		B512AC642B3ACE1600E9A09A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B5CC2B0E2B6E51B5001E86BD /* Student */,
+				B5CC2B0E2B6E51B5001E86BD /* Card */,
 				B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */,
 			);
 			path = ViewModel;
@@ -417,13 +421,13 @@
 			path = PopUp;
 			sourceTree = "<group>";
 		};
-		B5CC2B0E2B6E51B5001E86BD /* Student */ = {
+		B5CC2B0E2B6E51B5001E86BD /* Card */ = {
 			isa = PBXGroup;
 			children = (
 				B5A5C8B72B6BD8AC008F03D5 /* StudentCardViewModel.swift */,
 				B5979CEE2B9F46C50040142D /* GroupCardViewModel.swift */,
 			);
-			path = Student;
+			path = Card;
 			sourceTree = "<group>";
 		};
 		B5CC2B112B6E53FB001E86BD /* List's */ = {
@@ -439,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				B5CC2B142B6FBF0B001E86BD /* AddStudentView.swift */,
+				B5979D052BA0BCE40040142D /* AddGroupView.swift */,
 			);
 			path = AddRow;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */,
+				B5979D032BA07F370040142D /* EditGroupView.swift */,
 			);
 			path = EditRow;
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,
 				B5B55EE22B30CEB3002E0F4D /* LoginModel.swift in Sources */,
+				B5979D062BA0BCE40040142D /* AddGroupView.swift in Sources */,
 				B5979CF42B9F50E80040142D /* AcceptDeleteRowTeacher.swift in Sources */,
 				B5979CFC2B9F512C0040142D /* AcceptDeleteRowFaculty.swift in Sources */,
 				B5979CEF2B9F46C50040142D /* GroupCardViewModel.swift in Sources */,
@@ -603,6 +610,7 @@
 				B5CC2B1B2B6FFF0D001E86BD /* ErrorSaveView.swift in Sources */,
 				B5979CFE2B9F51390040142D /* AcceptDeleteRowSpecialization.swift in Sources */,
 				B5979CED2B9F46110040142D /* RowGroupView.swift in Sources */,
+				B5979D042BA07F370040142D /* EditGroupView.swift in Sources */,
 				B5B55ED62B30CE57002E0F4D /* WindowController.swift in Sources */,
 				B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */,
 				B5979CE72B9EF7440040142D /* SpecialtyInfoView.swift in Sources */,

@@ -207,15 +207,16 @@ struct RowGroupView: View
                 
                 Section(header: Text("Студенти"))
                 {
-                    Text("")
-                    
-
+                    if group.studentList.isEmpty
+                    {
+                        Text("")
+                    }
                        
                     ForEach(group.studentList.indices, id: \.self)
                     { index in
                         HStack
                         {
-                            Text("Студент № \(index)")
+                            Text("Студент № \(index + 1)")
                             
                             Spacer()
                             
@@ -290,14 +291,14 @@ struct RowGroupView: View
                             Староста: \(group.groupLeader)
                             Кафедра: \(group.departmentName)
                             Освітня програма: \(group.educationProgram)
-                            ===========================================
+                            ===========================================\n
                             """
                     
                     if !group.studentList.isEmpty
                     {
                         for index in group.studentList.indices
                         {
-                            allInfo += "Студент № \(index)" + "\(group.studentList[index])"
+                            allInfo += "Студент № \(index)" + "\(group.studentList[index])\n"
                         }
                         
                         allInfo += "==========================================="

@@ -43,15 +43,11 @@ struct GroupList: Identifiable, Hashable
 
 
 
-
-
 class ReadWriteModel: ObservableObject
 {
     @Published var studentGroups:       [StudentGroupList] = []
     @Published var groupList:           [GroupList] = []
 
-    
-    @Published var students             = [Student]()
     @Published var groups               = [Group]()
     @Published var teachers             = [Teacher]()
     @Published var departments          = [Department]()
@@ -78,22 +74,177 @@ class ReadWriteModel: ObservableObject
         return ["program1", "program2"]
     }// func getEducatProgramNameList() async -> [String]
     
+    
+    func getStudentList(groupName: String) async -> [String]
+    {
+        do
+        {
+            var filteredStudents: [String] = []
+            
+            await fetchStudentData(updateCountRecod: false)
+            
+            for group in self.studentGroups
+            {
+                for student in group.students
+                {
+                    if student.group == groupName
+                    {
+                        filteredStudents.append("\(student.lastName) \(student.name) \(student.surname)")
+                    }
+                }
+            }
+
+            return filteredStudents
+        }
+        catch
+        {
+            print("Error fetching student data : \(error)")
+            return []
+        }
+    }// func getStudentList(groupName: String) async -> [String]
+
+    
+    func getTeacherList() async -> [String]
+    {
+        return ["taecher1", "taecher2", "taecher3"]
+    }// func getTeacherList() async -> [String]
+
+    
+    func getDeprmentList() async -> [String]
+    {
+        return ["department1", "department2", "department3"]
+    }// func getDeprmentList() async -> [String]
+    
+    
     func getGroupNameList() async -> [String]
     {
         do
         {
-            await fetchGroupData()
+            await fetchSmallGroupData()
             
-            return self.groupList.map { $0.name }
+            var groupNameList: [String] = []
+            
+            for list in self.groupList
+            {
+                for groups in list.groups
+                {
+                    groupNameList.append("\(groups.name)")
+                }
+            }
+            
+            return groupNameList
         }
         catch
         {
-            print("Error fetching group data: \(error)")
+            print("Error fetching group data : \(error)")
             return []
         }
     }// func getGroupName() async -> [String]
     
-    func fetchGroupData() async
+    func fetchBigGroupData() async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            self.countRecords = 0
+
+            let querySnapshot = try await db.collection("groups").getDocuments()
+
+            var intermediateGroups: [Group] = []
+
+            for queryDocumentSnapshot in querySnapshot.documents
+            {
+                let data = queryDocumentSnapshot.data()
+
+                let id = data["id"] as? Int ?? -1
+                
+                if self.maxIdRecord <= id
+                {
+                    self.maxIdRecord = id + 1
+                }
+
+                let name = data["name"] as? String ?? ""
+                let curator = data["curator"] as? String ?? ""
+                let groupLeader = data["groupLeader"] as? String ?? ""
+                let departmentName = data["departmentName"] as? String ?? ""
+                let educationProgram = data["educationProgram"] as? String ?? ""
+                
+                let studentList = await getStudentList(groupName: name)
+                
+                let group = Group(
+                    id: id,
+                    name: name,
+                    curator: curator,
+                    groupLeader: groupLeader,
+                    departmentName: departmentName,
+                    educationProgram: educationProgram,
+                    studentList: studentList
+                )
+
+                intermediateGroups.append(group)
+            }
+
+            // После того, как все асинхронные вызовы выполнены, группируем данные
+            let groupedGroups = Dictionary(grouping: intermediateGroups, by: { $0.departmentName })
+
+            self.groupList = groupedGroups.map { (department, groups) -> GroupList in
+                return GroupList(name: department, groups: groups)
+            }
+
+            self.countRecords = self.groupList.flatMap { $0.groups }.count
+
+            DispatchQueue.main.async
+            {
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Error fetching data : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+
+    }// func fetchBigGroupData() async
+    
+    
+    func updateGroup(id: Int, name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": id,
+        "name": name,
+        "curator": curator,
+        "departmentName": department,
+        "educationProgram": educationProgram,
+        "groupLeader": leaderGroup
+    ]
+        
+        do
+        {
+            let snapshot = try await db.collection("groups").whereField("id", isEqualTo: id).getDocuments(
+            )
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("groups").document(document.documentID).updateData(object)
+            return true
+        } catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+    }// func updateGroup(id: Int, name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
+    
+
+    func fetchSmallGroupData() async
     {
         do
         {
@@ -106,7 +257,9 @@ class ReadWriteModel: ObservableObject
                 let data = queryDocumentSnapshot.data()
 
                 let id = data["id"] as? Int ?? -1
-                if self.maxIdRecord <= id {
+                
+                if self.maxIdRecord <= id
+                {
                     self.maxIdRecord = id + 1
                 }
 
@@ -115,7 +268,7 @@ class ReadWriteModel: ObservableObject
                 let groupLeader = data["groupLeader"] as? String ?? ""
                 let departmentName = data["departmentName"] as? String ?? ""
                 let educationProgram = data["educationProgram"] as? String ?? ""
-
+                                
                 return Group(
                     id: id,
                     name: name,
@@ -161,24 +314,16 @@ class ReadWriteModel: ObservableObject
     }// func fetchGroupData() async
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func fetchStudentData() async
+    func fetchStudentData(updateCountRecod: Bool) async
     {
         do
         {
             self.isLoadingFetchData = true
-            self.countRecords = 0
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
 
             let querySnapshot = try await db.collection("students").getDocuments()
 
@@ -211,8 +356,17 @@ class ReadWriteModel: ObservableObject
                 StudentGroupList(name: group, students: users)
             }
 
-            self.countRecords = self.studentGroups.flatMap { $0.students }.count
+            if updateCountRecod
+            {
+                self.countRecords = self.studentGroups.flatMap { $0.students }.count
+            }
 
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
+            }
+            
+            /*
             DispatchQueue.main.async
             {
                 withAnimation(Animation.easeOut(duration: 0.5))
@@ -220,6 +374,7 @@ class ReadWriteModel: ObservableObject
                     self.isLoadingFetchData = false
                 }
             }
+             */
         }
         catch let error as NSError
         {
@@ -239,7 +394,29 @@ class ReadWriteModel: ObservableObject
         }
     }// func fetchStudentData() async
 
+    func addNewGroup(name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "curator": curator,
+        "departmentName": department,
+        "educationProgram": educationProgram,
+        "groupLeader": leaderGroup
+        ]
         
+        do
+        {
+            try await db.collection("groups").addDocument(data: object)
+            self.maxIdRecord += 1
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }// func addNewGroup(name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
+
     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -266,11 +443,6 @@ class ReadWriteModel: ObservableObject
             return false
         }
     }//     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
-
-
-    
-    
-    
     
     func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     {    let object: [String: Any] = [
@@ -334,10 +506,7 @@ class ReadWriteModel: ObservableObject
             print("Error in get data: \(error.localizedDescription)")
         }
     }// func deleteStudent(withId studentId: Int) async {
-    
-    
-    
-    
+        
     func deleteGroup(withId groupId: Int) async
     {
         do 
@@ -368,11 +537,6 @@ class ReadWriteModel: ObservableObject
         }
     }// func deleteStudent(withId studentId: Int) async {
 
-    
-    
-    
-    
-    
     func matchesSearch(student: Student, searchString: String) -> Bool
     {
         return student.name.lowercased().contains(searchString.lowercased()) ||
@@ -393,6 +557,4 @@ class ReadWriteModel: ObservableObject
                group.departmentName.lowercased().contains(searchString.lowercased()) ||
                group.educationProgram.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(group: Group, searchString: String) -> Bool {
-
 }
-

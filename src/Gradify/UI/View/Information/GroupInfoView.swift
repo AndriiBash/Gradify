@@ -50,7 +50,7 @@ struct GroupInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchGroupData()
+                        await readModel.fetchBigGroupData()
                     }// need add wait view (monitor)
                     
                     withAnimation
@@ -112,8 +112,7 @@ struct GroupInfoView: View
         }
         .sheet(isPresented: $isShowAddGroupPanel)
         {
-            EmptyView()
-                .frame(width: 300, height: 120)
+            AddGroupView(isShowForm: $isShowAddGroupPanel, statusSave: $statusSave, writeModel: readModel)
         }
         .sheet(isPresented: $showStatusSave)
         {
@@ -127,7 +126,7 @@ struct GroupInfoView: View
 
                         Task
                         {
-                            await readModel.fetchGroupData()
+                            await readModel.fetchBigGroupData()
                             searchString = oldSearchString
                         }// need add wait view (monitor)
                     }
@@ -172,7 +171,7 @@ struct GroupInfoView: View
 
                 Task
                 {
-                    await readModel.fetchGroupData()
+                    await readModel.fetchBigGroupData()
                     searchString = oldSearchString
                 }
                 

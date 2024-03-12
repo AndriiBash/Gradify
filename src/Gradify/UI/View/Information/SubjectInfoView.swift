@@ -61,10 +61,3 @@ struct SubjectInfoView: View
         }//.toolBar for main ZStack
     }
 }
-
-/*
-#Preview
-{
-    SubjectInfoView()
-}
-*/

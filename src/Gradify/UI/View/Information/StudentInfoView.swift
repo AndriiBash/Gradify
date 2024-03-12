@@ -22,10 +22,6 @@ struct StudentInfoView: View
     @State private var searchString:                String = ""
     @State private var oldSearchString:             String = ""
     @State private var countSearched:               Int = 0
-   
-    // long proccess make this function...
-    // @State private var selectedGroup: StudentGroup
-    
     
     var body: some View
     {
@@ -54,7 +50,7 @@ struct StudentInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchStudentData()
+                        await readModel.fetchStudentData(updateCountRecod: true)
                     }// need add wait view (monitor)
                     
                     withAnimation
@@ -94,7 +90,7 @@ struct StudentInfoView: View
 
                         Task
                         {
-                            await readModel.fetchStudentData()
+                            await readModel.fetchStudentData(updateCountRecod: true)
                             searchString = oldSearchString
                         }// need add wait view (monitor)
                     }
@@ -174,7 +170,7 @@ struct StudentInfoView: View
 
                 Task
                 {
-                    await readModel.fetchStudentData()
+                    await readModel.fetchStudentData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 

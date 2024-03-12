@@ -179,10 +179,11 @@ struct EditStudentView: View
 
                         Divider()
                         
-                        ForEach(groupList, id: \.self) { groupName in
-                                        Text(groupName)
-                                            .tag(groupName)
-                                    }
+                        ForEach(groupList, id: \.self)
+                        { groupName in
+                            Text(groupName)
+                                .tag(groupName)
+                        }
                     }// Picker for select group
                 }// Section with additional info student
             }// Form with info and TextField
@@ -333,10 +334,3 @@ struct EditStudentView: View
         
     }
 }
-
-/*
-#Preview
-{
-    EditStudentView()
-}
-*/

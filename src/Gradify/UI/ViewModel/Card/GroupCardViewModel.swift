@@ -18,7 +18,6 @@ struct GroupCardViewModel: View
     @Binding var group:                     Group
     @Binding var isUpdateGroup:             Bool
     @ObservedObject var writeModel:         ReadWriteModel
-
     
     var body: some View
     {
@@ -164,7 +163,7 @@ struct GroupCardViewModel: View
         }
         .sheet(isPresented: $showEditGroup)
         {
-            //EditStudentView(isShowView: $showAboutStudent, isEditView: $showEditStudent, isUpdateListStudent: $isUpdateStudent, student: $student, writeModel: writeModel)
+            EditGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, isUpdateListGroup: $isUpdateGroup, group: $group, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteGroup)
         {
