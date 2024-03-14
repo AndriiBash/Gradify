@@ -32,6 +32,7 @@ struct SpecialtyInfoView: View
             
         }// main ZStack
         .navigationTitle("Спеціальність")
+        .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) спеціальностей" : "Знайдено \(countSearched) спеціальностей")
         .frame(minWidth: 300, minHeight: 200)
         .searchable(text: $searchString){}
         .toolbar
@@ -45,7 +46,7 @@ struct SpecialtyInfoView: View
                 Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: isSotredList ? "arrow.down.circle" : "arrow.up.circle")
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
-            .padding(.leading, 45)
+            .padding(.leading, 100)
 
             Button
             {

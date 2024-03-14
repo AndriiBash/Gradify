@@ -87,9 +87,9 @@ struct Subject: Identifiable, Sendable, Equatable, Hashable
     var name: String = ""
     var type: String = ""
     
-    var teacherList: [Teacher] = []
+    var teacherList: [String] = []
     
-    var departamentSubject: Department = Department() // maybe use string
+    var departamentSubject: String = ""
     
     var totalHours: Int = 0
     var lectureHours: Int = 0

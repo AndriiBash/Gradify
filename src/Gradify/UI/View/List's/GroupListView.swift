@@ -79,7 +79,7 @@ struct GroupListView: View
                         .buttonStyle(PlainButtonStyle())
                         
                         Spacer()
-                    }//HStack Button for expand list group student's
+                    }//HStack Button for expand list group group
                     .padding(.horizontal, 20)
                     .onChange(of: isExpandListForAll)
                     { _,newValue in
@@ -181,12 +181,10 @@ struct GroupListView: View
                 {
                     cardVisibility[index] = false
                 }
-                //print("status open \(studentList.name) : \(isScrollViewOpen)")
             }
             .onChange(of: isScrollViewOpen)
             { oldValue, newValue in
                 UserDefaults.standard.set(newValue, forKey: "list-status-open-\(groupList.name)")
-                //print("change status open \(studentList.name) : \(isScrollViewOpen)")
             }
         }
     }// body

@@ -36,6 +36,7 @@ struct AddGroupView: View
                 Spacer()
                 
                 Text("Додавання групи")
+                    .padding(.top, 10)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
                 

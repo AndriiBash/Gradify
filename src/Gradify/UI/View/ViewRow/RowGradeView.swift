@@ -69,10 +69,9 @@ struct RowGradeView: View
                             )
                             .onHover
                         { isHovered in
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
                             hoverOnSubject.toggle()
                         }
-                        .contextMenu()
+                        .contextMenu
                         {
                             Button
                             {
@@ -101,10 +100,9 @@ struct RowGradeView: View
                             )
                             .onHover
                         { isHovered in
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
                             hoverOnRecipient.toggle()
                         }
-                        .contextMenu()
+                        .contextMenu
                         {
                             Button
                             {
@@ -133,10 +131,9 @@ struct RowGradeView: View
                             )
                             .onHover
                         { isHovered in
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
                             hoverOnGrader.toggle()
                         }
-                        .contextMenu()
+                        .contextMenu
                         {
                             Button
                             {
@@ -165,10 +162,9 @@ struct RowGradeView: View
                             )
                             .onHover
                         { isHovered in
-                            changePointingHandCursor(shouldChangeCursor: isHovered)
                             hoverOnScore.toggle()
                         }
-                        .contextMenu()
+                        .contextMenu
                         {
                             Button
                             {
@@ -200,10 +196,9 @@ struct RowGradeView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnDateGiven.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -232,10 +227,9 @@ struct RowGradeView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnGradeType.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -264,10 +258,9 @@ struct RowGradeView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnRetakePossible.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -299,10 +292,9 @@ struct RowGradeView: View
                             )
                             .onHover
                             {isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnComment.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {

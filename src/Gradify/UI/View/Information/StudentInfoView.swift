@@ -34,10 +34,10 @@ struct StudentInfoView: View
             {                
                 VStack(spacing: 0)
                 {
-                    ForEach(readModel.studentGroups, id: \.self)
+                    ForEach(readModel.studentList, id: \.self)
                     { studentGroup in
                         StudentListView(
-                            studentList: $readModel.studentGroups[readModel.studentGroups.firstIndex(of: studentGroup)!],
+                            studentList: $readModel.studentList[readModel.studentList.firstIndex(of: studentGroup)!],
                             isExpandListForAll: $isExpandAllList,
                             isUpdateList: $statusSaveEdit,
                             searchString: $searchString,
@@ -55,7 +55,7 @@ struct StudentInfoView: View
                     
                     withAnimation
                     {
-                        readModel.studentGroups.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                        readModel.studentList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
                     }
                 }
             }// Main ScrollView
@@ -111,7 +111,7 @@ struct StudentInfoView: View
                 Label(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки", systemImage: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
             }// expand all list card in some view
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
-            .padding(.leading, 45)
+            .padding(.leading, 100)
             
             Button
             {
@@ -142,7 +142,7 @@ struct StudentInfoView: View
 
             if !searchString.isEmpty
             {
-                for group in readModel.studentGroups
+                for group in readModel.studentList
                 {
                     for student in group.students
                     {
@@ -158,7 +158,7 @@ struct StudentInfoView: View
         { _, _ in
             withAnimation
             {
-                readModel.studentGroups.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                readModel.studentList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
             }
         }
         .onChange(of: statusSaveEdit)

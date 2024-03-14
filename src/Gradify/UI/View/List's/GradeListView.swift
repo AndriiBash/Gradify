@@ -181,14 +181,11 @@ struct GradeListView: View
                 {
                     cardVisibility[index] = false
                 }
-                //print("status open \(studentList.name) : \(isScrollViewOpen)")
             }
             .onChange(of: isScrollViewOpen)
             { oldValue, newValue in
                 UserDefaults.standard.set(newValue, forKey: "list-status-open-\(gradeList.name)")
-                //print("change status open \(studentList.name) : \(isScrollViewOpen)")
-            }
-            
+            }            
         }// main VStack
     }
 }

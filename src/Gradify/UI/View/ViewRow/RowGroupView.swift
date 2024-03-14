@@ -68,10 +68,9 @@ struct RowGroupView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnName.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -100,10 +99,9 @@ struct RowGroupView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnCurator.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -132,10 +130,9 @@ struct RowGroupView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnLeader.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -164,10 +161,9 @@ struct RowGroupView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnDepartmentName.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -196,10 +192,9 @@ struct RowGroupView: View
                             )
                             .onHover
                             { isHovered in
-                                changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnEducationProgram.toggle()
                             }
-                            .contextMenu()
+                            .contextMenu
                             {
                                 Button
                                 {
@@ -239,7 +234,6 @@ struct RowGroupView: View
                                     )
                                     .onHover
                                     { isHovered in
-                                        changePointingHandCursor(shouldChangeCursor: isHovered)
                                         if isHovered
                                         {
                                             if !hoverOnStudent.indices.contains(index)
@@ -249,7 +243,7 @@ struct RowGroupView: View
                                         }
                                         hoverOnStudent[index].toggle()
                                     }
-                                    .contextMenu()
+                                    .contextMenu
                                     {
                                         Button
                                         {

@@ -14,7 +14,6 @@ struct AcceptDeleteRowStudent: View
     @Binding var isUpdateListStudent:   Bool
     @ObservedObject var writeModel:     ReadWriteModel
     
-    
     var body: some View
     {
         VStack

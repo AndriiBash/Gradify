@@ -58,7 +58,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Оцінки", systemImage: "list.star")
+                            Label("!Оцінки!", systemImage: "list.star")
                         }// NavigationLink with grades
 
                         NavigationLink
@@ -67,7 +67,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Предмети", systemImage: "book.pages")
+                            Label("!Предмети!", systemImage: "book.pages")
                         }// NavigationLink with subjects
                     }// Section about learning and teaching
                     
@@ -80,7 +80,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Викладачі", systemImage: "person")
+                            Label("!Викладачі!", systemImage: "person")
                         }// NavigationLink with teacher's
                         
                         NavigationLink
@@ -89,7 +89,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Кафедра", systemImage: "globe.desk")
+                            Label("!Кафедра!", systemImage: "globe.desk")
                         }// NavigationLink with chair's
 
                         NavigationLink
@@ -98,7 +98,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Факультет", systemImage: "building.columns.fill")
+                            Label("!Факультет!", systemImage: "building.columns.fill")
                         }// NavigationLink with faculty's
 
                     }// Section with about teacher's and departament
@@ -121,7 +121,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Спеціальність", systemImage: "hammer.fill")
+                            Label("!Спеціальність!", systemImage: "hammer.fill")
                         }// NavigationLink with Specialty
                         
                         NavigationLink
@@ -130,7 +130,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("Освітня програма", systemImage: "book.and.wrench.fill")
+                            Label("!Освітня програма!", systemImage: "book.and.wrench.fill")
                         }// NavigationLink with Specialty
                     }// Section with specialization and teach programm
                 } // List with section

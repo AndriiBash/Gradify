@@ -75,7 +75,7 @@ struct GradeInfoView: View
                 Label(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки", systemImage: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
             }// expand all list card in some view
             .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
-            .padding(.leading, 45)
+            .padding(.leading, 100)
             
             Button
             {

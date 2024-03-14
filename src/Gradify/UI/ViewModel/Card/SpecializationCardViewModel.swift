@@ -1,24 +1,25 @@
 //
-//  GradeCardViewModel.swift
+//  SpecializationCardViewModel.swift
 //  Gradify
 //
-//  Created by Андрiй on 13.03.2024.
+//  Created by Андрiй on 14.03.2024.
 //
 
 import SwiftUI
 
-struct GradeCardViewModel: View
+struct SpecializationCardViewModel: View
 {
-    @State private var isHovered:           Bool = false
+    @State private var isHovered:                   Bool = false
 
-    @State private var showAboutGrade:      Bool = false
-    @State private var showEditGrade:       Bool = false
-    @State private var showDeleteGrade:     Bool = false
+    @State private var showAboutSpecialization:     Bool = false
+    @State private var showEditSpecialization:      Bool = false
+    @State private var showDeleteSpecialization:    Bool = false
     
-    @Binding var grade:                     Grade
-    @Binding var isUpdateGrade:             Bool
-    @ObservedObject var writeModel:         ReadWriteModel
+    @Binding var specialization:                    Specialization
+    @Binding var isUpdateSpecialization:            Bool
+    @ObservedObject var writeModel:                 ReadWriteModel
 
+    
     var body: some View
     {
         VStack
@@ -27,53 +28,27 @@ struct GradeCardViewModel: View
             
             HStack
             {
-                Text("\(grade.recipient)")
+                Text("\(specialization.name)")
                     .font(.title2)
             }// HStack with main info
+            
+            Spacer()
             
             VStack
             {
                 HStack
                 {
-                    Image(systemName: "rosette")
+                    Image(systemName: "info.square.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(grade.score)")
+                    Text("\(specialization.description)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with contact number
-                
-                HStack
-                {
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(Color.blue)
-                    
-                    Text(dateFormatter.string(from: grade.dateGiven))
-                        .font(.subheadline)
-
-                    Spacer()
-                }// Hstack with contact number
-                
-                HStack
-                {
-                    Image(systemName: "paperplane")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(Color.blue)
-                                        
-                    Text("\(grade.grader)")
-                        .font(.subheadline)
-                    
-                    Spacer()
-                }// Hstack with residence address
+                }// Hstack with info description spec
             }// VStack with another info
             .padding(.horizontal, 6)
             .padding(.top, 4)
@@ -93,7 +68,7 @@ struct GradeCardViewModel: View
             {
                 Button
                 {
-                    showDeleteGrade.toggle()
+                    showDeleteSpecialization.toggle()
                 }
                 label:
                 {
@@ -111,7 +86,7 @@ struct GradeCardViewModel: View
                 
                 Button
                 {
-                    showEditGrade.toggle()
+                    showEditSpecialization.toggle()
                 }
                 label:
                 {
@@ -129,7 +104,7 @@ struct GradeCardViewModel: View
                 
                 Button
                 {
-                    showAboutGrade.toggle()
+                    showAboutSpecialization.toggle()
                 }
                 label:
                 {
@@ -155,17 +130,17 @@ struct GradeCardViewModel: View
                 self.isHovered = hovering
             }
         }
-        .sheet(isPresented: $showAboutGrade)
+        .sheet(isPresented: $showAboutSpecialization)
         {
-            RowGradeView(isShowView: $showAboutGrade, isEditView: $showEditGrade, grade: grade)
+            RowSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, specialization: specialization)
         }
-        .sheet(isPresented: $showEditGrade)
+        .sheet(isPresented: $showEditSpecialization)
         {
-            EditGradeView(isShowView: $showAboutGrade, isEditView: $showEditGrade, isUpdateListGroup: $isUpdateGrade, grade: $grade, writeModel: writeModel)
+            EditSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, specialization: $specialization, writeModel: writeModel)
         }
-        .sheet(isPresented: $showDeleteGrade)
+        .sheet(isPresented: $showDeleteSpecialization)
         {
-            AcceptDeleteRowGrades(grade: $grade, isShowSelfView: $showDeleteGrade, isUpdateListGrades: $isUpdateGrade, writeModel: writeModel)
+            AcceptDeleteRowSpecialization(specialization: $specialization, isShowSelfView: $showDeleteSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, writeModel: writeModel)
         }
     }
 }

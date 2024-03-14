@@ -31,6 +31,7 @@ struct EducationalProgramInfoView: View
             
         }// main ZStack
         .navigationTitle("Навчальні програми")
+        .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) навчальних предметів" : "Знайдено \(countSearched) навчальних предметів")
         .frame(minWidth: 300, minHeight: 200)
         .searchable(text: $searchString){}
         .toolbar
@@ -44,7 +45,7 @@ struct EducationalProgramInfoView: View
                 Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: isSotredList ? "arrow.down.circle" : "arrow.up.circle")
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
-            .padding(.leading, 45)
+            .padding(.leading, 100)
 
             Button
             {
