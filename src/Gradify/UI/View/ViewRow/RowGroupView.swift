@@ -14,7 +14,7 @@ struct RowGroupView: View
     @State private var hoverOnLeader:               Bool = false
     @State private var hoverOnDepartmentName:       Bool = false
     @State private var hoverOnEducationProgram:     Bool = false
-    @State private var hoverOnStudent:              [Bool] = []
+    @State private var hoverOnStudent:              [Bool]
     
     @State private var statusCopyString:        String  = "Скопіювати"
     @State private var maxWidthForButton:       CGFloat = .zero
@@ -23,6 +23,14 @@ struct RowGroupView: View
     @Binding var isEditView: Bool
     
     var group: Group
+    
+    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, group: Group)
+    {
+        self._isShowView = isShowView
+        self._isEditView = isEditView
+        self.group = group
+        self._hoverOnStudent = State(initialValue: Array(repeating: false, count: group.studentList.count))
+    }
     
     var body: some View
     {
@@ -59,7 +67,7 @@ struct RowGroupView: View
                                         .fill(hoverOnName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnName.toggle()
                             }
@@ -91,7 +99,7 @@ struct RowGroupView: View
                                         .fill(hoverOnCurator ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnCurator.toggle()
                             }
@@ -123,7 +131,7 @@ struct RowGroupView: View
                                         .fill(hoverOnLeader ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnLeader.toggle()
                             }
@@ -155,7 +163,7 @@ struct RowGroupView: View
                                         .fill(hoverOnDepartmentName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnDepartmentName.toggle()
                             }
@@ -187,7 +195,7 @@ struct RowGroupView: View
                                         .fill(hoverOnEducationProgram ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnEducationProgram.toggle()
                             }
@@ -209,47 +217,54 @@ struct RowGroupView: View
                 {
                     if group.studentList.isEmpty
                     {
-                        Text("")
+                        Text("Студенти відсутні")
+                    }
+                    else
+                    {
+                        ForEach(group.studentList.indices, id: \.self)
+                        { index in
+                            HStack
+                            {
+                                Text("Студент № \(index + 1)")
+                                
+                                Spacer()
+                                
+                                Text("\(group.studentList[index])")
+                                    .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 1)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .fill(hoverOnStudent.indices.contains(index) && hoverOnStudent[index] ? Color.gray.opacity(0.2) : Color.clear)
+                                    )
+                                    .onHover
+                                    { isHovered in
+                                        changePointingHandCursor(shouldChangeCursor: isHovered)
+                                        if isHovered
+                                        {
+                                            if !hoverOnStudent.indices.contains(index)
+                                            {
+                                                hoverOnStudent.append(false)
+                                            }
+                                        }
+                                        hoverOnStudent[index].toggle()
+                                    }
+                                    .contextMenu()
+                                    {
+                                        Button
+                                        {
+                                            copyInBuffer(text: group.studentList[index])
+                                        }
+                                        label:
+                                        {
+                                            Text("Скопіювати ПІБ студента")
+                                        }
+                                }
+                            }// ForEach with student's in group
+                        }
                     }
                        
-                    ForEach(group.studentList.indices, id: \.self)
-                    { index in
-                        HStack
-                        {
-                            Text("Студент № \(index + 1)")
-                            
-                            Spacer()
-                            
-                            Text("\(group.studentList[index])")
-                                .foregroundColor(Color("MainTextForBlur").opacity(0.7))
-                                .padding(.horizontal)
-                                .padding(.vertical, 1)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnStudent.indices.contains(index) && hoverOnStudent[index] ? Color.gray.opacity(0.2) : Color.clear)
-                                )
-                                .onHover { isHovered in
-                                    changePointingHandCursor(shouldChangeCursor: isHovered)
-                                    if isHovered {
-                                        if !hoverOnStudent.indices.contains(index) {
-                                            hoverOnStudent.append(false)
-                                        }
-                                    }
-                                    hoverOnStudent[index].toggle()
-                                }
-                                .contextMenu()
-                                {
-                                    Button
-                                    {
-                                        copyInBuffer(text: group.studentList[index])
-                                    }
-                                    label:
-                                    {
-                                        Text("Скопіювати ПІБ студента")
-                                    }
-                            }
-                        }
-                    }// ForEach with student's in group
+                    
                 }// Section with additional info about student's in group
             }// Form with info
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -268,9 +283,6 @@ struct RowGroupView: View
                 label:
                 {
                     Image(systemName: "square.and.pencil")
-                        //.resizable()
-                        //.aspectRatio(contentMode: .fit)
-                        //.frame(width: 20, height: 20)
                 }// button for edit row
                 .padding(.trailing, 12)
                 .help("Редагувати запис")
@@ -298,12 +310,12 @@ struct RowGroupView: View
                     {
                         for index in group.studentList.indices
                         {
-                            allInfo += "Студент № \(index)" + "\(group.studentList[index])\n"
+                            allInfo += "Студент № \(index) " + "\(group.studentList[index])\n"
                         }
                         
                         allInfo += "==========================================="
                     }
-                    
+
                     copyInBuffer(text: allInfo)
                     statusCopyString = "Скопійовано!"
                 }
@@ -321,6 +333,7 @@ struct RowGroupView: View
                 
                 Button
                 {
+                    isShowView = false
                     isShowView = false
                 }
                 label:

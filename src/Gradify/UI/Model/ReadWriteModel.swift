@@ -14,6 +14,7 @@ import SwiftUI
 
 struct StudentGroupList: Identifiable, Sendable, Hashable
 {
+    // maybe delete sendable and method's
     static func == (lhs: StudentGroupList, rhs: StudentGroupList) -> Bool // need move to async
     {
         return lhs.id == rhs.id &&
@@ -42,17 +43,26 @@ struct GroupList: Identifiable, Hashable
 }// struct DepartmentGroup: Identifiable, Hashable
 
 
+struct GradeList: Identifiable, Hashable
+{
+    var id = UUID()
+    var name: String
+    var grades: [Grade]
+}// struct DepartmentGroup: Identifiable, Hashable
+
+
 
 class ReadWriteModel: ObservableObject
 {
     @Published var studentGroups:       [StudentGroupList] = []
     @Published var groupList:           [GroupList] = []
+    @Published var gradeList:           [GradeList] = []
 
     @Published var groups               = [Group]()
     @Published var teachers             = [Teacher]()
     @Published var departments          = [Department]()
     @Published var subjects             = [Subject]()
-    @Published var grades               = [Grades]()
+    @Published var grades               = [Grade]()
     @Published var facultys             = [Faculty]()
     @Published var specializations      = [Specialization]()
     @Published var specialtys           = [Specialty]()
@@ -141,6 +151,81 @@ class ReadWriteModel: ObservableObject
         }
     }// func getGroupName() async -> [String]
     
+    
+    func fetchGradeData() async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            self.countRecords = 0
+
+            let querySnapshot = try await db.collection("grades").getDocuments()
+
+            var intermediateGrades: [Grade] = []
+
+            for queryDocumentSnapshot in querySnapshot.documents
+            {
+                let data = queryDocumentSnapshot.data()
+
+                let id = data["id"] as? Int ?? -1
+                
+                if self.maxIdRecord <= id
+                {
+                    self.maxIdRecord = id + 1
+                }
+                
+                let subject = data["subject"] as? String ?? ""
+                let recipient = data["recipient"] as? String ?? ""
+                let grader = data["grader"] as? String ?? ""
+                
+                let score = data["score"] as? Int ?? -1
+                let dateGiven: Date = dateFormatter.date(from: (data["dateGiven"] as? String) ?? "") ?? Date.from(year: 2000, month: 12, day: 12)!
+                let gradeType = data["gradeType"] as? String ?? ""
+                let retakePossible = data["retakePossible"] as? Bool ?? false
+                let comment = data["comment"] as? String ?? ""
+                                
+                let grade = Grade(
+                    id: id,
+                    subject: subject,
+                    recipient: recipient,
+                    grader: grader,
+                    score: score,
+                    dateGiven: dateGiven,
+                    gradeType: gradeType,
+                    retakePossible: retakePossible,
+                    comment: comment)
+
+                intermediateGrades.append(grade)
+            }
+
+            let groupedGrades = Dictionary(grouping: intermediateGrades, by: { $0.subject })
+
+                   self.gradeList = groupedGrades.map { (subject, grades) -> GradeList in
+                       return GradeList(name: subject, grades: grades)
+                   }
+            
+            self.countRecords = self.gradeList.flatMap { $0.grades }.count
+
+            DispatchQueue.main.async
+            {
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Error fetching data : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+    }// func fetchGradeData() async
+    
+    
+    
     func fetchBigGroupData() async
     {
         do
@@ -184,7 +269,6 @@ class ReadWriteModel: ObservableObject
                 intermediateGroups.append(group)
             }
 
-            // После того, как все асинхронные вызовы выполнены, группируем данные
             let groupedGroups = Dictionary(grouping: intermediateGroups, by: { $0.departmentName })
 
             self.groupList = groupedGroups.map { (department, groups) -> GroupList in
@@ -226,8 +310,8 @@ class ReadWriteModel: ObservableObject
         
         do
         {
-            let snapshot = try await db.collection("groups").whereField("id", isEqualTo: id).getDocuments(
-            )
+            let snapshot = try await db.collection("groups").whereField("id", isEqualTo: id).getDocuments()
+            
             guard let document = snapshot.documents.first else
             {
                 print("No documents or multiple documents found")
@@ -236,7 +320,8 @@ class ReadWriteModel: ObservableObject
             
             try await db.collection("groups").document(document.documentID).updateData(object)
             return true
-        } catch
+        } 
+        catch
         {
             print("Error in update data: \(error)")
             return false
@@ -477,6 +562,38 @@ class ReadWriteModel: ObservableObject
         }
     }// func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
 
+    func deleteGrade(withId gradeId: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("grades").whereField("id", isEqualTo: gradeId).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete student: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteStudent(withId studentId: Int) async {
+
+    
+    
     func deleteStudent(withId studentId: Int) async
     {
         do
@@ -556,5 +673,18 @@ class ReadWriteModel: ObservableObject
                group.groupLeader.lowercased().contains(searchString.lowercased()) ||
                group.departmentName.lowercased().contains(searchString.lowercased()) ||
                group.educationProgram.lowercased().contains(searchString.lowercased())
-    }// func matchesSearch(group: Group, searchString: String) -> Bool {
+    }// func matchesSearch(group: Group, searchString: String) -> Bool
+    
+    func matchesSearch(grade: Grade, searchString: String) -> Bool
+    {
+        return grade.subject.lowercased().contains(searchString.lowercased()) ||
+               grade.recipient.lowercased().contains(searchString.lowercased()) ||
+               grade.grader.lowercased().contains(searchString.lowercased()) ||
+               String(grade.score).contains(searchString) ||  // move to string for ==
+               grade.dateGiven.description.lowercased().contains(searchString.lowercased()) ||
+               grade.gradeType.lowercased().contains(searchString.lowercased()) ||
+               String(grade.retakePossible).lowercased().contains(searchString.lowercased()) ||  // move to string for ==
+               grade.comment.lowercased().contains(searchString.lowercased())
+    }// func matchesSearch(grade: Grade, searchString: String) -> Bool
+
 }

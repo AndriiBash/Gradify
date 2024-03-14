@@ -63,7 +63,7 @@ struct RowStudentView: View
                                         .fill(hoverOnName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnName.toggle()
                             }
@@ -95,7 +95,7 @@ struct RowStudentView: View
                                         .fill(hoverOnLastName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnLastName.toggle()
                             }
@@ -127,7 +127,7 @@ struct RowStudentView: View
                                         .fill(hoverOnSurname ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnSurname.toggle()
                             }
@@ -162,7 +162,7 @@ struct RowStudentView: View
                                         .fill(hoverOnBirthDay ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnBirthDay.toggle()
                             }
@@ -194,7 +194,7 @@ struct RowStudentView: View
                                         .fill(hoverOnContactNumber ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnContactNumber.toggle()
                             }
@@ -226,7 +226,7 @@ struct RowStudentView: View
                                         .fill(hoverOnPassportNumber ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnPassportNumber.toggle()
                             }
@@ -258,7 +258,7 @@ struct RowStudentView: View
                                         .fill(hoverOnResidenceAddress ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnResidenceAddress.toggle()
                             }
@@ -290,7 +290,7 @@ struct RowStudentView: View
                                         .fill(hoverOnEducationProgram ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnEducationProgram.toggle()
                             }
@@ -322,7 +322,7 @@ struct RowStudentView: View
                                         .fill(hoverOnGroup ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            {isHovered in
+                            { isHovered in
                                 changePointingHandCursor(shouldChangeCursor: isHovered)
                                 hoverOnGroup.toggle()
                             }

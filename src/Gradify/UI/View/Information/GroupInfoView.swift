@@ -51,7 +51,7 @@ struct GroupInfoView: View
                     Task
                     {
                         await readModel.fetchBigGroupData()
-                    }// need add wait view (monitor)
+                    }
                     
                     withAnimation
                     {
@@ -161,7 +161,6 @@ struct GroupInfoView: View
                 }
             }
         }// onChange(of: searchString)
-
         .onChange(of: statusSaveEdit)
         { _, newValue in
             if statusSaveEdit

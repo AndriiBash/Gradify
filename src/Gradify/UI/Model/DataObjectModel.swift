@@ -101,13 +101,13 @@ struct Subject: Identifiable, Sendable, Equatable, Hashable
 }// struct Subject: Identifiable
 
 
-struct Grades: Identifiable, Sendable, Equatable, Hashable
+struct Grade: Identifiable, Sendable, Equatable, Hashable
 {
     var id: Int = 0
 
-    var subject: Subject = Subject()
-    var recipient: Student = Student()
-    var grader: Teacher = Teacher()
+    var subject: String = ""
+    var recipient: String = ""
+    var grader: String = ""
     
     var score: Int = 0
     var dateGiven: Date = Date()
