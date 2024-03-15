@@ -75,7 +75,6 @@ class ReadWriteModel: ObservableObject
 {
     @Published var studentList:       [StudentGroupList] = []
     @Published var groupList:         [GroupList] = []
-    
     @Published var specializationList:  [SpecializationList] = []
 
     
@@ -122,6 +121,54 @@ class ReadWriteModel: ObservableObject
     {
         return ["type1", "type2", "type3"]
     }
+    
+    
+    func getSpecializationNameList(withOut: String) async -> [String]
+    {
+        if specializationList.isEmpty
+        {
+            await fetchSpecializationData()
+        }
+        
+        var specializationListName: [String] = []
+        
+        for specicializationList in specializationList
+        {
+            for specialization in specicializationList.specialization
+            {
+                if specialization.name != withOut
+                {
+                    specializationListName.append(specialization.name)
+                }
+            }
+        }
+        
+        return specializationListName
+    }// func getSpecializationNameList(withOut: String) async -> [String]
+    
+    
+    func getGroupNameList(withOut: String) async -> [String]
+    {
+        if groupList.isEmpty
+        {
+            await fetchBigGroupData()
+        }
+        
+        var groupListName: [String] = []
+        
+        for groupArray in groupList
+        {
+            for group in groupArray.groups
+            {
+                if group.name != withOut
+                {
+                    groupListName.append(group.name)
+                }
+            }
+        }
+        
+        return groupListName
+    }// func getGroupNameList(withOut: String) async -> [String]
     
     
     func getStudentList(groupName: String) async -> [String]

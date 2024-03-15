@@ -15,6 +15,8 @@ struct EditSpecializationView: View
     
     @State private var statusSaveString:                String = "Зберегти"
 
+    @State private var isWrongIdName:                   Bool = false
+    
     @State private var isWrongName:                     Bool = false
     @State private var isWrongField:                    Bool = false
     @State private var isWrongDescription:              Bool = false
@@ -48,7 +50,7 @@ struct EditSpecializationView: View
                 Section(header: Text("Головне"))
                 {
                     TextField("Назва", text: $editedName)
-                        .foregroundColor(isWrongName ? Color.red : Color("MainTextForBlur"))
+                        .foregroundColor(isWrongName || isWrongIdName ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
                             {
@@ -99,9 +101,15 @@ struct EditSpecializationView: View
             
             Spacer()
             
-            if isWrongName
+            if isWrongName || isWrongField || isWrongDescription
             {
                 Text("Заповніть всі поля коректно")
+                    .foregroundColor(Color.red)
+            }
+            
+            if isWrongIdName
+            {
+                Text("Назва спеціалізації не повина збігатися з назвами інших спеціалізацій")
                     .foregroundColor(Color.red)
             }
             
@@ -143,24 +151,41 @@ struct EditSpecializationView: View
                 
                 Button
                 {
+                    withAnimation(Animation.easeIn(duration: 0.35))
+                    {
+                        isWrongName = false
+                        isWrongField = false
+                        isWrongDescription = false
+                        isWrongIdName = false
+                    }
+                    
                     if !editedName.isEmpty && !editedField.isEmpty && !editedDescription.isEmpty && !writeModel.isLoadingFetchData
                     {
                         Task
                         {
-                            let status = await writeModel.updateSpecialization(id: specialization.id, name: editedName, description: editedDescription, field: editedField)
-                                                        
-                            isUpdateListSpecialization.toggle()
-                            
-                            statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                            let listSpecializationKeyName = await writeModel.getSpecializationNameList(withOut: specialization.name)
+                        
+                            if listSpecializationKeyName.contains(editedName)
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.35))
+                                {
+                                    isWrongIdName = true
+                                }
+                            }
+                            else
+                            {
+                                let status = await writeModel.updateSpecialization(id: specialization.id, name: editedName, description: editedDescription, field: editedField)
+                                                            
+                                isUpdateListSpecialization.toggle()
+                                
+                                statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                            }
                         }
                     }
                     else
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
-                            isWrongName = false
-                            isWrongField = false
-                            isWrongDescription = false
                             
                             if editedName.isEmpty
                             {

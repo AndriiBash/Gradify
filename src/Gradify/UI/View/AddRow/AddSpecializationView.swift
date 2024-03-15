@@ -17,6 +17,8 @@ struct AddSpecializationView: View
     @State private var isWrongField:            Bool = false
     @State private var isWrongDescription:      Bool = false
 
+    @State private var isWrongIdName:           Bool = false
+
     @Binding var isShowForm:                    Bool
     @Binding var statusSave:                    Bool
     @ObservedObject var writeModel:             ReadWriteModel
@@ -42,7 +44,7 @@ struct AddSpecializationView: View
                 Section(header: Text("Головне"))
                 {
                     TextField("Назва", text: $name)
-                        .foregroundColor(isWrongName ? Color.red : Color("MainTextForBlur"))
+                        .foregroundColor(isWrongName || isWrongIdName ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
                             {
@@ -50,7 +52,7 @@ struct AddSpecializationView: View
                                 
                                 if name.isEmpty
                                 {
-                                    Text("Dungeon Master")
+                                    Text("Назва спеціалізації (ID)")
                                         .foregroundColor(Color.gray)
                                         .padding(.horizontal, 12)
                                 }
@@ -95,9 +97,15 @@ struct AddSpecializationView: View
             
             Spacer()
             
-            if isWrongName
+            if isWrongName || isWrongField || isWrongDescription
             {
                 Text("Заповніть всі поля коректно")
+                    .foregroundColor(Color.red)
+            }
+            
+            if isWrongIdName
+            {
+                Text("Назва спеціалізації не повина збігатися з назвами інших спеціалізацій")
                     .foregroundColor(Color.red)
             }
             
@@ -122,13 +130,34 @@ struct AddSpecializationView: View
                 
                 Button
                 {
+                    withAnimation(Animation.easeIn(duration: 0.35))
+                    {
+                        isWrongName = false
+                        isWrongField = false
+                        isWrongDescription = false
+                        isWrongIdName = false
+                    }
+                    
                     if !name.isEmpty && !field.isEmpty && !description.isEmpty && !writeModel.isLoadingFetchData
                     {
-                        isShowForm = false
                                                 
                         Task
                         {
-                            statusSave = await writeModel.addNewSpecialization(name: name, description: description, field: field)
+                            let listSpecializationKeyName = await writeModel.getSpecializationNameList(withOut: "")
+                        
+                            if listSpecializationKeyName.contains(name)
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.35))
+                                {
+                                    isWrongIdName = true
+                                }
+                            }
+                            else
+                            {
+                                isShowForm = false
+                                
+                                statusSave = await writeModel.addNewSpecialization(name: name, description: description, field: field)
+                            }
                         }
                         
                         statusSave = false
@@ -137,6 +166,7 @@ struct AddSpecializationView: View
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
+
                             if name.isEmpty
                             {
                                 isWrongName = true
@@ -169,6 +199,6 @@ struct AddSpecializationView: View
         }// VStack main
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 350)
+        .frame(width: 400, height: 380)
     }
 }

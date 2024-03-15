@@ -17,14 +17,16 @@ struct AddGroupView: View
     
     @State private var isWrongName:                 Bool = false
 
+    @State private var isWrongIdName:               Bool = false
+
     @State private var curatorList:                 [String] = []
     @State private var studentList:                 [String] = []
     @State private var departmentList:              [String] = []
     @State private var educationProgramList:        [String] = []
 
-    @Binding var isShowForm:                    Bool
-    @Binding var statusSave:                    Bool
-    @ObservedObject var writeModel:             ReadWriteModel
+    @Binding var isShowForm:                        Bool
+    @Binding var statusSave:                        Bool
+    @ObservedObject var writeModel:                 ReadWriteModel
 
     
     var body: some View
@@ -48,7 +50,7 @@ struct AddGroupView: View
                 Section(header: Text("Головне"))
                 {
                     TextField("Назва", text: $name)
-                        .foregroundColor(isWrongName ? Color.red : Color("MainTextForBlur"))
+                        .foregroundColor(isWrongName || isWrongIdName ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
                             {
@@ -129,6 +131,11 @@ struct AddGroupView: View
                     .foregroundColor(Color.red)
             }
             
+            if isWrongIdName
+            {
+                Text("Назва спеціалізації не повина збігатися з назвами інших спеціалізацій")
+                    .foregroundColor(Color.red)
+            }
             
             Divider()
 
@@ -151,13 +158,36 @@ struct AddGroupView: View
                 
                 Button
                 {
+                    withAnimation(Animation.easeIn(duration: 0.35))
+                    {
+                        isWrongName = false
+                        isWrongIdName = false
+                    }
+                    
                     if !name.isEmpty && !writeModel.isLoadingFetchData
                     {
-                        isShowForm = false
-                                                
                         Task
                         {
-                            statusSave = await writeModel.addNewGroup(name: name, curator: curator, leaderGroup: leaderGroup, department: department, educationProgram: educationProgram)
+                            let listGroupKeyName = await writeModel.getGroupNameList(withOut: "")
+                                                    
+                            if listGroupKeyName.contains(name)
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.35))
+                                {
+                                    isWrongIdName = true
+                                }
+                                
+                                print("error!")
+                            }
+                            else
+                            {
+                                print("true!")
+
+                                isShowForm = false
+                                
+                                statusSave = await writeModel.addNewGroup(name: name, curator: curator, leaderGroup: leaderGroup, department: department, educationProgram: educationProgram)
+                            }
+                            
                         }
                         
                         statusSave = false
@@ -166,8 +196,6 @@ struct AddGroupView: View
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
-                            isWrongName = false
-                            
                             if name.isEmpty
                             {
                                 isWrongName = true
@@ -190,7 +218,7 @@ struct AddGroupView: View
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
         }// main VStack
-        .frame(width: 400, height: 360)
+        .frame(width: 400, height: 370)
         .onAppear
         {
             Task

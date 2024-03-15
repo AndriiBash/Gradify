@@ -224,6 +224,13 @@ struct AddStudentView: View
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
+                            isWrongName = false
+                            isWrongLastName = false
+                            isWrongSurname = false
+                            isWrongContactNumber = false
+                            isWrongPassportNumber = false
+                            isWrongResidenceAddress = false
+                            
                             if name.isEmpty
                             {
                                 isWrongName = true

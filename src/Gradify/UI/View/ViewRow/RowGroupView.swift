@@ -16,8 +16,8 @@ struct RowGroupView: View
     @State private var hoverOnEducationProgram:     Bool = false
     @State private var hoverOnStudent:              [Bool]
     
-    @State private var statusCopyString:        String  = "Скопіювати"
-    @State private var maxWidthForButton:       CGFloat = .zero
+    @State private var statusCopyString:            String  = "Скопіювати"
+    @State private var maxWidthForButton:           CGFloat = .zero
 
     @Binding var isShowView: Bool
     @Binding var isEditView: Bool

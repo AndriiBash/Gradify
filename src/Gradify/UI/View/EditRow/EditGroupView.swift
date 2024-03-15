@@ -16,6 +16,7 @@ struct EditGroupView: View
     @State private var editedEducationProgram:          String = "Без навчальної програми"
     
     @State private var isWrongName:                     Bool = false
+    @State private var isWrongIdName:                   Bool = false
 
     @State private var statusSaveString:                String = "Зберегти"
     @State private var curatorList:                     [String] = []
@@ -52,7 +53,7 @@ struct EditGroupView: View
                 Section(header: Text("Головне"))
                 {
                     TextField("Назва", text: $editedName)
-                        .foregroundColor(isWrongName ? Color.red : Color("MainTextForBlur"))
+                        .foregroundColor(isWrongName || isWrongIdName ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
                             {
@@ -133,6 +134,12 @@ struct EditGroupView: View
                     .foregroundColor(Color.red)
             }
             
+            if isWrongIdName
+            {
+                Text("Назва спеціалізації не повина збігатися з назвами інших спеціалізацій")
+                    .foregroundColor(Color.red)
+            }
+            
             Divider()
 
             HStack
@@ -171,23 +178,41 @@ struct EditGroupView: View
                 
                 Button
                 {
+                    withAnimation(Animation.easeIn(duration: 0.35))
+                    {
+                        isWrongName = false
+                        isWrongIdName = false
+                    }
+                    
                     if !editedName.isEmpty && !writeModel.isLoadingFetchData
                     {
+                        
+                        
                         Task
                         {
-                            let status = await writeModel.updateGroup(id: group.id, name: editedName, curator: editedCurator, leaderGroup: editedLeaderGroup, department: editedDepartment, educationProgram: editedEducationProgram)
-                            
-                            isUpdateListGroup.toggle()
-                            
-                            statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                            let listGroupKeyName = await writeModel.getGroupNameList(withOut: group.name)
+
+                            if listGroupKeyName.contains(editedName)
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.35))
+                                {
+                                    isWrongIdName = true
+                                }
+                            }
+                            else
+                            {
+                                let status = await writeModel.updateGroup(id: group.id, name: editedName, curator: editedCurator, leaderGroup: editedLeaderGroup, department: editedDepartment, educationProgram: editedEducationProgram)
+
+                                isUpdateListGroup.toggle()
+                                
+                                statusSaveString = status ? "Збережено" : "Невдалося зберегти"
+                            }
                         }
                     }
                     else
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
-                            isWrongName = false
-                            
                             if editedName.isEmpty
                             {
                                 isWrongName = true
@@ -214,7 +239,7 @@ struct EditGroupView: View
         }// VStack main
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 350)
+        .frame(width: 400, height: 370)
         .onAppear
         {
             let buttonWidth = getWidthFromString(for: "Скопіювати")
