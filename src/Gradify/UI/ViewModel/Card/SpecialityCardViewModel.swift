@@ -1,23 +1,23 @@
 //
-//  SpecializationCardViewModel.swift
+//  SpecialityCardViewModel.swift
 //  Gradify
 //
-//  Created by Андрiй on 14.03.2024.
+//  Created by Андрiй on 16.03.2024.
 //
 
 import SwiftUI
 
-struct SpecializationCardViewModel: View
+struct SpecialityCardViewModel: View
 {
-    @State private var isHovered:                   Bool = false
+    @State private var isHovered:               Bool = false
 
-    @State private var showAboutSpecialization:     Bool = false
-    @State private var showEditSpecialization:      Bool = false
-    @State private var showDeleteSpecialization:    Bool = false
+    @State private var showAboutSpeciality:     Bool = false
+    @State private var showEditSpeciality:      Bool = false
+    @State private var showDeleteSpeciality:    Bool = false
     
-    @Binding var specialization:                    Specialization
-    @Binding var isUpdateSpecialization:            Bool
-    @ObservedObject var writeModel:                 ReadWriteModel
+    @Binding var speciality:                    Specialty
+    @Binding var isUpdateSpecialization:        Bool
+    @ObservedObject var writeModel:             ReadWriteModel
 
     
     var body: some View
@@ -28,7 +28,7 @@ struct SpecializationCardViewModel: View
             
             HStack
             {
-                Text("\(specialization.name)")
+                Text("\(speciality.name)")
                     .font(.title2)
             }// HStack with main info
             
@@ -38,17 +38,46 @@ struct SpecializationCardViewModel: View
             {
                 HStack
                 {
-                    Image(systemName: "info.square.fill")
+                    Image(systemName: "clock")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(specialization.description)")
+                    Text("\(speciality.duration)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with info description spec
+                }// Hstack with info duration teach
+                
+                HStack
+                {
+                    Image(systemName: "hryvniasign")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(speciality.tuitionCost) грн.")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with info tuition Cost
+
+                HStack
+                {
+                    Image(systemName: "doc.text.magnifyingglass")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(speciality.specialization)")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with info specialization speciality
+
             }// VStack with another info
             .padding(.horizontal, 6)
             .padding(.top, 4)
@@ -68,7 +97,7 @@ struct SpecializationCardViewModel: View
             {
                 Button
                 {
-                    showDeleteSpecialization.toggle()
+                    showDeleteSpeciality.toggle()
                 }
                 label:
                 {
@@ -86,7 +115,7 @@ struct SpecializationCardViewModel: View
                 
                 Button
                 {
-                    showEditSpecialization.toggle()
+                    showEditSpeciality.toggle()
                 }
                 label:
                 {
@@ -104,7 +133,7 @@ struct SpecializationCardViewModel: View
                 
                 Button
                 {
-                    showAboutSpecialization.toggle()
+                    showAboutSpeciality.toggle()
                 }
                 label:
                 {
@@ -130,17 +159,17 @@ struct SpecializationCardViewModel: View
                 self.isHovered = hovering
             }
         }
-        .sheet(isPresented: $showAboutSpecialization)
+        .sheet(isPresented: $showAboutSpeciality)
         {
-            RowSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, specialization: specialization)
+            RowSpecialityView(isShowView: $showAboutSpeciality, isEditView: $showEditSpeciality, speciality: speciality)
         }
-        .sheet(isPresented: $showEditSpecialization)
+        .sheet(isPresented: $showEditSpeciality)
         {
-            EditSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, specialization: $specialization, writeModel: writeModel)
+            //EditSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, specialization: $specialization, writeModel: writeModel)
         }
-        .sheet(isPresented: $showDeleteSpecialization)
+        .sheet(isPresented: $showDeleteSpeciality)
         {
-            AcceptDeleteRowSpecialization(specialization: $specialization, isShowSelfView: $showDeleteSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, writeModel: writeModel)
+            AcceptDeleteRowSpecialty(specialty: $speciality, isShowSelfView: $showDeleteSpeciality, isUpdateListSpecialty: $isUpdateSpecialization, writeModel: writeModel)
         }
     }// body
 }

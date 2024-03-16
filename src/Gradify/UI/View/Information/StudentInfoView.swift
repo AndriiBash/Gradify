@@ -158,7 +158,7 @@ struct StudentInfoView: View
         { _, _ in
             withAnimation
             {
-                readModel.studentList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                readModel.studentList.sort(by: { isSotredList ? $0.name > $1.name : $0.name < $1.name })
             }
         }
         .onChange(of: statusSaveEdit)

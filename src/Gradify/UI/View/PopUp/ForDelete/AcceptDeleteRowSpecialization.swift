@@ -94,6 +94,5 @@ struct AcceptDeleteRowSpecialization: View
         }// main VStack
         .frame(width: 290, height: 250)
         .padding()
-
     }
 }

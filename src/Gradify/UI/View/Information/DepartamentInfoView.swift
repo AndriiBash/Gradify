@@ -11,7 +11,7 @@ struct DepartamentInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
     
-    @State private var isShowAddStudentPanel:       Bool = false
+    @State private var isShowAddDeprmentPanel:      Bool = false
     @State private var statusSave:                  Bool = false
     @State private var statusSaveEdit:              Bool = false
     @State private var showStatusSave:              Bool = false
@@ -50,7 +50,7 @@ struct DepartamentInfoView: View
 
             Button
             {
-                isShowAddStudentPanel.toggle()
+                isShowAddDeprmentPanel.toggle()
             }
             label:
             {

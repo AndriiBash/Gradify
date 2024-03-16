@@ -11,16 +11,16 @@ struct EducationalProgramInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
     
-    @State private var isShowAddStudentPanel:       Bool = false
-    @State private var statusSave:                  Bool = false
-    @State private var statusSaveEdit:              Bool = false
-    @State private var showStatusSave:              Bool = false
-    @State private var isSotredList:                Bool = false
-    @State private var isFilterShow:                Bool = false
+    @State private var isShowAddEducationalProgramPanel:        Bool = false
+    @State private var statusSave:                              Bool = false
+    @State private var statusSaveEdit:                          Bool = false
+    @State private var showStatusSave:                          Bool = false
+    @State private var isSotredList:                            Bool = false
+    @State private var isFilterShow:                            Bool = false
 
-    @State private var searchString:                String = ""
-    @State private var oldSearchString:             String = ""
-    @State private var countSearched:               Int = 0
+    @State private var searchString:                            String = ""
+    @State private var oldSearchString:                         String = ""
+    @State private var countSearched:                           Int = 0
 
     var body: some View
     {
@@ -49,7 +49,7 @@ struct EducationalProgramInfoView: View
 
             Button
             {
-                isShowAddStudentPanel.toggle()
+                isShowAddEducationalProgramPanel.toggle()
             }
             label:
             {

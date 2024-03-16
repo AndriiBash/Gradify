@@ -14,7 +14,7 @@ import SwiftUI
 
 struct StudentGroupList: Identifiable, Sendable, Hashable
 {
-    // maybe delete sendable and method's
+    // maybe delete property sendable and related method's
     static func == (lhs: StudentGroupList, rhs: StudentGroupList) -> Bool // need move to async
     {
         return lhs.id == rhs.id &&
@@ -68,18 +68,29 @@ struct SpecializationList: Identifiable, Hashable
 }// struct SpecializationList: Identifiable, Hashable
 
 
+struct SpecialityList: Identifiable, Hashable
+{
+    var id = UUID()
+    var name: String
+    var speciality: [Specialty]
+}// struct SpecialityList: Identifiable, Hashable
 
 
 
 class ReadWriteModel: ObservableObject
 {
-    @Published var studentList:       [StudentGroupList] = []
-    @Published var groupList:         [GroupList] = []
+    @Published var studentList:         [StudentGroupList] = []
+    @Published var groupList:           [GroupList] = []
     @Published var specializationList:  [SpecializationList] = []
 
     
+    @Published var specialityList:      [SpecialityList] = []
+
+    
+    
+    
     @Published var gradeList:         [GradeList] = []
-    @Published var subjectList:         [SubjectList] = []
+    @Published var subjectList:        [SubjectList] = []
 
     
     
@@ -123,11 +134,42 @@ class ReadWriteModel: ObservableObject
     }
     
     
+    func getSubjectNameList(withOut: String) async -> [String]
+    {
+        return ["ds","ds"]
+    } // func getSubjectNameList(withOut: String) async -> [String]
+    
+    
+    func getSpecialityNameList(withOut: String) async -> [String]
+    {
+        if specialityList.isEmpty
+        {
+            await fetchSpecialityData()
+        }
+        
+        var specialityListName: [String] = []
+        
+        for specialityList in specialityList
+        {
+            for specialty in specialityList.speciality
+            {
+                if specialty.name != withOut
+                {
+                    specialityListName.append(specialty.name)
+                }
+            }
+        }
+        
+        return specialityListName
+    }// func getSpecialityNameList(withOut: String) async -> [String]
+
+    
+    
     func getSpecializationNameList(withOut: String) async -> [String]
     {
         if specializationList.isEmpty
         {
-            await fetchSpecializationData()
+            await fetchSpecializationData(updateCountRecod: false)
         }
         
         var specializationListName: [String] = []
@@ -245,12 +287,73 @@ class ReadWriteModel: ObservableObject
 
     
     
-    func fetchSpecializationData() async
+    func fetchSpecialityData() async
     {
         do
         {
             self.isLoadingFetchData = true
             self.countRecords = 0
+            
+            let querySnapshot = try await db.collection("speciality").getDocuments()
+
+            let groupedSpeciality = Dictionary(grouping: querySnapshot.documents.map
+            { queryDocumentSnapshot in
+            
+                let data = queryDocumentSnapshot.data()
+
+                let id = data["id"] as? Int ?? -1
+                
+                if self.maxIdRecord <= id
+                {
+                    self.maxIdRecord = id + 1
+                }
+                                
+                let name = data["name"] as? String ?? ""
+                let duration = data["duration"] as? String ?? ""
+                let tuitionCost = data["tuitionCost"] as? Int ?? 0
+                let subjects = data["subjects"] as? [String] ?? []
+                let specialization = data["specialization"] as? String ?? ""
+                
+                return Specialty(id: id, name: name, duration: duration, tuitionCost: tuitionCost, subjects: subjects, specialization: specialization)
+                
+            }, by: { $0.specialization })
+
+            self.specialityList = groupedSpeciality.map
+            { name, speciality in
+                SpecialityList(name: name, speciality: speciality)
+            }
+
+            self.countRecords = self.specialityList.flatMap { $0.speciality }.count
+
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Not anotteted error : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+    }// func fetchSpecialityData() async
+
+    
+    
+    
+    
+    func fetchSpecializationData(updateCountRecod: Bool) async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
 
             let querySnapshot = try await db.collection("specializations").getDocuments()
 
@@ -278,7 +381,10 @@ class ReadWriteModel: ObservableObject
                 SpecializationList(name: name, specialization: specialization)
             }
 
-            self.countRecords = self.specializationList.flatMap { $0.specialization }.count
+            if updateCountRecod
+            {
+                self.countRecords = self.specializationList.flatMap { $0.specialization }.count
+            }
 
             withAnimation(Animation.easeOut(duration: 0.5))
             {
@@ -749,7 +855,7 @@ class ReadWriteModel: ObservableObject
             {
                 self.countRecords = self.studentList.flatMap { $0.students }.count
             }
-
+            
             withAnimation(Animation.easeOut(duration: 0.5))
             {
                 self.isLoadingFetchData = false
@@ -765,7 +871,7 @@ class ReadWriteModel: ObservableObject
             }
              */
         }
-        catch let error as NSError
+        /*catch let error as NSError
         {
             DispatchQueue.main.async
             {
@@ -773,6 +879,7 @@ class ReadWriteModel: ObservableObject
                 self.isLoadingFetchData = false
             }
         }
+         */
         catch
         {
             DispatchQueue.main.async
@@ -890,7 +997,7 @@ class ReadWriteModel: ObservableObject
                 }
                 catch
                 {
-                    print("Error in delete student: \(error.localizedDescription)")
+                    print("Error in delete grade: \(error.localizedDescription)")
                 }
             }
         }
@@ -898,8 +1005,40 @@ class ReadWriteModel: ObservableObject
         {
             print("Error in get data: \(error.localizedDescription)")
         }
-    }// func deleteStudent(withId studentId: Int) async {
+    }// func deleteGrade(withId gradeId: Int) async
 
+    
+    func deleteSpeciality(withId specialityId: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("speciality").whereField("id", isEqualTo: specialityId).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete specialty: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteGrade(withId gradeId: Int) async
+
+    
     
     func deleteStudent(withId studentId: Int) async
     {
@@ -931,6 +1070,31 @@ class ReadWriteModel: ObservableObject
         }
     }// func deleteStudent(withId studentId: Int) async {
       
+    
+    func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, subjects: [String]) async -> Bool
+    {        
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "duration": duration,
+        "tuitionCost": tuitionCost,
+        "subjects" : [],
+        "specialization": specialization
+        ]
+        
+        do
+        {
+            try await db.collection("speciality").addDocument(data: object)
+            self.maxIdRecord += 1
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }// func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, subjects: [String]) async -> Bool
+
+    
     
     func addNewSpecialization(name: String, description: String, field: String) async -> Bool
     {
@@ -974,7 +1138,7 @@ class ReadWriteModel: ObservableObject
                 }
                 catch
                 {
-                    print("Error in delete student: \(error.localizedDescription)")
+                    print("Error in delete specialization: \(error.localizedDescription)")
                 }
             }
         }
@@ -982,7 +1146,7 @@ class ReadWriteModel: ObservableObject
         {
             print("Error in get data: \(error.localizedDescription)")
         }
-    }// func deleteStudent(withId studentId: Int) async {
+    }// func deleteSpecialization(withId specializationId: Int) async
 
     
                                            
@@ -1006,7 +1170,7 @@ class ReadWriteModel: ObservableObject
                 }
                 catch
                 {
-                    print("Error in delete student: \(error.localizedDescription)")
+                    print("Error in delete group: \(error.localizedDescription)")
                 }
             }
         }
@@ -1014,7 +1178,7 @@ class ReadWriteModel: ObservableObject
         {
             print("Error in get data: \(error.localizedDescription)")
         }
-    }// func deleteStudent(withId studentId: Int) async {
+    }// func deleteGroup(withId groupId: Int) async
 
                                            
     func matchesSearch(student: Student, searchString: String) -> Bool
@@ -1047,6 +1211,16 @@ class ReadWriteModel: ObservableObject
                specialization.field.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(specialization: Specialization, searchString: String) -> Bool
  
+    
+    func matchesSearch(specialty: Specialty, searchString: String) -> Bool
+    {
+        return specialty.name.lowercased().contains(searchString.lowercased()) ||
+               specialty.duration.lowercased().contains(searchString.lowercased()) ||
+               String(specialty.tuitionCost).contains(searchString) ||
+               specialty.subjects.contains { $0.lowercased().contains(searchString.lowercased()) } ||
+               specialty.specialization.lowercased().contains(searchString.lowercased())
+    }// func matchesSearch(specialty: Specialty, searchString: String) -> Bool
+
     
     func matchesSearch(grade: Grade, searchString: String) -> Bool
     {

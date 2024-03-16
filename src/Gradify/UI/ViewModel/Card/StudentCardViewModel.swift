@@ -170,5 +170,5 @@ struct StudentCardViewModel: View
         {
             AcceptDeleteRowStudent(student: $student, isShowSelfView: $showDeleteStudent, isUpdateListStudent: $isUpdateStudent, writeModel: writeModel)
         }
-    }
+    }// body
 }

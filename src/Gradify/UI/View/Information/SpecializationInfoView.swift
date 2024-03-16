@@ -51,7 +51,7 @@ struct SpecializationInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchSpecializationData()
+                        await readModel.fetchSpecializationData(updateCountRecod: true)
                     }
                     
                     withAnimation
@@ -60,7 +60,6 @@ struct SpecializationInfoView: View
                     }
                 }
             }// Main ScrollView
-            
         }// main ZStack
         .navigationTitle("Спеціалізації")
         .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) спеціалізацій" : "Знайдено \(countSearched) спеціалізацій")
@@ -128,9 +127,9 @@ struct SpecializationInfoView: View
 
                         Task
                         {
-                            await readModel.fetchSpecializationData()
+                            await readModel.fetchSpecializationData(updateCountRecod: true)
                             searchString = oldSearchString
-                        }// need add wait view (monitor)
+                        }
                     }
             }
             else
@@ -172,7 +171,7 @@ struct SpecializationInfoView: View
 
                 Task
                 {
-                    await readModel.fetchSpecializationData()
+                    await readModel.fetchSpecializationData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 

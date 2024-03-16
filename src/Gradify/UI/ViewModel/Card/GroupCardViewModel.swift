@@ -169,5 +169,5 @@ struct GroupCardViewModel: View
         {
             AcceptDeleteRowGroup(group: $group, isShowSelfView: $showDeleteGroup, isUpdateListGroup: $isUpdateGroup, writeModel: writeModel)
         }
-    }
+    }// body
 }

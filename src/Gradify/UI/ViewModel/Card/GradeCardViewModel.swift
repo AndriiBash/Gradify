@@ -167,5 +167,5 @@ struct GradeCardViewModel: View
         {
             AcceptDeleteRowGrades(grade: $grade, isShowSelfView: $showDeleteGrade, isUpdateListGrades: $isUpdateGrade, writeModel: writeModel)
         }
-    }
+    }// body
 }

@@ -1,36 +1,40 @@
 //
-//  RowGroupView.swift
+//  RowSpecialityView.swift
 //  Gradify
 //
-//  Created by Андрiй on 11.03.2024.
+//  Created by Андрiй on 16.03.2024.
 //
 
 import SwiftUI
 
-struct RowGroupView: View
+struct RowSpecialityView: View
 {
-    @State private var hoverOnName:                 Bool = false
-    @State private var hoverOnCurator:              Bool = false
-    @State private var hoverOnLeader:               Bool = false
-    @State private var hoverOnDepartmentName:       Bool = false
-    @State private var hoverOnEducationProgram:     Bool = false
-    @State private var hoverOnStudent:              [Bool]
+    @State private var hoverOnName:             Bool = false
     
-    @State private var statusCopyString:            String  = "Скопіювати"
-    @State private var maxWidthForButton:           CGFloat = .zero
+    
+    @State private var hoverOnDuration:         Bool = false
+    @State private var hoverOnTuitionCost:      Bool = false
+    @State private var hoverOnspecialization:   Bool = false
+    
+    @State private var hoverOnSubject:          [Bool]
+
+    @State private var statusCopyString:        String  = "Скопіювати"
+    @State private var maxWidthForButton:       CGFloat = .zero
 
     @Binding var isShowView: Bool
     @Binding var isEditView: Bool
     
-    var group: Group
+    var speciality: Specialty
     
-    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, group: Group)
+    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, speciality: Specialty)
     {
         self._isShowView = isShowView
         self._isEditView = isEditView
-        self.group = group
-        self._hoverOnStudent = State(initialValue: Array(repeating: false, count: group.studentList.count))
+        self.speciality = speciality
+        
+        self._hoverOnSubject = State(initialValue: Array(repeating: false, count: speciality.subjects.count))
     }
+
     
     var body: some View
     {
@@ -39,15 +43,15 @@ struct RowGroupView: View
             HStack(alignment: .center)
             {
                 Spacer()
-
-                Text("[\(group.id)] \(group.name)")
+                
+                Text("[\(speciality.id)] \(speciality.name)")
                     .font(.system(size: 13))
                     .fontWeight(.bold)
-
+                
                 Spacer()
             }// HStack navigation panel
             .padding(.top, 8)
-
+            
             Form
             {
                 Section(header: Text("Головне"))
@@ -58,209 +62,179 @@ struct RowGroupView: View
                         
                         Spacer()
                         
-                        Text("\(group.name)")
+                        Text("\(speciality.name)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnName ? Color.gray.opacity(0.2) : Color.clear)
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                            { isHovered in
-                                hoverOnName.toggle()
-                            }
-                            .contextMenu
+                        { isHovered in
+                            hoverOnName.toggle()
+                        }
+                        .contextMenu
+                        {
+                            Button
                             {
-                                Button
-                                {
-                                    copyInBuffer(text: group.name)
-                                }
-                                label:
-                                {
-                                    Text("Скопіювати назву")
-                                }
+                                copyInBuffer(text: speciality.name)
                             }
-                    }// HStack with name group
+                            label:
+                            {
+                                Text("Скопіювати назву")
+                            }
+                        }
+                    }// HStack with name speciality
                     
                     HStack
                     {
-                        Text("Куратор")
+                        Text("Тривалість навчання")
                         
                         Spacer()
                         
-                        Text("\(group.curator)")
+                        Text("\(speciality.duration)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnCurator ? Color.gray.opacity(0.2) : Color.clear)
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnDuration ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                             { isHovered in
-                                hoverOnCurator.toggle()
+                                hoverOnDuration.toggle()
                             }
                             .contextMenu
                             {
                                 Button
                                 {
-                                    copyInBuffer(text: group.curator)
+                                    copyInBuffer(text: speciality.duration)
                                 }
                                 label:
                                 {
-                                    Text("Скопіювати ПІБ куратора")
+                                    Text("Скопіювати тривалість навчання")
                                 }
                             }
-                    }// Hstack with curator name
+                    }// Hstack with duration teach on speciality
                     
                     HStack
                     {
-                        Text("Староста")
+                        Text("Вартість навчання")
                         
                         Spacer()
                         
-                        Text("\(group.groupLeader)")
+                        Text("\(speciality.tuitionCost) грн")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnLeader ? Color.gray.opacity(0.2) : Color.clear)
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnTuitionCost ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                             { isHovered in
-                                hoverOnLeader.toggle()
+                                hoverOnTuitionCost.toggle()
                             }
                             .contextMenu
                             {
                                 Button
                                 {
-                                    copyInBuffer(text: group.groupLeader)
+                                    copyInBuffer(text: String(speciality.tuitionCost) + " грн")
                                 }
                                 label:
                                 {
-                                    Text("Скопіювати ПІБ старости")
+                                    Text("Скопіювати вартість навчання")
                                 }
                             }
-                    }// Hstack with groupLeader name
+                    }// Hstack with tuition cost speciality
                     
                     HStack
                     {
-                        Text("Кафедра")
+                        Text("Спеціалізація")
                         
                         Spacer()
                         
-                        Text("\(group.departmentName)")
+                        Text("\(speciality.specialization)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnDepartmentName ? Color.gray.opacity(0.2) : Color.clear)
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnspecialization ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                             { isHovered in
-                                hoverOnDepartmentName.toggle()
+                                hoverOnspecialization.toggle()
                             }
                             .contextMenu
                             {
                                 Button
                                 {
-                                    copyInBuffer(text: group.departmentName)
+                                    copyInBuffer(text: speciality.specialization)
                                 }
                                 label:
                                 {
-                                    Text("Скопіювати назву кафедри")
+                                    Text("Скопіювати спеціалізацію спеціальноті")
                                 }
                             }
-                    }// Hstack with contact number student
-
-                    HStack
-                    {
-                        Text("Освітня програма")
-                        
-                        Spacer()
-                        
-                        Text("\(group.educationProgram)")
-                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
-                            .padding(.horizontal)
-                            .padding(.vertical, 1)
-                            .background(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .fill(hoverOnEducationProgram ? Color.gray.opacity(0.2) : Color.clear)
-                            )
-                            .onHover
-                            { isHovered in
-                                hoverOnEducationProgram.toggle()
-                            }
-                            .contextMenu
-                            {
-                                Button
-                                {
-                                    copyInBuffer(text: group.educationProgram)
-                                }
-                                label:
-                                {
-                                    Text("Скопіювати назву освітньої програми")
-                                }
-                            }
-                    }// Hstack with education program
-                }// Section with main info
+                    }// Hstack with specialization speciality
+                }// Main Section
                 
-                Section(header: Text("Студенти"))
+                Section(header: Text("Предмети"))
                 {
-                    if group.studentList.isEmpty
+                    if speciality.subjects.isEmpty
                     {
-                        Text("Студенти відсутні")
+                        Text("Навчальні предмети відсутні")
                     }
                     else
                     {
-                        ForEach(group.studentList.indices, id: \.self)
+                        ForEach(speciality.subjects.indices, id: \.self)
                         { index in
                             HStack
                             {
-                                Text("Студент № \(index + 1)")
+                                Text("Предмет № \(index + 1)")
                                 
                                 Spacer()
                                 
-                                Text("\(group.studentList[index])")
+                                Text("\(speciality.subjects[index])")
                                     .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                                     .padding(.horizontal)
                                     .padding(.vertical, 1)
                                     .background(
                                         RoundedRectangle(cornerRadius: 4)
-                                            .fill(hoverOnStudent.indices.contains(index) && hoverOnStudent[index] ? Color.gray.opacity(0.2) : Color.clear)
+                                            .fill(hoverOnSubject.indices.contains(index) && hoverOnSubject[index] ? Color.gray.opacity(0.2) : Color.clear)
                                     )
                                     .onHover
                                     { isHovered in
                                         if isHovered
                                         {
-                                            if !hoverOnStudent.indices.contains(index)
+                                            if !hoverOnSubject.indices.contains(index)
                                             {
-                                                hoverOnStudent.append(false)
+                                                hoverOnSubject.append(false)
                                             }
                                         }
-                                        hoverOnStudent[index].toggle()
+                                        hoverOnSubject[index].toggle()
                                     }
                                     .contextMenu
                                     {
                                         Button
                                         {
-                                            copyInBuffer(text: group.studentList[index])
+                                            copyInBuffer(text: speciality.subjects[index])
                                         }
                                         label:
                                         {
-                                            Text("Скопіювати ПІБ студента")
+                                            Text("Скопіювати назву предмету")
                                         }
                                 }
-                            }// ForEach with student's in group
+                            }// ForEach with learn subject in speciality
                         }
                     }
-                }// Section with additional info about student's in group
-            }// Form with info
+                }// Section with subject in speciality
+            }// Form
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
+            
             
             Spacer()
             Divider()
@@ -288,21 +262,20 @@ struct RowGroupView: View
                 Button
                 {
                     var allInfo = """
-                            [\(group.id)] \(group.name)
+                            [\(speciality.id)] \(speciality.name)
                             ===========================================
-                            Назва: \(group.name)
-                            Куратор: \(group.curator)
-                            Староста: \(group.groupLeader)
-                            Кафедра: \(group.departmentName)
-                            Освітня програма: \(group.educationProgram)
+                            Назва: \(speciality.name)
+                            Тривалість навчання: \(speciality.duration)
+                            Вартість навчання: \(speciality.tuitionCost)
+                            Спеціалізація: \(speciality.specialization)
                             ===========================================\n
                             """
                     
-                    if !group.studentList.isEmpty
+                    if !speciality.subjects.isEmpty
                     {
-                        for index in group.studentList.indices
+                        for index in speciality.subjects.indices
                         {
-                            allInfo += "Студент № \(index) " + "\(group.studentList[index])\n"
+                            allInfo += "Предмет № \(index) " + "\(speciality.subjects[index])\n"
                         }
                         
                         allInfo += "==========================================="
@@ -320,7 +293,7 @@ struct RowGroupView: View
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
-                .help("Скопіювати усю інформацію студента")
+                .help("Скопіювати усю інформацію спеціалізації")
                 .padding(.horizontal, 12)
                 
                 Button
@@ -354,10 +327,3 @@ struct RowGroupView: View
         }
     }
 }
-
-/*
-#Preview
-{
-    RowGroupView()
-}
-*/

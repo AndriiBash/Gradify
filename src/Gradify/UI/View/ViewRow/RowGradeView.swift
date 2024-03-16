@@ -100,6 +100,7 @@ struct RowGradeView: View
                             )
                             .onHover
                         { isHovered in
+                            changePointingHandCursor(shouldChangeCursor: isHovered)
                             hoverOnRecipient.toggle()
                         }
                         .contextMenu
