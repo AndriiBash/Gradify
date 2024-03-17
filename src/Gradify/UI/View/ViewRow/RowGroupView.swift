@@ -302,7 +302,7 @@ struct RowGroupView: View
                     {
                         for index in group.studentList.indices
                         {
-                            allInfo += "Студент № \(index) " + "\(group.studentList[index])\n"
+                            allInfo += "Студент № \(index + 1) " + "\(group.studentList[index])\n"
                         }
                         
                         allInfo += "==========================================="

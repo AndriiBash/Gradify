@@ -20,6 +20,7 @@
 		B52D0A262BA5E54D00554677 /* SpecialityCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A252BA5E54D00554677 /* SpecialityCardViewModel.swift */; };
 		B52D0A282BA5E79500554677 /* RowSpecialityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A272BA5E79500554677 /* RowSpecialityView.swift */; };
 		B52D0A2A2BA5ECFF00554677 /* AddSpecialityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A292BA5ECFF00554677 /* AddSpecialityView.swift */; };
+		B52D0A2C2BA70B3F00554677 /* EditSpecialityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A2B2BA70B3F00554677 /* EditSpecialityView.swift */; };
 		B5480A152BA1E5D3007D6784 /* GradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480A142BA1E5D3007D6784 /* GradeListView.swift */; };
 		B5480A172BA1EFF3007D6784 /* GradeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480A162BA1EFF3007D6784 /* GradeCardViewModel.swift */; };
 		B5480A192BA2016F007D6784 /* RowGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480A182BA2016F007D6784 /* RowGradeView.swift */; };
@@ -107,6 +108,7 @@
 		B52D0A252BA5E54D00554677 /* SpecialityCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityCardViewModel.swift; sourceTree = "<group>"; };
 		B52D0A272BA5E79500554677 /* RowSpecialityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSpecialityView.swift; sourceTree = "<group>"; };
 		B52D0A292BA5ECFF00554677 /* AddSpecialityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpecialityView.swift; sourceTree = "<group>"; };
+		B52D0A2B2BA70B3F00554677 /* EditSpecialityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSpecialityView.swift; sourceTree = "<group>"; };
 		B5480A142BA1E5D3007D6784 /* GradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeListView.swift; sourceTree = "<group>"; };
 		B5480A162BA1EFF3007D6784 /* GradeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCardViewModel.swift; sourceTree = "<group>"; };
 		B5480A182BA2016F007D6784 /* RowGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowGradeView.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 			children = (
 				B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */,
 				B52D0A1F2BA370FD00554677 /* EditSpecializationView.swift */,
+				B52D0A2B2BA70B3F00554677 /* EditSpecialityView.swift */,
 				B52D0A152BA31C5600554677 /* EditGradeView.swift */,
 				B5979D032BA07F370040142D /* EditGroupView.swift */,
 			);
@@ -636,6 +639,7 @@
 				B52D0A242BA5E45800554677 /* SpecialityListView.swift in Sources */,
 				B52D0A162BA31C5600554677 /* EditGradeView.swift in Sources */,
 				B5CC2B102B6E51D3001E86BD /* StudentListView.swift in Sources */,
+				B52D0A2C2BA70B3F00554677 /* EditSpecialityView.swift in Sources */,
 				B52D0A262BA5E54D00554677 /* SpecialityCardViewModel.swift in Sources */,
 				B5A5C8B42B6BD331008F03D5 /* PressedInfoButtonStyle.swift in Sources */,
 				B5CC2B152B6FBF0B001E86BD /* AddStudentView.swift in Sources */,

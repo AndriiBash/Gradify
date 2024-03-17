@@ -16,7 +16,7 @@ struct SpecialityCardViewModel: View
     @State private var showDeleteSpeciality:    Bool = false
     
     @Binding var speciality:                    Specialty
-    @Binding var isUpdateSpecialization:        Bool
+    @Binding var isUpdateSpeciality:            Bool
     @ObservedObject var writeModel:             ReadWriteModel
 
     
@@ -165,11 +165,11 @@ struct SpecialityCardViewModel: View
         }
         .sheet(isPresented: $showEditSpeciality)
         {
-            //EditSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, specialization: $specialization, writeModel: writeModel)
+            EditSpecialityView(isShowView: $showAboutSpeciality, isEditView: $showEditSpeciality, isUpdateListSpeciality: $isUpdateSpeciality, speciality: $speciality, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteSpeciality)
         {
-            AcceptDeleteRowSpecialty(specialty: $speciality, isShowSelfView: $showDeleteSpeciality, isUpdateListSpecialty: $isUpdateSpecialization, writeModel: writeModel)
+            AcceptDeleteRowSpecialty(specialty: $speciality, isShowSelfView: $showDeleteSpeciality, isUpdateListSpecialty: $isUpdateSpeciality, writeModel: writeModel)
         }
     }// body
 }

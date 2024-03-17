@@ -10,12 +10,11 @@ import SwiftUI
 struct RowSpecialityView: View
 {
     @State private var hoverOnName:             Bool = false
-    
-    
     @State private var hoverOnDuration:         Bool = false
     @State private var hoverOnTuitionCost:      Bool = false
-    @State private var hoverOnspecialization:   Bool = false
-    
+    @State private var hoverOnSpecialization:   Bool = false
+    @State private var hoverOnBranch:           Bool = false
+
     @State private var hoverOnSubject:          [Bool]
 
     @State private var statusCopyString:        String  = "Скопіювати"
@@ -151,6 +150,37 @@ struct RowSpecialityView: View
                     
                     HStack
                     {
+                        Text("Галузь")
+                        
+                        Spacer()
+                        
+                        Text("\(speciality.branch)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnBranch ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                            { isHovered in
+                                hoverOnBranch.toggle()
+                            }
+                            .contextMenu
+                            {
+                                Button
+                                {
+                                    copyInBuffer(text: speciality.branch)
+                                }
+                                label:
+                                {
+                                    Text("Скопіювати галузь спеціальноті")
+                                }
+                            }
+                    }// Hstack with branch speciality
+
+                    HStack
+                    {
                         Text("Спеціалізація")
                         
                         Spacer()
@@ -161,11 +191,11 @@ struct RowSpecialityView: View
                             .padding(.vertical, 1)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnspecialization ? Color.gray.opacity(0.2) : Color.clear)
+                                    .fill(hoverOnSpecialization ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                             { isHovered in
-                                hoverOnspecialization.toggle()
+                                hoverOnSpecialization.toggle()
                             }
                             .contextMenu
                             {
@@ -185,7 +215,14 @@ struct RowSpecialityView: View
                 {
                     if speciality.subjects.isEmpty
                     {
-                        Text("Навчальні предмети відсутні")
+                        HStack
+                        {
+                            Spacer()
+                            
+                            Text("Навчальні предмети відсутні")
+                            
+                            Spacer()
+                        }// HStack with info about none subject learning
                     }
                     else
                     {
@@ -267,6 +304,7 @@ struct RowSpecialityView: View
                             Назва: \(speciality.name)
                             Тривалість навчання: \(speciality.duration)
                             Вартість навчання: \(speciality.tuitionCost)
+                            Галузь: \(speciality.branch)
                             Спеціалізація: \(speciality.specialization)
                             ===========================================\n
                             """

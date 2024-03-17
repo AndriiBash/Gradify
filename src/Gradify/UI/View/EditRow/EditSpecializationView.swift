@@ -10,25 +10,26 @@ import SwiftUI
 struct EditSpecializationView: View
 {
     @State private var editedName:                      String = ""
-    @State private var editedField:                     String = ""
+    @State private var editedBranch:                    String = "Без галузі"
     @State private var editedDescription:               String = ""
     
+    @State private var branchList:                      [String] = []
+
     @State private var statusSaveString:                String = "Зберегти"
 
     @State private var isWrongIdName:                   Bool = false
-    
     @State private var isWrongName:                     Bool = false
-    @State private var isWrongField:                    Bool = false
+    @State private var isWrongBranch:                   Bool = false
     @State private var isWrongDescription:              Bool = false
 
-    @State private var maxWidthForButton:             CGFloat = .zero
+    @State private var maxWidthForButton:               CGFloat = .zero
 
-    @Binding var isShowView:                          Bool
-    @Binding var isEditView:                          Bool
-    @Binding var isUpdateListSpecialization:          Bool
-    @Binding var specialization:                      Specialization
+    @Binding var isShowView:                            Bool
+    @Binding var isEditView:                            Bool
+    @Binding var isUpdateListSpecialization:            Bool
+    @Binding var specialization:                        Specialization
     
-    @ObservedObject var writeModel:                   ReadWriteModel
+    @ObservedObject var writeModel:                     ReadWriteModel
 
     var body: some View
     {
@@ -63,19 +64,20 @@ struct EditSpecializationView: View
                                 }
                             })// textField for edited name specialization
 
-                    TextField("Галузь", text: $editedField)
-                        .foregroundColor(isWrongField ? Color.red : Color("MainTextForBlur"))
-                        .overlay(
-                            HStack
-                            {
-                                Spacer()
-                                if editedField.isEmpty
-                                {
-                                    Text("Галузь спеціалізаціїї")
-                                        .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 12)
-                                }
-                            })// textField for edited name specialization
+                    Picker("Галузь", selection: $editedBranch)
+                    {
+                        Text("Без галузі")
+                                .tag("Без галузі")
+
+                        Divider()
+                        
+                        ForEach(branchList, id: \.self)
+                        { branch in
+                            Text(branch)
+                                .tag(branch)
+                        }
+                    }// Picker for select branch speciality
+                    .foregroundColor(isWrongBranch ? Color.red : Color("PopUpTextColor"))
                 }// Section with main info
             
                 Section(header: Text("Інше"))
@@ -101,7 +103,7 @@ struct EditSpecializationView: View
             
             Spacer()
             
-            if isWrongName || isWrongField || isWrongDescription
+            if isWrongName || isWrongBranch || isWrongDescription
             {
                 Text("Заповніть всі поля коректно")
                     .foregroundColor(Color.red)
@@ -154,12 +156,12 @@ struct EditSpecializationView: View
                     withAnimation(Animation.easeIn(duration: 0.35))
                     {
                         isWrongName = false
-                        isWrongField = false
+                        isWrongBranch = false
                         isWrongDescription = false
                         isWrongIdName = false
                     }
                     
-                    if !editedName.isEmpty && !editedField.isEmpty && !editedDescription.isEmpty && !writeModel.isLoadingFetchData
+                    if !editedName.isEmpty && editedBranch != "Без галузі" && !editedDescription.isEmpty && !writeModel.isLoadingFetchData
                     {
                         Task
                         {
@@ -174,7 +176,7 @@ struct EditSpecializationView: View
                             }
                             else
                             {
-                                let status = await writeModel.updateSpecialization(id: specialization.id, name: editedName, description: editedDescription, field: editedField)
+                                let status = await writeModel.updateSpecialization(id: specialization.id, name: editedName, description: editedDescription, field: editedBranch)
                                                             
                                 isUpdateListSpecialization.toggle()
                                 
@@ -191,9 +193,9 @@ struct EditSpecializationView: View
                             {
                                 isWrongName = true
                             }
-                            if editedField.isEmpty
+                            if editedBranch == "Без галузі"
                             {
-                                isWrongField = true
+                                isWrongBranch = true
                             }
                             if editedDescription.isEmpty
                             {
@@ -221,7 +223,7 @@ struct EditSpecializationView: View
         }// VStack main
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 350)
+        .frame(width: 400, height: 330)
         .onAppear
         {
             let buttonWidth = getWidthFromString(for: "Скопіювати")
@@ -232,8 +234,11 @@ struct EditSpecializationView: View
             Task
             {
                 self.editedName = specialization.name
-                self.editedField = specialization.field
+                self.editedBranch = specialization.field
                 self.editedDescription = specialization.description
+                
+                self.branchList         = await writeModel.getBranchName()
+
             }
         }
     }

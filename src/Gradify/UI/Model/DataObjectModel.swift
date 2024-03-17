@@ -147,6 +147,7 @@ struct Specialty: Identifiable, Sendable, Equatable, Hashable
     var duration: String = ""
     var tuitionCost: Int
     var subjects: [String] = []
+    var branch: String = ""
     var specialization: String = ""
 }// struct Specialty: Identifiable, Sendable
 

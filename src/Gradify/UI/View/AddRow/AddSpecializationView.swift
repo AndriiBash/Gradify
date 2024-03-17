@@ -10,11 +10,13 @@ import SwiftUI
 struct AddSpecializationView: View
 {
     @State private var name:                    String = ""
-    @State private var field:                   String = ""
+    @State private var branch:                  String = "Без галузі"
     @State private var description:             String = ""
 
+    @State private var branchList:              [String] = []
+
     @State private var isWrongName:             Bool = false
-    @State private var isWrongField:            Bool = false
+    @State private var isWrongBranch:            Bool = false
     @State private var isWrongDescription:      Bool = false
 
     @State private var isWrongIdName:           Bool = false
@@ -32,7 +34,6 @@ struct AddSpecializationView: View
                 Spacer()
                 
                 Text("Додавання спеціалізації")
-                    .padding(.top, 10)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
                 
@@ -58,20 +59,21 @@ struct AddSpecializationView: View
                                 }
                             })// textField for edited name specialization
 
-                    TextField("Галузь", text: $field)
-                        .foregroundColor(isWrongField ? Color.red : Color("MainTextForBlur"))
-                        .overlay(
-                            HStack
-                            {
-                                Spacer()
-                                
-                                if field.isEmpty
-                                {
-                                    Text("Галузь спеціалізаціїї")
-                                        .foregroundColor(Color.gray)
-                                        .padding(.horizontal, 12)
-                                }
-                            })// textField for edited name specialization
+                    Picker("Галузь", selection: $branch)
+                    {
+                        Text("Без галузі")
+                                .tag("Без галузі")
+
+                        Divider()
+                        
+                        ForEach(branchList, id: \.self)
+                        { branch in
+                            Text(branch)
+                                .tag(branch)
+                        }
+                    }// Picker for select branch speciality
+                    .foregroundColor(isWrongBranch ? Color.red : Color("PopUpTextColor"))
+
                 }// Section with main info
             
                 Section(header: Text("Інше"))
@@ -97,7 +99,7 @@ struct AddSpecializationView: View
             
             Spacer()
             
-            if isWrongName || isWrongField || isWrongDescription
+            if isWrongName || isWrongBranch || isWrongDescription
             {
                 Text("Заповніть всі поля коректно")
                     .foregroundColor(Color.red)
@@ -133,12 +135,12 @@ struct AddSpecializationView: View
                     withAnimation(Animation.easeIn(duration: 0.35))
                     {
                         isWrongName = false
-                        isWrongField = false
+                        isWrongBranch = false
                         isWrongDescription = false
                         isWrongIdName = false
                     }
                     
-                    if !name.isEmpty && !field.isEmpty && !description.isEmpty && !writeModel.isLoadingFetchData
+                    if !name.isEmpty && branch != "Без галузі" && !description.isEmpty && !writeModel.isLoadingFetchData
                     {
                                                 
                         Task
@@ -156,7 +158,7 @@ struct AddSpecializationView: View
                             {
                                 isShowForm = false
                                 
-                                statusSave = await writeModel.addNewSpecialization(name: name, description: description, field: field)
+                                statusSave = await writeModel.addNewSpecialization(name: name, description: description, field: branch)
                             }
                         }
                         
@@ -171,9 +173,9 @@ struct AddSpecializationView: View
                             {
                                 isWrongName = true
                             }
-                            if field.isEmpty
+                            if branch == "Без галузі"
                             {
-                                isWrongField = true
+                                isWrongBranch = true
                             }
                             if description.isEmpty
                             {
@@ -199,6 +201,13 @@ struct AddSpecializationView: View
         }// VStack main
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 380)
+        .frame(width: 400, height: 330)
+        .onAppear
+        {
+            Task
+            {
+                self.branchList         = await writeModel.getBranchName()
+            }
+        }
     }
 }

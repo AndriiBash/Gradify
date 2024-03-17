@@ -141,7 +141,6 @@ struct RowSpecializationView: View
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
             
-            
             Spacer()
             Divider()
             
@@ -212,7 +211,7 @@ struct RowSpecializationView: View
             .padding(.horizontal, 22)
         }// Main VStack
         .foregroundColor(Color("MainTextForBlur"))
-        .frame(width: 400, height: 565)
+        .frame(width: 400, height: 350)
         .onAppear
         {
             let buttonWidth = getWidthFromString(for: "Скопіювати")

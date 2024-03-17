@@ -121,7 +121,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Спеціальність!", systemImage: "hammer.fill")
+                            Label("Спеціальність", systemImage: "hammer.fill")
                         }// NavigationLink with Specialty
                         
                         NavigationLink

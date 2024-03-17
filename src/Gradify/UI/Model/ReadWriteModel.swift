@@ -131,13 +131,19 @@ class ReadWriteModel: ObservableObject
     func getSubjectType() async -> [String]
     {
         return ["type1", "type2", "type3"]
-    }
+    }// func getSubjectType() async -> [String]
     
     
     func getSubjectNameList(withOut: String) async -> [String]
     {
-        return ["ds","ds"]
+        return ["Programming","Math", "Deutch Language"]
     } // func getSubjectNameList(withOut: String) async -> [String]
+    
+    
+    func getBranchName() async -> [String]
+    {
+        return ["Освіта", "Культура і мистецтво", "Гуманітарні науки", "Богослов’я", "Соціальні та поведінкові науки", "Журналістика", "Управління та адміністрування", "Право", "Біологія", "Природничі науки", "Математика та статистика", "Інформаційні технології", "Механічна інженерія", "Електрична інженерія", "Автоматизація та приладобудування", "Хімічна та біоінженерія", "Електроніка та телекомунікації", "Виробництво та технології", "Архітектура та будівництво", "Аграрні науки та продовольство", "Ветеринарна медицина", "Охорона здоров’я", "Соціальна робота", "Сфера обслуговування", "Воєнні науки, національна безпека, безпека державного кордону", "Цивільна безпека", "Транспорт"]
+    }// func getBranchName() async -> [String]
     
     
     func getSpecialityNameList(withOut: String) async -> [String]
@@ -163,6 +169,29 @@ class ReadWriteModel: ObservableObject
         return specialityListName
     }// func getSpecialityNameList(withOut: String) async -> [String]
 
+    
+    func getSpecializationNameList(branch: String) async -> [String]
+    {
+        if specializationList.isEmpty
+        {
+            await fetchSpecializationData(updateCountRecod: false)
+        }
+        
+        var specializationListName: [String] = []
+        
+        for specializationList in specializationList
+        {
+            for specialization in specializationList.specialization
+            {
+                if specialization.field == branch
+                {
+                    specializationListName.append(specialization.name)
+                }
+            }
+        }
+        
+        return specializationListName
+    }// func getSpecializationNameList(branch: String) async -> [String]
     
     
     func getSpecializationNameList(withOut: String) async -> [String]
@@ -313,10 +342,11 @@ class ReadWriteModel: ObservableObject
                 let tuitionCost = data["tuitionCost"] as? Int ?? 0
                 let subjects = data["subjects"] as? [String] ?? []
                 let specialization = data["specialization"] as? String ?? ""
+                let branch = data["branch"] as? String ?? ""
+
+                return Specialty(id: id, name: name, duration: duration, tuitionCost: tuitionCost, subjects: subjects, branch: branch, specialization: specialization)
                 
-                return Specialty(id: id, name: name, duration: duration, tuitionCost: tuitionCost, subjects: subjects, specialization: specialization)
-                
-            }, by: { $0.specialization })
+            }, by: { $0.branch })
 
             self.specialityList = groupedSpeciality.map
             { name, speciality in
@@ -504,8 +534,6 @@ class ReadWriteModel: ObservableObject
             {
                 let data = queryDocumentSnapshot.data()
 
-                print(data)
-
                 let id = data["id"] as? Int ?? -1
                 
                 if self.maxIdRecord <= id
@@ -532,8 +560,6 @@ class ReadWriteModel: ObservableObject
                     teacherList.append(contentsOf: teacherArray)
                 }
 
-                print(teacherList)
-                
                 let departamentSubject = data["departamentSubject"] as? String ?? ""
                 
                 let totalHours = data["totalHours"] as? Int ?? -1
@@ -676,6 +702,40 @@ class ReadWriteModel: ObservableObject
     }// func fetchBigGroupData() async
     
     
+    func updateSpeciality(id: Int, name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "duration": duration,
+        "tuitionCost": tuitionCost,
+        "subjects" : subjects,
+        "specialization": specialization,
+        "branch": branch
+        ]
+                        
+        do
+        {
+            let snapshot = try await db.collection("speciality").whereField("id", isEqualTo: id).getDocuments()
+            
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("speciality").document(document.documentID).updateData(object)
+            return true
+        }
+        catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+
+    }// func updateSpeciality(id: Int, name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
+
+    
     func updateGroup(id: Int, name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -707,6 +767,7 @@ class ReadWriteModel: ObservableObject
         }
     }// func updateGroup(id: Int, name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
     
+    
     func updateSpecialization(id: Int, name: String, description: String, field: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -715,9 +776,7 @@ class ReadWriteModel: ObservableObject
         "description": description,
         "field": field
         ]
-        
-        print(object)
-        
+                
         do
         {
             let snapshot = try await db.collection("specializations").whereField("id", isEqualTo: id).getDocuments()
@@ -860,26 +919,7 @@ class ReadWriteModel: ObservableObject
             {
                 self.isLoadingFetchData = false
             }
-            
-            /*
-            DispatchQueue.main.async
-            {
-                withAnimation(Animation.easeOut(duration: 0.5))
-                {
-                    self.isLoadingFetchData = false
-                }
-            }
-             */
         }
-        /*catch let error as NSError
-        {
-            DispatchQueue.main.async
-            {
-                print("Error Firestore : \(error.localizedDescription)")
-                self.isLoadingFetchData = false
-            }
-        }
-         */
         catch
         {
             DispatchQueue.main.async
@@ -1071,15 +1111,16 @@ class ReadWriteModel: ObservableObject
     }// func deleteStudent(withId studentId: Int) async {
       
     
-    func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, subjects: [String]) async -> Bool
-    {        
+    func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
+    {
         let object: [String: Any] = [
         "id": maxIdRecord,
         "name": name,
         "duration": duration,
         "tuitionCost": tuitionCost,
-        "subjects" : [],
-        "specialization": specialization
+        "subjects" : subjects,
+        "specialization": specialization,
+        "branch": branch
         ]
         
         do
@@ -1092,9 +1133,8 @@ class ReadWriteModel: ObservableObject
         {
             return false
         }
-    }// func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, subjects: [String]) async -> Bool
+    }// func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
 
-    
     
     func addNewSpecialization(name: String, description: String, field: String) async -> Bool
     {

@@ -104,7 +104,7 @@ struct SpecialityListView: View
                     if searchString.isEmpty
                     {
                         
-                        SpecialityCardViewModel(speciality: .constant(speciality), isUpdateSpecialization: $isUpdateList, writeModel: writeModel)
+                        SpecialityCardViewModel(speciality: .constant(speciality), isUpdateSpeciality: $isUpdateList, writeModel: writeModel)
                             .opacity(cardVisibility[index] ? 1 : 0)
                             .scaleEffect(cardVisibility[index] ? 1 : 0.8)
                             .onAppear
@@ -125,7 +125,7 @@ struct SpecialityListView: View
                     }
                     else if writeModel.matchesSearch(specialty: speciality, searchString: searchString)
                     {
-                        SpecialityCardViewModel(speciality: .constant(speciality), isUpdateSpecialization: $isUpdateList, writeModel: writeModel)
+                        SpecialityCardViewModel(speciality: .constant(speciality), isUpdateSpeciality: $isUpdateList, writeModel: writeModel)
                     }// else if
                 }// ForEach
             }// LazyHGrid(rows: adaptiveColumns, spacing: 20)
