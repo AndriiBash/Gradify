@@ -63,7 +63,7 @@ struct AcceptDeleteRowGroup: View
                             .padding(.vertical, 4)
                             .foregroundColor(Color.red)
                             //.padding(.vertical, 3)
-                    }// Button restart app
+                    }
                     .onHover
                     { isHovered in
                         changePointingHandCursor(shouldChangeCursor: isHovered)

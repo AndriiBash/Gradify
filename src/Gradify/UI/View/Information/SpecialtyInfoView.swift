@@ -11,7 +11,7 @@ struct SpecialtyInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
     
-    @State private var isExpandAllList:                 Bool = false
+    @State private var isExpandAllList:             Bool = false
     @State private var isShowAddSpecialityPanel:    Bool = false
     @State private var statusSave:                  Bool = false
     @State private var statusSaveEdit:              Bool = false
@@ -51,7 +51,7 @@ struct SpecialtyInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchSpecialityData()
+                        await readModel.fetchSpecialityData(updateCountRecod: true)
                     }
                     
                     withAnimation
@@ -59,9 +59,7 @@ struct SpecialtyInfoView: View
                         readModel.specialityList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
                     }
                 }
-            }// Main ScrollView
-            //fetchSpecialityData
-            
+            }// Main ScrollView            
         }// main ZStack
         .navigationTitle("Спеціальність")
         .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) спеціальностей" : "Знайдено \(countSearched) спеціальностей")
@@ -129,7 +127,7 @@ struct SpecialtyInfoView: View
 
                         Task
                         {
-                            await readModel.fetchSpecialityData()
+                            await readModel.fetchSpecialityData(updateCountRecod: true)
                             searchString = oldSearchString
                         }
                     }
@@ -173,7 +171,7 @@ struct SpecialtyInfoView: View
 
                 Task
                 {
-                    await readModel.fetchSpecialityData()
+                    await readModel.fetchSpecialityData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 
@@ -186,7 +184,7 @@ struct SpecialtyInfoView: View
             {
                 LoadingScreen()
             }
-        }// onChange(of: statusSaveEdit)
+        }
     }
 }
 

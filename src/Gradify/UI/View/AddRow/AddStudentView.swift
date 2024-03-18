@@ -285,7 +285,7 @@ struct AddStudentView: View
         Task
         {
             self.groupList = await writeModel.getGroupNameList()
-            self.educatProgramList = await writeModel.getEducatProgramNameList()
+            self.educatProgramList = await writeModel.getEducatProgramNameList(withOut: "")
         }
     }// private func fetchGroupsAndEducationPrograms()
 }

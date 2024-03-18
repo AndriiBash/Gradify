@@ -11,6 +11,7 @@ struct TeacherInfoView: View
 {
     @StateObject private var readModel              = ReadWriteModel()
     
+    @State private var isExpandAllList:             Bool = false
     @State private var isShowAddTeacherPanel:       Bool = false
     @State private var statusSave:                  Bool = false
     @State private var statusSaveEdit:              Bool = false
@@ -39,6 +40,17 @@ struct TeacherInfoView: View
         {
             Button
             {
+                isExpandAllList.toggle()
+            }
+            label:
+            {
+                Label(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки", systemImage: isExpandAllList ? "chevron.down.circle" : "chevron.right.circle")
+            }// expand all list card in some view
+            .help(isExpandAllList ? "Згорнути усі списки" : "Розгорнути усі списки")
+            .padding(.leading, 100)
+
+            Button
+            {
                 isSotredList.toggle()
             }
             label:
@@ -46,7 +58,6 @@ struct TeacherInfoView: View
                 Label(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням", systemImage: isSotredList ? "arrow.down.circle" : "arrow.up.circle")
             }
             .help(isSotredList ? "Сорторувати за зростанням" : "Сорторувати за спаданням")
-            .padding(.leading, 100)
 
             Button
             {

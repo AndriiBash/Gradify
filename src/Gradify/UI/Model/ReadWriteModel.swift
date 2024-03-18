@@ -12,23 +12,8 @@ import FirebaseFirestore
 import SwiftUI
 
 
-struct StudentGroupList: Identifiable, Sendable, Hashable
+struct StudentGroupList: Identifiable, Hashable
 {
-    // maybe delete property sendable and related method's
-    static func == (lhs: StudentGroupList, rhs: StudentGroupList) -> Bool // need move to async
-    {
-        return lhs.id == rhs.id &&
-        lhs.name == rhs.name &&
-        lhs.students == rhs.students
-    }
-
-    func hash(into hasher: inout Hasher)
-    {
-        hasher.combine(id)
-        hasher.combine(name)
-        hasher.combine(students)
-    }
-    
     var id = UUID()
     var name: String
     var students: [Student]
@@ -76,39 +61,43 @@ struct SpecialityList: Identifiable, Hashable
 }// struct SpecialityList: Identifiable, Hashable
 
 
+struct EducationalProgramList: Identifiable, Hashable
+{
+    var id = UUID()
+    var name: String
+    var educationalProgram: [EducationalProgram]
+}// struct EducationalProgramList: Identifiable, Hashable
+
 
 class ReadWriteModel: ObservableObject
 {
-    @Published var studentList:         [StudentGroupList] = []
-    @Published var groupList:           [GroupList] = []
-    @Published var specializationList:  [SpecializationList] = []
-
-    
-    @Published var specialityList:      [SpecialityList] = []
-
-    
-    
-    
-    @Published var gradeList:         [GradeList] = []
-    @Published var subjectList:        [SubjectList] = []
+    @Published var studentList:                 [StudentGroupList] = []
+    @Published var groupList:                   [GroupList] = []
+    @Published var specializationList:          [SpecializationList] = []
+    @Published var specialityList:              [SpecialityList] = []
+    @Published var educationalProgramList:      [EducationalProgramList] = []
 
     
     
     
+    @Published var gradeList:                   [GradeList] = []
+    @Published var subjectList:                 [SubjectList] = []
+
     
     
-    @Published var groups               = [Group]()
-    @Published var teachers             = [Teacher]()
-    @Published var departments          = [Department]()
-    @Published var subjects             = [Subject]()
-    @Published var grades               = [Grade]()
-    @Published var facultys             = [Faculty]()
-    @Published var specializations      = [Specialization]()
-    @Published var specialtys           = [Specialty]()
-    @Published var educationalPrograms  = [EducationalProgram]()
     
-    @Published var maxIdRecord:     Int = 0
-    @Published var countRecords:    Int = 0
+    @Published var groups                       = [Group]()
+    @Published var teachers                     = [Teacher]()
+    @Published var departments                  = [Department]()
+    @Published var subjects                     = [Subject]()
+    @Published var grades                       = [Grade]()
+    @Published var facultys                     = [Faculty]()
+    @Published var specializations              = [Specialization]()
+    @Published var specialtys                   = [Specialty]()
+    @Published var educationalPrograms          = [EducationalProgram]()
+    
+    @Published var maxIdRecord:                 Int = 0
+    @Published var countRecords:                Int = 0
     
     @Published var isLoadingFetchData = false
 
@@ -118,10 +107,28 @@ class ReadWriteModel: ObservableObject
     
     //MARK: - Method's
     
-    func getEducatProgramNameList() async -> [String]
+    func getEducatProgramNameList(withOut: String) async -> [String]
     {
-        return ["program1", "program2"]
-    }// func getEducatProgramNameList() async -> [String]
+        if educationalProgramList.isEmpty
+        {
+            await fetchEducationalProgram(updateCountRecod: false)
+        }
+        
+        var educationalProgramListName: [String] = []
+        
+        for educationProgramList in educationalProgramList
+        {
+            for educationProgram in educationProgramList.educationalProgram
+            {
+                if educationProgram.name != withOut
+                {
+                    educationalProgramListName.append(educationProgram.name)
+                }
+            }
+        }
+        
+        return educationalProgramListName
+    }// func getEducatProgramNameList(withOut: String) async -> [String]
     
     func getTeacherCategory() async -> [String]
     {
@@ -146,11 +153,17 @@ class ReadWriteModel: ObservableObject
     }// func getBranchName() async -> [String]
     
     
+    func getLevelList() async -> [String]
+    {
+        return ["Рівень стандарту", "Профільний рівень", "Поглиблений рівень", "Авторський рівень"]
+    }// func getBranchName() async -> [String]
+    
+    
     func getSpecialityNameList(withOut: String) async -> [String]
     {
         if specialityList.isEmpty
         {
-            await fetchSpecialityData()
+            await fetchSpecialityData(updateCountRecod: false)
         }
         
         var specialityListName: [String] = []
@@ -222,7 +235,7 @@ class ReadWriteModel: ObservableObject
     {
         if groupList.isEmpty
         {
-            await fetchBigGroupData()
+            await fetchBigGroupData(updateCountRecod: false)
         }
         
         var groupListName: [String] = []
@@ -287,7 +300,7 @@ class ReadWriteModel: ObservableObject
     {
         do
         {
-            await fetchSmallGroupData()
+            await fetchSmallGroupData(updateCountRecod: false)
             
             var groupNameList: [String] = []
             
@@ -314,14 +327,83 @@ class ReadWriteModel: ObservableObject
         return "sd"
     }// func getGroupStudent(of nameStudent: String) async -> String
 
-    
-    
-    func fetchSpecialityData() async
+
+    func fetchEducationalProgram(updateCountRecod: Bool) async
     {
         do
         {
             self.isLoadingFetchData = true
-            self.countRecords = 0
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
+            
+            let querySnapshot = try await db.collection("educationalPrograms").getDocuments()
+
+            let groupedEducationalPrograms = Dictionary(grouping: querySnapshot.documents.map
+            { queryDocumentSnapshot in
+            
+                let data = queryDocumentSnapshot.data()
+
+                let id = data["id"] as? Int ?? -1
+                
+                if updateCountRecod
+                {
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
+                }
+                
+                let name = data["name"] as? String ?? ""
+                let specialty = data["specialty"] as? String ?? ""
+                let level = data["level"] as? String ?? ""
+                let description = data["description"] as? String ?? ""
+                let duration = data["duration"] as? String ?? ""
+
+                let specializations = data["specializations"] as? [String] ?? []
+                
+                return EducationalProgram(id: id, name: name, specializations: specializations, specialty: specialty, level: level, duration: duration, description: description)
+                
+            }, by: { $0.specialty })
+
+            self.educationalProgramList = groupedEducationalPrograms.map
+            { name, educationProgram in
+                EducationalProgramList(name: name, educationalProgram: educationProgram)
+            }
+
+            if updateCountRecod
+            {
+                self.countRecords = self.educationalProgramList.flatMap { $0.educationalProgram }.count
+            }
+
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Not anotteted error : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+    }// func fetchEducationalProgram(updateCountRecod: Bool) async
+
+    
+    func fetchSpecialityData(updateCountRecod: Bool) async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
             
             let querySnapshot = try await db.collection("speciality").getDocuments()
 
@@ -332,9 +414,12 @@ class ReadWriteModel: ObservableObject
 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
                                 
                 let name = data["name"] as? String ?? ""
@@ -353,7 +438,10 @@ class ReadWriteModel: ObservableObject
                 SpecialityList(name: name, speciality: speciality)
             }
 
-            self.countRecords = self.specialityList.flatMap { $0.speciality }.count
+            if updateCountRecod
+            {
+                self.countRecords = self.specialityList.flatMap { $0.speciality }.count
+            }
 
             withAnimation(Animation.easeOut(duration: 0.5))
             {
@@ -369,9 +457,6 @@ class ReadWriteModel: ObservableObject
             }
         }
     }// func fetchSpecialityData() async
-
-    
-    
     
     
     func fetchSpecializationData(updateCountRecod: Bool) async
@@ -394,11 +479,14 @@ class ReadWriteModel: ObservableObject
 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
-                
+
                 let name = data["name"] as? String ?? ""
                 let description = data["description"] as? String ?? ""
                 let field = data["field"] as? String ?? ""
@@ -432,18 +520,7 @@ class ReadWriteModel: ObservableObject
     }// func fetchStudentData() async
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func fetchGradeData() async
+    func fetchGradeData(updateCountRecod: Bool) async
     {
         do
         {
@@ -460,11 +537,14 @@ class ReadWriteModel: ObservableObject
 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
-                
+
                 let subject = data["subject"] as? String ?? ""
                 let recipient = data["recipient"] as? String ?? ""
                 let grader = data["grader"] as? String ?? ""
@@ -516,10 +596,7 @@ class ReadWriteModel: ObservableObject
     }// func fetchGradeData() async
     
     
-    
-    
-    
-    func fetchSubjectData() async
+    func fetchSubjectData(updateCountRecod: Bool) async
     {
         do
         {
@@ -536,17 +613,18 @@ class ReadWriteModel: ObservableObject
 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
-                                
+
                 let name = data["name"] as? String ?? ""
                 let type = data["type"] as? String ?? ""
                 
                 var teacherList: [String] = []
-                
-                
 
                 for queryDocumentSnapshot in querySnapshot.documents
                 {
@@ -612,26 +690,8 @@ class ReadWriteModel: ObservableObject
         }
     }// func fetchSubjectData() async
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    func fetchBigGroupData() async
+
+    func fetchBigGroupData(updateCountRecod: Bool) async
     {
         do
         {
@@ -648,9 +708,12 @@ class ReadWriteModel: ObservableObject
                 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
 
                 let name = data["name"] as? String ?? ""
@@ -798,7 +861,7 @@ class ReadWriteModel: ObservableObject
     }// func updateSpecialization(id: Int, name: String, description: String, field: String) async -> Bool
     
 
-    func fetchSmallGroupData() async
+    func fetchSmallGroupData(updateCountRecod: Bool) async
     {
         do
         {
@@ -812,9 +875,12 @@ class ReadWriteModel: ObservableObject
 
                 let id = data["id"] as? Int ?? -1
                 
-                if self.maxIdRecord <= id
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
                 }
 
                 let name = data["name"] as? String ?? ""
@@ -930,7 +996,32 @@ class ReadWriteModel: ObservableObject
         }
     }// func fetchStudentData() async
 
-                                           
+                      
+    func addNewEducationProgram(name: String, level: String, duration: String, description: String, specialty: String, specializations: [String]) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "specialty": specialty,
+        "level": level,
+        "duration": duration,
+        "description": description,
+        "specializations" : specializations
+        ]
+        
+        do
+        {
+            try await db.collection("educationalPrograms").addDocument(data: object)
+            self.maxIdRecord += 1
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }// func addNewEducationProgram(name: String, level: String, duration: String, description: String, specialty: String, specializations: [String]) async -> Bool
+
+    
     func addNewGroup(name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -954,7 +1045,41 @@ class ReadWriteModel: ObservableObject
         }
     }// func addNewGroup(name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
 
-                                           
+    func updateEducationProgram(id: Int, name: String, level: String, duration: String, description: String, specialty: String, specializations: [String]) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "specialty": specialty,
+        "level": level,
+        "duration": duration,
+        "description": description,
+        "specializations" : specializations
+        ]
+
+        do
+        {
+            let snapshot = try await db.collection("educationalPrograms").whereField("id", isEqualTo: id).getDocuments()
+            
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("educationalPrograms").document(document.documentID).updateData(object)
+            return true
+        }
+        catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+
+    }// func updateEducationProgram(id: Int, name: String, level: String, duration: String, description: String, specialty: String, specializations: [String]) async -> Bool
+
+    
+    
     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     {
         let object: [String: Any] = [
@@ -1048,6 +1173,37 @@ class ReadWriteModel: ObservableObject
     }// func deleteGrade(withId gradeId: Int) async
 
     
+    func deleteEducationProgram(withId educationProgramId: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("educationalPrograms").whereField("id", isEqualTo: educationProgramId).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete education program: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteEducationProgram(withId educationProgramId: Int) async
+    
+    
     func deleteSpeciality(withId specialityId: Int) async
     {
         do
@@ -1076,9 +1232,8 @@ class ReadWriteModel: ObservableObject
         {
             print("Error in get data: \(error.localizedDescription)")
         }
-    }// func deleteGrade(withId gradeId: Int) async
+    }// func deleteSpeciality(withId specialityId: Int) async
 
-    
     
     func deleteStudent(withId studentId: Int) async
     {
@@ -1260,6 +1415,17 @@ class ReadWriteModel: ObservableObject
                specialty.subjects.contains { $0.lowercased().contains(searchString.lowercased()) } ||
                specialty.specialization.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(specialty: Specialty, searchString: String) -> Bool
+
+    
+    func matchesSearch(educationalProgram: EducationalProgram, searchString: String) -> Bool
+    {
+        return educationalProgram.name.lowercased().contains(searchString.lowercased()) ||
+               educationalProgram.specialty.lowercased().contains(searchString.lowercased()) ||
+               educationalProgram.level.lowercased().contains(searchString.lowercased()) ||
+               educationalProgram.duration.lowercased().contains(searchString.lowercased()) ||
+               educationalProgram.description.lowercased().contains(searchString.lowercased()) ||
+               educationalProgram.specializations.contains { $0.lowercased().contains(searchString.lowercased()) }
+    }// func matchesSearch(educationalProgram: EducationalProgram, searchString: String) -> Bool
 
     
     func matchesSearch(grade: Grade, searchString: String) -> Bool

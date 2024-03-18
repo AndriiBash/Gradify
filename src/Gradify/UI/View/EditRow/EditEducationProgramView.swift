@@ -1,33 +1,33 @@
 //
-//  EditSpecialityView.swift
+//  EditEducationProgramView.swift
 //  Gradify
 //
-//  Created by Андрiй on 17.03.2024.
+//  Created by Андрiй on 18.03.2024.
 //
 
 import SwiftUI
 
-struct EditSpecialityView: View
+struct EditEducationProgramView: View
 {
     @State private var editedName:                      String = ""
     @State private var editedDuration:                  String = ""
-    @State private var editedTuitionCost:               String = ""
-    @State private var editedSpecialization:            String = "Без спеціалізації"
-    @State private var editedBranch:                    String = "Без галузі"
-    @State private var editedSubjects:                  [String] = []
+    @State private var editedDescription:               String = ""
+    @State private var editedLevel:                     String = "Рівень відсутній"
+    @State private var editedSpeciality:                String = "Без спеціальності"
+    @State private var editedSpecialization:            [String] = []
 
-    @State private var isWrongIdName:                   Bool = false
-    @State private var isWrongName:                     Bool = false
-    @State private var isWrongDuration:                 Bool = false
-    @State private var isWrongTuitionCost:              Bool = false
-    @State private var isWrongSpecialization:           Bool = false
-    @State private var isWrongBranch:                   Bool = false
-    @State private var isWrongLastSubject:              Bool = false
-    @State private var isWrongSubjects:                 [Bool] = []
-    
-    @State private var subjectList:                     [String] = []
+    @State private var isWrongIdName:               Bool = false
+    @State private var isWrongName:                 Bool = false
+    @State private var isWrongDuration:             Bool = false
+    @State private var isWrongLevel:                Bool = false
+    @State private var isWrongSpeciality:           Bool = false
+    @State private var isWrongDescription:          Bool = false
+    @State private var isWrongLastSpecialiazation:  Bool = false
+    @State private var isWrongSpecialiazation:      [Bool] = []
+
+    @State private var specialityList:                  [String] = []
     @State private var specializationList:              [String] = []
-    @State private var branchList:                      [String] = []
+    @State private var levelList:                       [String] = []
 
     @State private var statusSaveString:                String = "Зберегти"
 
@@ -36,10 +36,11 @@ struct EditSpecialityView: View
     @Binding var isShowView:                            Bool
     @Binding var isEditView:                            Bool
     @Binding var isUpdateListSpeciality:                Bool
-    @Binding var speciality:                            Specialty
+    @Binding var educationProgram:                      EducationalProgram
     
     @ObservedObject var writeModel:                     ReadWriteModel
 
+    
     var body: some View
     {
         VStack
@@ -55,7 +56,6 @@ struct EditSpecialityView: View
                 Spacer()
             }// HStack title
             
-            
             Form
             {
                 Section(header: Text("Головне"))
@@ -69,13 +69,28 @@ struct EditSpecialityView: View
                                 
                                 if editedName.isEmpty
                                 {
-                                    Text("Назва спеціальності (ID)")
+                                    Text("Назва навчальної програми (ID)")
                                         .foregroundColor(Color.gray)
                                         .padding(.horizontal, 12)
                                 }
-                            })// textField for name specialty
+                            })// textField for name education program
 
-                    TextField("Тривалість навчання", text: $editedDuration)
+                    Picker("Рівень", selection: $editedLevel)
+                    {
+                        Text("Рівень відсутній")
+                                .tag("Рівень відсутній")
+
+                        Divider()
+                        
+                        ForEach(levelList, id: \.self)
+                        { level in
+                            Text(level)
+                                .tag(level)
+                        }
+                    }// Picker for select level education program
+                    .foregroundColor(isWrongLevel ? Color.red : Color("PopUpTextColor"))
+                    
+                    TextField("Тривалість", text: $editedDuration)
                         .foregroundColor(isWrongDuration ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
@@ -88,139 +103,110 @@ struct EditSpecialityView: View
                                         .foregroundColor(Color.gray)
                                         .padding(.horizontal, 12)
                                 }
-                            })// textField for duration study
+                            })// textField for duration education program
+
+                    Picker("Спеціальність", selection: $editedSpeciality)
+                    {
+                        Text("Без спеціальності")
+                                .tag("Без спеціальності")
+
+                        Divider()
+                        
+                        ForEach(specialityList, id: \.self)
+                        { speciality in
+                            Text(speciality)
+                                .tag(speciality)
+                        }
+                    }// Picker for select speciality education program
+                    .foregroundColor(isWrongSpeciality ? Color.red : Color("PopUpTextColor"))
+
                     
-                    
-                    TextField("Вартість навчання", text: $editedTuitionCost)
-                        .foregroundColor(isWrongTuitionCost ? Color.red : Color("MainTextForBlur"))
+                }// Section with main info
+            
+                Section(header: Text("Опис"))
+                {
+                    TextField("Опис", text: $editedDescription)
+                        .foregroundColor(isWrongDescription ? Color.red : Color("MainTextForBlur"))
                         .overlay(
                             HStack
                             {
                                 Spacer()
                                 
-                                if editedTuitionCost.isEmpty
+                                if editedDescription.isEmpty
                                 {
-                                    Text("300 грн")
+                                    Text("Опис навчальної програми")
                                         .foregroundColor(Color.gray)
                                         .padding(.horizontal, 12)
                                 }
-                            })// textField for tuition coast
-                        .onChange(of: editedTuitionCost)
-                        { _, newValue in
-                            let filteredValue = newValue.filter { "0123456789".contains($0) }
-                            editedTuitionCost = filteredValue
-                        }
-                    
-                    
-                    Picker("Галузь", selection: $editedBranch)
-                    {
-                        Text("Без галузі")
-                                .tag("Без галузі")
-
-                        Divider()
-                        
-                        ForEach(branchList, id: \.self)
-                        { branch in
-                            Text(branch)
-                                .tag(branch)
-                        }
-                    }// Picker for select branch speciality
-                    .foregroundColor(isWrongBranch ? Color.red : Color("PopUpTextColor"))
-                    .onChange(of: editedBranch)
-                    { _, newValue in
-                        
-                        Task
-                        {
-                            self.specializationList = await writeModel.getSpecializationNameList(branch: newValue)
-                            
-                            if !specializationList.contains(editedSpecialization)
-                            {
-                                editedSpecialization = "Без спеціалізації"
-                            }
-                        }
-                    }
+                            })// textField for description education program
+                }// Section description eductation program
                 
-                    Picker("Спеціалізація", selection: $editedSpecialization)
-                    {
-                        Text("Без спеціалізації")
-                                .tag("Без спеціалізації")
-
-                        Divider()
-                        
-                        ForEach(specializationList, id: \.self)
-                        { specialization in
-                            Text(specialization)
-                                .tag(specialization)
-                        }
-                    }// Picker for select specialization speciality
-                    .foregroundColor(isWrongSpecialization ? Color.red : Color("PopUpTextColor"))
-                }// Section with main info
-            
-                Section(header: Text("Предмети"))
+                Section(header: Text("Спеціалізація"))
                 {
-                    ForEach(editedSubjects.indices, id: \.self)
+                    ForEach(editedSpecialization.indices, id: \.self)
                     { index in
                         HStack(alignment: .center)
                         {
-                            Picker("Предмет №\(index + 1)", selection: $editedSubjects[index])
+                            Picker("Спеціалізація №\(index + 1)", selection: $editedSpecialization[index])
                             {
-                                Text("Предмет не обрано")
-                                        .tag("Предмет не обрано")
+                                Text("Спеціалізацію не обрано")
+                                        .tag("Спеціалізацію не обрано")
 
                                 Divider()
                                 
-                                ForEach(subjectList, id: \.self)
+                                ForEach(specializationList, id: \.self)
                                 { subject in
                                     Text(subject)
                                         .tag(subject)
                                 }
                             }// Picker for select subject
-                            .foregroundColor(isWrongSubjects[index] ? Color.red : Color("PopUpTextColor"))
+                            .foregroundColor(isWrongSpecialiazation[index] ? Color.red : Color("PopUpTextColor"))
                             
                             Button
                             {
                                 withAnimation(Animation.easeIn(duration: 0.25))
                                 {
-                                    editedSubjects.remove(at: index)
-                                    isWrongSubjects.remove(at: index)
+                                    editedSpecialization.remove(at: index)
+                                    isWrongSpecialiazation.remove(at: index)
                                 }
                             }
                             label:
                             {
                                 Image(systemName: "trash")
                                     .aspectRatio(contentMode: .fit)
-                            }// Button for delete subject
-                            .help("Видалити предмет")
+                            }// Button for delete specialization
+                            .help("Видалити спеціалізацію")
                         }
                     }
                     
                     HStack
                     {
-                        if isWrongLastSubject
+                        if isWrongLastSpecialiazation
                         {
-                            Text("Заповніть попередній предмет!")
+                            Text("Оберіть попередню спеціалізацію!")
                                 .foregroundColor(Color.red)
                         }
-
+                        
                         Spacer()
                         
                         Button
                         {
-                            if !editedSubjects.contains("Предмет не обрано")
+                            if !editedSpecialization.contains("Спеціалізацію не обрано")
                             {
+                                
                                 withAnimation(Animation.easeIn(duration: 0.25))
                                 {
-                                    isWrongLastSubject = false
-
-                                    editedSubjects.append("Предмет не обрано")
-                                    isWrongSubjects.append(false)
+                                    isWrongLastSpecialiazation = false
+                                    
+                                    editedSpecialization.append("Спеціалізацію не обрано")
+                                    isWrongSpecialiazation.append(false)
                                 }
                             }
                             else
                             {
                                 withAnimation(Animation.easeIn(duration: 0.25))
                                 {
-                                    isWrongLastSubject = true
+                                    isWrongLastSpecialiazation = true
                                 }
                             }
                         }
@@ -229,16 +215,16 @@ struct EditSpecialityView: View
                             Image(systemName: "plus")
                                 .aspectRatio(contentMode: .fit)
                         }// Button for add subject
-                        .help("Додати новий предмет який вивчається на даній спеціальності")
-                    }// HStack with button for add subject
-                }// Section subject
+                        .help("Додати нову спеціалізацію яка присутня в навчальній програми")
+                    }// HStack with button for add specialiazation
+                }// Section specialiaztion
             }// Form
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
             
             Spacer()
                         
-            if isWrongName || isWrongDuration || isWrongTuitionCost || isWrongSpecialization || isWrongBranch || isWrongSubjects.contains(true)
+            if isWrongName || isWrongDuration || isWrongLevel || isWrongSpeciality || isWrongDescription || isWrongSpecialiazation.contains(true)
             {
                 Text("Заповніть всі поля коректно")
                     .foregroundColor(Color.red)
@@ -246,10 +232,10 @@ struct EditSpecialityView: View
             
             if isWrongIdName
             {
-                Text("Назва спеціальності не повина збігатися з назвами інших спеціальностей")
+                Text("Назва навчальної програми не повина збігатися з назвами інших навчальних програм")
                     .foregroundColor(Color.red)
             }
-            
+
             Divider()
 
             HStack
@@ -292,20 +278,20 @@ struct EditSpecialityView: View
                     {
                         isWrongName = false
                         isWrongDuration = false
-                        isWrongTuitionCost = false
-                        isWrongBranch = false
-                        isWrongSpecialization = false
-                        isWrongLastSubject = false
-                        isWrongSubjects = Array(repeating: false, count: editedSubjects.count)
+                        isWrongLevel = false
+                        isWrongSpeciality = false
+                        isWrongDescription = false
+                        isWrongLastSpecialiazation = false
+                        isWrongSpecialiazation = Array(repeating: false, count: editedSpecialization.count)
                     }
                     
-                    if !editedName.isEmpty && !editedDuration.isEmpty && !editedTuitionCost.isEmpty && editedBranch != "Без галузі" && editedSpecialization != "Без спеціалізації" && !editedSubjects.contains("Предмет не обрано") && !isWrongSubjects.contains(true) && !writeModel.isLoadingFetchData
+                    if !editedName.isEmpty && !editedDuration.isEmpty && editedLevel != "Рівень відсутній" && editedSpeciality != "Без спеціальності" && !editedDescription.isEmpty && !isWrongSpecialiazation.contains(true) && !editedSpecialization.contains("Спеціалізацію не обрано") && !writeModel.isLoadingFetchData
                     {
                         Task
                         {
-                            let listSpecialityKeyName = await writeModel.getSpecialityNameList(withOut: speciality.name)
+                            let listEducationProgramKeyName = await writeModel.getEducatProgramNameList(withOut: educationProgram.name)
                             
-                            if listSpecialityKeyName.contains(editedName)
+                            if listEducationProgramKeyName.contains(editedName)
                             {
                                 withAnimation(Animation.easeIn(duration: 0.35))
                                 {
@@ -314,7 +300,7 @@ struct EditSpecialityView: View
                             }
                             else
                             {
-                                let status = await writeModel.updateSpeciality(id: speciality.id, name: editedName, duration: editedDuration, tuitionCost: Int(editedTuitionCost) ?? 0, specialization: editedSpecialization, branch: editedBranch, subjects: editedSubjects)
+                                let status = await writeModel.updateEducationProgram(id: educationProgram.id, name: editedName, level: editedLevel, duration: editedDuration, description: editedDescription, specialty: editedSpeciality, specializations: editedSpecialization)
                                 
                                 isUpdateListSpeciality.toggle()
                                 
@@ -334,31 +320,32 @@ struct EditSpecialityView: View
                             {
                                 isWrongDuration = true
                             }
-                            if editedTuitionCost.isEmpty
+                            if editedDescription.isEmpty
                             {
-                                isWrongTuitionCost = true
+                                isWrongDescription = true
                             }
-                            if editedSpecialization == "Без спеціалізації"
+                            if editedLevel == "Рівень відсутній"
                             {
-                                isWrongSpecialization = true
+                                isWrongLevel = true
                             }
-                            if editedBranch == "Без галузі"
+                            if editedSpeciality == "Без спеціальності"
                             {
-                                isWrongBranch = true
+                                isWrongSpeciality = true
                             }
-                            if editedSubjects.contains("Предмет не обрано")
+                            
+                            if editedSpecialization.contains("Спеціалізацію не обрано")
                             {
-                                for index in editedSubjects.indices
+                                for index in editedSpecialization.indices
                                 {
-                                    if editedSubjects[index] == "Предмет не обрано"
+                                    if editedSpecialization[index] == "Спеціалізацію не обрано"
                                     {
-                                        isWrongSubjects[index] = true
+                                        isWrongSpecialiazation[index] = true
                                     }
                                 }
                             }
+                            
                         }
                     }
-                    
                 }
                 label:
                 {
@@ -369,7 +356,7 @@ struct EditSpecialityView: View
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
-                .help("Зберегти редаговану інформацію про спеціальність")
+                .help("Зберегти редаговану інформацію про навчальну програму")
                 .keyboardShortcut(.defaultAction)
                 .padding(.leading, 12)
             }// HStack with button's for manipulate form
@@ -388,18 +375,20 @@ struct EditSpecialityView: View
             maxWidthForButton = max(buttonWidth, doneButtonWidth)
             
             Task
-            {
-                self.editedName = speciality.name
-                self.editedDuration = speciality.duration
-                self.editedTuitionCost = String(speciality.tuitionCost)
-                self.editedSpecialization = speciality.specialization
-                self.editedBranch = speciality.branch
-                self.editedSubjects = speciality.subjects
-                self.isWrongSubjects = Array(repeating: false, count: speciality.subjects.count)
+            {                
+                self.specialityList         = await writeModel.getSpecialityNameList(withOut: "")
+                self.specializationList     = await writeModel.getSpecializationNameList(withOut: "")
+                self.levelList              = await writeModel.getLevelList()
 
-                self.subjectList        = await writeModel.getSubjectNameList(withOut: "")
-                self.branchList         = await writeModel.getBranchName()
+                self.editedName = educationProgram.name
+                self.editedDuration = educationProgram.duration
+                self.editedDescription = educationProgram.description
+                self.editedLevel = educationProgram.level
+                self.editedSpeciality = educationProgram.specialty
+                self.editedSpecialization = educationProgram.specializations
+                self.isWrongSpecialiazation = Array(repeating: false, count: educationProgram.specializations.count)
             }
         }
+
     }
 }

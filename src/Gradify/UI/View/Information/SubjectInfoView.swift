@@ -57,7 +57,7 @@ struct SubjectInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchSubjectData()
+                        await readModel.fetchSubjectData(updateCountRecod: true)
                     }// need add wait view (monitor)
                     
                     withAnimation

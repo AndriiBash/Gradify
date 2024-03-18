@@ -50,7 +50,7 @@ struct GradeInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchGradeData()
+                        await readModel.fetchGradeData(updateCountRecod: true)
                     }
                     
                     withAnimation
@@ -126,7 +126,7 @@ struct GradeInfoView: View
 
                         Task
                         {
-                            await readModel.fetchGradeData()
+                            await readModel.fetchGradeData(updateCountRecod: true)
                             searchString = oldSearchString
                         }
                     }
@@ -170,7 +170,7 @@ struct GradeInfoView: View
 
                 Task
                 {
-                    await readModel.fetchGradeData()
+                    await readModel.fetchGradeData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 

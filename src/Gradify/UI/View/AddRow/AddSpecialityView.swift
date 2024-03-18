@@ -23,7 +23,6 @@ struct AddSpecialityView: View
     @State private var isWrongBranch:           Bool = false
     @State private var isWrongLastSubject:      Bool = false
     @State private var isWrongSubjects:         [Bool] = []
-
     
     @State private var subjectList:             [String] = []
     @State private var specializationList:      [String] = []
@@ -193,7 +192,7 @@ struct AddSpecialityView: View
                     {
                         if isWrongLastSubject
                         {
-                            Text("Заповніть попередній предмет!")
+                            Text("Оберіть попередній предмет!")
                                 .foregroundColor(Color.red)
                         }
                         

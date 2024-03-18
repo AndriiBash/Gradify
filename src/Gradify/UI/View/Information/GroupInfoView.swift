@@ -50,7 +50,7 @@ struct GroupInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchBigGroupData()
+                        await readModel.fetchBigGroupData(updateCountRecod: true)
                     }
                     
                     withAnimation
@@ -126,7 +126,7 @@ struct GroupInfoView: View
 
                         Task
                         {
-                            await readModel.fetchBigGroupData()
+                            await readModel.fetchBigGroupData(updateCountRecod: true)
                             searchString = oldSearchString
                         }// need add wait view (monitor)
                     }
@@ -170,7 +170,7 @@ struct GroupInfoView: View
 
                 Task
                 {
-                    await readModel.fetchBigGroupData()
+                    await readModel.fetchBigGroupData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 

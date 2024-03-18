@@ -1,24 +1,24 @@
 //
-//  GroupCardViewModel.swift
+//  EducationalProgramCardViewModel.swift
 //  Gradify
 //
-//  Created by Андрiй on 11.03.2024.
+//  Created by Андрiй on 18.03.2024.
 //
 
 import SwiftUI
 
-struct GroupCardViewModel: View
+struct EducationalProgramCardViewModel: View
 {
-    @State private var isHovered:           Bool = false
+    @State private var isHovered:                       Bool = false
 
-    @State private var showAboutGroup:      Bool = false
-    @State private var showEditGroup:       Bool = false
-    @State private var showDeleteGroup:     Bool = false
+    @State private var showAboutEducationalProgram:     Bool = false
+    @State private var showEditEducationalProgram:      Bool = false
+    @State private var showDeleteEducationalProgram:    Bool = false
     
-    @Binding var group:                     Group
-    @Binding var isUpdateGroup:             Bool
-    @ObservedObject var writeModel:         ReadWriteModel
-    
+    @Binding var educationalProgramm:                   EducationalProgram
+    @Binding var isUpdateEducationalProgramm:           Bool
+    @ObservedObject var writeModel:                     ReadWriteModel
+
     var body: some View
     {
         VStack
@@ -27,7 +27,7 @@ struct GroupCardViewModel: View
             
             HStack
             {
-                Text("\(group.name)")
+                Text("\(educationalProgramm.name)")
                     .font(.title2)
             }// HStack with main info
             
@@ -35,45 +35,45 @@ struct GroupCardViewModel: View
             {
                 HStack
                 {
-                    Image(systemName: "person.bust.fill")
+                    Image(systemName: "hammer.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(group.curator)")
+                    Text("\(educationalProgramm.specialty)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with group curator
+                }// Hstack speciality seducational Programm
                 
                 HStack
                 {
-                    Image(systemName: "laurel.leading")
+                    Image(systemName: "level")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(group.groupLeader)")
+                    Text("\(educationalProgramm.level)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with group leader
+                }// Hstack with educationalProgramm level
                 
                 HStack
                 {
-                    Image(systemName: "book.and.wrench.fill")
+                    Image(systemName: "clock")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(group.educationProgram)")
+                    Text("\(educationalProgramm.duration)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with group educationProgram
+                }// Hstack with duration educationalProgramm
                 
                 
             }// VStack with another info
@@ -95,7 +95,7 @@ struct GroupCardViewModel: View
             {
                 Button
                 {
-                    showDeleteGroup.toggle()
+                    showDeleteEducationalProgram.toggle()
                 }
                 label:
                 {
@@ -113,7 +113,7 @@ struct GroupCardViewModel: View
                 
                 Button
                 {
-                    showEditGroup.toggle()
+                    showEditEducationalProgram.toggle()
                 }
                 label:
                 {
@@ -131,7 +131,7 @@ struct GroupCardViewModel: View
                 
                 Button
                 {
-                    showAboutGroup.toggle()
+                    showAboutEducationalProgram.toggle()
                 }
                 label:
                 {
@@ -157,17 +157,18 @@ struct GroupCardViewModel: View
                 self.isHovered = hovering
             }
         }
-        .sheet(isPresented: $showAboutGroup)
+        .sheet(isPresented: $showAboutEducationalProgram)
         {
-            RowGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, group: group)
+            RowEducationalProgramView(isShowView: $showAboutEducationalProgram, isEditView: $showEditEducationalProgram, educationProgram: educationalProgramm)
         }
-        .sheet(isPresented: $showEditGroup)
+        .sheet(isPresented: $showEditEducationalProgram)
         {
-            EditGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, isUpdateListGroup: $isUpdateGroup, group: $group, writeModel: writeModel)
+            EditEducationProgramView(isShowView: $showAboutEducationalProgram, isEditView: $showEditEducationalProgram, isUpdateListSpeciality: $isUpdateEducationalProgramm, educationProgram: $educationalProgramm, writeModel: writeModel)
         }
-        .sheet(isPresented: $showDeleteGroup)
+        .sheet(isPresented: $showDeleteEducationalProgram)
         {
-            AcceptDeleteRowGroup(group: $group, isShowSelfView: $showDeleteGroup, isUpdateListGroup: $isUpdateGroup, writeModel: writeModel)
+            AcceptDeleteRowEducationalProgram(educationalProgram: $educationalProgramm, isShowSelfView: $showDeleteEducationalProgram, isUpdateListEducationalProgram: $isUpdateEducationalProgramm, writeModel: writeModel)
         }
-    }// body
+
+    }
 }

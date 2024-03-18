@@ -318,7 +318,7 @@ struct EditStudentView: View
             Task
             {
                 self.groupList              = await writeModel.getGroupNameList()
-                self.educatProgramList      = await writeModel.getEducatProgramNameList()
+                self.educatProgramList      = await writeModel.getEducatProgramNameList(withOut: "")
                 
                 editedGroup                 = student.group
                 editedEducationProgram      = student.educationProgram

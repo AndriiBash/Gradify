@@ -130,7 +130,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Освітня програма!", systemImage: "book.and.wrench.fill")
+                            Label("Освітня програма", systemImage: "book.and.wrench.fill")
                         }// NavigationLink with Specialty
                     }// Section with specialization and teach programm
                 } // List with section

@@ -16,7 +16,6 @@ struct AddGroupView: View
     @State private var educationProgram:            String = "Без навчальної програми"
     
     @State private var isWrongName:                 Bool = false
-
     @State private var isWrongIdName:               Bool = false
 
     @State private var curatorList:                 [String] = []
@@ -226,7 +225,7 @@ struct AddGroupView: View
                 self.curatorList            = await writeModel.getTeacherList()
                 self.studentList            = await writeModel.getStudentList(groupName: "Без групи")
                 self.departmentList         = await writeModel.getDeprmentList()
-                self.educationProgramList   = await writeModel.getEducatProgramNameList()
+                self.educationProgramList   = await writeModel.getEducatProgramNameList(withOut: "")
             }
         }
     }
