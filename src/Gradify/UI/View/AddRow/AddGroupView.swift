@@ -228,5 +228,16 @@ struct AddGroupView: View
                 self.educationProgramList   = await writeModel.getEducatProgramNameList(withOut: "")
             }
         }
+        .onDisappear
+        {
+            if self.writeModel.isLoadingFetchData
+            {
+                withAnimation(Animation.easeIn(duration: 0.35))
+                {
+                    self.writeModel.isLoadingFetchData = false
+                }
+            }
+        }
+
     }
 }

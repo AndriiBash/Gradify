@@ -20,7 +20,7 @@ struct StudentGroupList: Identifiable, Hashable
 }// struct StudentGroup: Identifiable, Sendable, Hashable
 
 
-struct GroupList: Identifiable, Hashable 
+struct GroupList: Identifiable, Hashable
 {
     var id = UUID()
     var name: String
@@ -261,7 +261,10 @@ class ReadWriteModel: ObservableObject
         {
             var filteredStudents: [String] = []
             
-            await fetchStudentData(updateCountRecod: false)
+            if studentList.isEmpty
+            {
+                await fetchStudentData(updateCountRecod: false)
+            }
             
             for group in self.studentList
             {
@@ -822,7 +825,7 @@ class ReadWriteModel: ObservableObject
             
             try await db.collection("groups").document(document.documentID).updateData(object)
             return true
-        } 
+        }
         catch
         {
             print("Error in update data: \(error)")
@@ -1347,7 +1350,7 @@ class ReadWriteModel: ObservableObject
                                            
     func deleteGroup(withId groupId: Int) async
     {
-        do 
+        do
         {
             let snapshot = try await db.collection("groups").whereField("id", isEqualTo: groupId).getDocuments()
             

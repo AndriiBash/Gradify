@@ -389,6 +389,17 @@ struct EditEducationProgramView: View
                 self.isWrongSpecialiazation = Array(repeating: false, count: educationProgram.specializations.count)
             }
         }
+        .onDisappear
+        {
+            if self.writeModel.isLoadingFetchData
+            {
+                withAnimation(Animation.easeIn(duration: 0.35))
+                {
+                    self.writeModel.isLoadingFetchData = false
+                }
+            }
+        }
+
 
     }
 }

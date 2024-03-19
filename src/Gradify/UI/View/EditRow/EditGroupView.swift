@@ -261,5 +261,15 @@ struct EditGroupView: View
                 self.editedEducationProgram = group.educationProgram
             }
         }
+        .onDisappear
+        {
+            if self.writeModel.isLoadingFetchData
+            {
+                withAnimation(Animation.easeIn(duration: 0.35))
+                {
+                    self.writeModel.isLoadingFetchData = false
+                }
+            }
+        }
     }
 }
