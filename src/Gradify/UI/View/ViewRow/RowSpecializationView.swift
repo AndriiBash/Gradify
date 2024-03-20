@@ -166,7 +166,7 @@ struct RowSpecializationView: View
                                 
                 Button
                 {
-                    var allInfo = """
+                    let allInfo = """
                             [\(specialization.id)] \(specialization.name)
                             ===========================================
                             Назва: \(specialization.name)

@@ -313,7 +313,7 @@ struct RowSpecialityView: View
                     {
                         for index in speciality.subjects.indices
                         {
-                            allInfo += "Предмет №\(index) :" + "\(speciality.subjects[index])\n"
+                            allInfo += "Предмет №\(index + 1) :" + "\(speciality.subjects[index])\n"
                         }
                         
                         allInfo += "==========================================="

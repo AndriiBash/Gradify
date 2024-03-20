@@ -185,8 +185,6 @@ struct SpecializationInfoView: View
                 LoadingScreen()
             }
         }// onChange(of: statusSaveEdit)
-
-        
     }// body
 }
 

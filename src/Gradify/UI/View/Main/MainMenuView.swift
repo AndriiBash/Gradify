@@ -98,7 +98,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Факультет!", systemImage: "building.columns.fill")
+                            Label("Факультет", systemImage: "building.columns.fill")
                         }// NavigationLink with faculty's
 
                     }// Section with about teacher's and departament

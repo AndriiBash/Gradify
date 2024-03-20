@@ -125,7 +125,9 @@ struct Faculty: Identifiable, Sendable, Equatable, Hashable
     var dean: String // Decan
     
     var description: String
-    var departments: [Department] = []
+    
+    var specialiazation: [String] = []
+    var departments:     [String] = []
 }// struct Faculty: Identifiable, Sendable
 
 
