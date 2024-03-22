@@ -1,23 +1,23 @@
 //
-//  FacultyCardViewModel.swift
+//  DepartmentCardViewModel.swift
 //  Gradify
 //
-//  Created by Андрiй on 20.03.2024.
+//  Created by Андрiй on 22.03.2024.
 //
 
 import SwiftUI
 
-struct FacultyCardViewModel: View
+struct DepartmentCardViewModel: View
 {
-    @State private var isHovered:            Bool = false
+    @State private var isHovered:               Bool = false
 
-    @State private var showAboutFaculty:     Bool = false
-    @State private var showEditFaculty:      Bool = false
-    @State private var showDeleteFaculty:    Bool = false
+    @State private var showAboutDepartment:     Bool = false
+    @State private var showEditDepartment:      Bool = false
+    @State private var showDeleteDepartment:    Bool = false
     
-    @Binding var faculty:                    Faculty
-    @Binding var isUpdateFaculty:            Bool
-    @ObservedObject var writeModel:          ReadWriteModel
+    @Binding var department:                    Department
+    @Binding var isUpdateDeparment:             Bool
+    @ObservedObject var writeModel:             ReadWriteModel
 
     var body: some View
     {
@@ -27,7 +27,7 @@ struct FacultyCardViewModel: View
             
             HStack
             {
-                Text("\(faculty.name)")
+                Text("\(department.name)")
                     .font(.title2)
             }// HStack with main info
             .padding(.top, 6)
@@ -38,17 +38,45 @@ struct FacultyCardViewModel: View
             {
                 HStack
                 {
-                    Image(systemName: "info.square.fill")
+                    Image(systemName: "doc.text.magnifyingglass")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15, height: 15)
                         .foregroundColor(Color.blue)
                     
-                    Text("\(faculty.description)")
+                    Text("\(department.specialization)")
                         .font(.subheadline)
                     
                     Spacer()
-                }// Hstack with info duration teach
+                }// Hstack with info specialization department
+                
+                HStack
+                {
+                    Image(systemName: "laurel.leading")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(department.departmentLeader)")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with departmentLeader department
+
+                HStack
+                {
+                    Image(systemName: "square.split.bottomrightquarter")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(Color.blue)
+                    
+                    Text("\(department.departmentOffice)")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                }// Hstack with facultyOffice department
             }// VStack with another info
             .padding(.horizontal, 6)
             .padding(.top, 4)
@@ -68,7 +96,7 @@ struct FacultyCardViewModel: View
             {
                 Button
                 {
-                    showDeleteFaculty.toggle()
+                    showDeleteDepartment.toggle()
                 }
                 label:
                 {
@@ -86,7 +114,7 @@ struct FacultyCardViewModel: View
                 
                 Button
                 {
-                    showEditFaculty.toggle()
+                    showEditDepartment.toggle()
                 }
                 label:
                 {
@@ -104,7 +132,7 @@ struct FacultyCardViewModel: View
                 
                 Button
                 {
-                    showAboutFaculty.toggle()
+                    showAboutDepartment.toggle()
                 }
                 label:
                 {
@@ -130,17 +158,17 @@ struct FacultyCardViewModel: View
                 self.isHovered = hovering
             }
         }
-        .sheet(isPresented: $showAboutFaculty)
+        .sheet(isPresented: $showAboutDepartment)
         {
-            RowFacultyView(isShowView: $showAboutFaculty, isEditView: $showEditFaculty, faculty: faculty)
+            RowDepartmentView(isShowView: $showAboutDepartment, isEditView: $showEditDepartment, department: department)
         }
-        .sheet(isPresented: $showEditFaculty)
+        .sheet(isPresented: $showEditDepartment)
         {
-            EditFacultyView(isShowView: $showAboutFaculty, isEditView: $showEditFaculty, isUpdateListFaculty: $isUpdateFaculty, faculty: $faculty, writeModel: writeModel)
+            //EditFacultyView(isShowView: $showAboutFaculty, isEditView: $showEditFaculty, isUpdateListFaculty: $isUpdateFaculty, faculty: $faculty, writeModel: writeModel)
         }
-        .sheet(isPresented: $showDeleteFaculty)
+        .sheet(isPresented: $showDeleteDepartment)
         {
-            AcceptDeleteRowFaculty(faculty: $faculty, isShowSelfView: $showDeleteFaculty, isUpdateListFaculty: $isUpdateFaculty, writeModel: writeModel)
+            AcceptDeleteRowDepartment(departament: $department, isShowSelfView: $showDeleteDepartment, isUpdateListDepartment: $isUpdateDeparment, writeModel: writeModel)
         }
     }// body
 }

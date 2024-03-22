@@ -73,7 +73,15 @@ struct FacultyList: Identifiable, Hashable
     var id = UUID()
     var name: String
     var faculty: [Faculty]
-}// struct EducationalProgramList: Identifiable, Hashable
+}// struct FacultyList: Identifiable, Hashable
+
+
+struct DepartmentList: Identifiable, Hashable
+{
+    var id = UUID()
+    var name: String
+    var deparment: [Department]
+}// struct DepartmentList: Identifiable, Hashable
 
 
 
@@ -84,11 +92,11 @@ class ReadWriteModel: ObservableObject
     @Published var specializationList:          [SpecializationList] = []
     @Published var specialityList:              [SpecialityList] = []
     @Published var educationalProgramList:      [EducationalProgramList] = []
-
-    
     @Published var facultyList:                 [FacultyList] = []
 
     
+    @Published var departmentList:              [DepartmentList] = []
+
     
     
     
@@ -177,7 +185,7 @@ class ReadWriteModel: ObservableObject
     {
         if facultyList.isEmpty
         {
-            await fetchFacultynData(updateCountRecod: false)
+            await fetchFacultyData(updateCountRecod: false)
         }
         
         var facultyListName: [String] = []
@@ -362,13 +370,82 @@ class ReadWriteModel: ObservableObject
         }
     }// func getGroupName() async -> [String]
     
-    
+    // MARK: - maybe delete
     func getGroupStudent(of nameStudent: String) async -> String
     {
         return "sd"
     }// func getGroupStudent(of nameStudent: String) async -> String
 
 
+    func fetchDepartment(updateCountRecod: Bool) async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
+            
+            let querySnapshot = try await db.collection("departments").getDocuments()
+
+            let groupedDepartments = Dictionary(grouping: querySnapshot.documents.map
+            { queryDocumentSnapshot in
+            
+                let data = queryDocumentSnapshot.data()
+
+                let id = data["id"] as? Int ?? -1
+                
+                if updateCountRecod
+                {
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
+                }
+                
+                let name = data["name"] as? String ?? ""
+                let description = data["description"] as? String ?? ""
+                let specialization = data["specialization"] as? String ?? ""
+                
+                let departmentLeader = data["departmentLeader"] as? String ?? ""
+                let viceLeader = data["viceLeader"] as? String ?? ""
+
+                let teacherList = data["teacherList"] as? [String] ?? []
+                let departmentOffice = data["departmentOffice"] as? String ?? ""
+
+                let creationYear = data["creationYear"] as? Int ?? 2000
+                
+                return Department(id: id, name: name, description: description ,specialization: specialization, departmentLeader: departmentLeader, viceLeader: viceLeader, teacherList: teacherList, departmentOffice: departmentOffice, creationYear: creationYear)
+            }, by: { $0.specialization })
+
+            self.departmentList = groupedDepartments.map
+            { name, department in
+                DepartmentList(name: name, deparment: department)
+            }
+
+            if updateCountRecod
+            {
+                self.countRecords = self.departmentList.flatMap { $0.deparment }.count
+            }
+
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Not anotteted error : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+    }// func fetchDepartment(updateCountRecod: Bool) async
+    
+    
     func fetchEducationalProgram(updateCountRecod: Bool) async
     {
         do
@@ -500,7 +577,7 @@ class ReadWriteModel: ObservableObject
     }// func fetchSpecialityData() async
     
     
-    func fetchFacultynData(updateCountRecod: Bool) async
+    func fetchFacultyData(updateCountRecod: Bool) async
     {
         do
         {
@@ -851,12 +928,9 @@ class ReadWriteModel: ObservableObject
 
             self.countRecords = self.groupList.flatMap { $0.groups }.count
 
-            DispatchQueue.main.async
+            withAnimation(Animation.easeOut(duration: 0.5))
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
-                {
-                    self.isLoadingFetchData = false
-                }
+                self.isLoadingFetchData = false
             }
         }
         catch
@@ -904,12 +978,7 @@ class ReadWriteModel: ObservableObject
 
     }// func updateSpeciality(id: Int, name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
 
-    
-    /*
-     func addNewFaculty(name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
-
-     */
-    
+        
     func updateFaculty(id: Int, name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
     {
         let object: [String: Any] = [
@@ -942,8 +1011,6 @@ class ReadWriteModel: ObservableObject
 
     }// func updateFaculty(id: Int, name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
 
-
-    
     
     func updateGroup(id: Int, name: String, curator: String, leaderGroup: String, department: String, educationProgram: String) async -> Bool
     {
@@ -1514,6 +1581,37 @@ class ReadWriteModel: ObservableObject
     }// func deleteSpecialization(withId specializationId: Int) async
 
     
+    func deleteDepartment(withId departmentId: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("departments").whereField("id", isEqualTo: departmentId).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete department : \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data : \(error.localizedDescription)")
+        }
+    }// func deleteDepartment(withId departmentId: Int) async
+    
+    
     func deleteFaculty(withId specializationId: Int) async
     {
         do
@@ -1543,7 +1641,6 @@ class ReadWriteModel: ObservableObject
             print("Error in get data: \(error.localizedDescription)")
         }
     }// func deleteFaculty(withId specializationId: Int) async
-
     
                                            
     func deleteGroup(withId groupId: Int) async
@@ -1599,6 +1696,17 @@ class ReadWriteModel: ObservableObject
                group.educationProgram.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(group: Group, searchString: String) -> Bool
     
+    
+    func matchesSearch(department: Department, searchString: String) -> Bool
+    {
+        return department.name.lowercased().contains(searchString.lowercased()) ||
+               department.departmentLeader.lowercased().contains(searchString.lowercased()) ||
+               department.description.lowercased().contains(searchString.lowercased()) ||
+               department.specialization.lowercased().contains(searchString.lowercased()) ||
+               department.teacherList.contains { $0.lowercased().contains(searchString.lowercased()) } ||
+               department.departmentOffice.lowercased().contains(searchString.lowercased())
+    }// func matchesSearch(department: Department, searchString: String) -> Bool
+
     
     func matchesSearch(faculty: Faculty, searchString: String) -> Bool
     {

@@ -73,8 +73,8 @@ struct Department: Identifiable, Sendable, Equatable, Hashable // cafedra
     var departmentLeader: String = ""
     var viceLeader: String = ""
     
-    var teacherList: [Teacher] = []
-    var facultyOffice: String = ""
+    var teacherList: [String] = []
+    var departmentOffice: String = ""
     
     var creationYear: Int = 2000
 }// struct Department: Identifiable

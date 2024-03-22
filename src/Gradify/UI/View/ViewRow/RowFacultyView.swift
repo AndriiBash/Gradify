@@ -80,7 +80,7 @@ struct RowFacultyView: View
                             {
                                 copyInBuffer(text: faculty.name)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати назву")
                             }
@@ -161,7 +161,7 @@ struct RowFacultyView: View
                         {
                             Spacer()
                             
-                            Text("Кафедри вісутні відсутні")
+                            Text("Кафедри відсутні")
                             
                             Spacer()
                         }// HStack with info about none deparments in faculty

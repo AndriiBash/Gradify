@@ -50,7 +50,7 @@ struct FacultyInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchFacultynData(updateCountRecod: true)
+                        await readModel.fetchFacultyData(updateCountRecod: true)
                     }
                     
                     withAnimation
@@ -127,7 +127,7 @@ struct FacultyInfoView: View
 
                         Task
                         {
-                            await readModel.fetchFacultynData(updateCountRecod: true)
+                            await readModel.fetchFacultyData(updateCountRecod: true)
                             searchString = oldSearchString
                         }
                     }
@@ -171,7 +171,7 @@ struct FacultyInfoView: View
 
                 Task
                 {
-                    await readModel.fetchFacultynData(updateCountRecod: true)
+                    await readModel.fetchFacultyData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 
