@@ -26,6 +26,6 @@ Adding new records to the database is done through the application's intuitive a
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/mainMenuView~dark.png">
-    <img src="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/mainMenuView.png" alt="Gradify main menu" height="500">
+    <img src="https://github.com/AndriiBash/Gradify/blob/main/.github/icons/mainMenuView.png" alt="Gradify main menu">
   </picture>
 </div>
