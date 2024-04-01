@@ -404,27 +404,13 @@ struct EditFacultyView: View
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
-                .help("Зберегти редаговану інформацію про спеціальність")
+                .help("Зберегти редаговану інформацію про факультет")
                 .keyboardShortcut(.defaultAction)
                 .padding(.leading, 12)
             }// HStack with button's for manipulate form
             .padding(.vertical, 6)
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }// main VStack
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
@@ -449,7 +435,7 @@ struct EditFacultyView: View
 
                 self.teacherList            = await writeModel.getTeacherList()
                 self.specializationList     = await writeModel.getSpecializationNameList()
-                self.departmentsList        = await writeModel.getDeprmentList()
+                self.departmentsList        = await writeModel.getDeprmentNameList(withOut: "")
             }
         }
         .onDisappear

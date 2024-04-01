@@ -31,6 +31,34 @@ struct TeacherInfoView: View
             BlurBehindWindow()
                 .ignoresSafeArea()
             
+            ScrollView
+            {
+                VStack(spacing: 0)
+                {
+                    ForEach(readModel.teacherList, id: \.self)
+                    { teacherList in
+                        TeachersListView(teacherList: $readModel.teacherList[readModel.teacherList.firstIndex(of: teacherList)!],
+                                         isExpandListForAll: $isExpandAllList,
+                                         isUpdateList: $statusSaveEdit,
+                                         searchString: $searchString,
+                                         writeModel: readModel)
+                    }// ForEach with list teacher
+                    .padding(.top, 4)
+                }// VStack with list teacher
+                .padding(.vertical)
+                .onAppear
+                {
+                    Task
+                    {
+                        await readModel.fetchTeacher(updateCountRecod: true)
+                    }
+                    
+                    withAnimation
+                    {
+                        readModel.teacherList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                    }
+                }
+            }// Main ScrollView
         }// main ZStack
         .navigationTitle("Викладачі")
         .navigationSubtitle(searchString.isEmpty ? "\(readModel.countRecords) викладачів" : "Знайдено \(countSearched) викладачів")
@@ -71,6 +99,93 @@ struct TeacherInfoView: View
         
             Spacer()
         }//.toolBar for main ZStack
+        .onChange(of: statusSave)
+        {
+            if statusSave
+            {
+                showStatusSave = true
+            }
+            else
+            {
+                showStatusSave = false
+            }
+        }
+        .sheet(isPresented: $isShowAddTeacherPanel)
+        {
+            //AddDepartmentView(isShowForm: $isShowAddDeprmentPanel, statusSave: $statusSave, writeModel: readModel)
+        }
+        .sheet(isPresented: $showStatusSave)
+        {
+            if statusSave
+            {
+                SuccessSaveView(isAnimated: $statusSave)
+                    .onAppear
+                    {
+                        oldSearchString = searchString
+                        searchString = ""
+
+                        Task
+                        {
+                            await readModel.fetchTeacher(updateCountRecod: true)
+                            searchString = oldSearchString
+                        }
+                    }
+            }
+            else
+            {
+                ErrorSaveView(isAnimated: $statusSave)
+            }
+        }
+        .onChange(of: isSotredList)
+        { _, _ in
+            withAnimation
+            {
+                readModel.teacherList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+            }
+        }
+        .onChange(of: searchString)
+        { oldValue,newValue in
+            countSearched = 0
+
+            if !searchString.isEmpty
+            {
+                for list in readModel.teacherList
+                {
+                    for teacher in list.teacher
+                    {
+                        if readModel.matchesSearch(teacher: teacher, searchString: searchString)
+                        {
+                            countSearched += 1
+                        }
+                    }
+                }
+            }
+        }// onChange(of: searchString)
+        .onChange(of: statusSaveEdit)
+        { _, newValue in
+            if statusSaveEdit
+            {
+                oldSearchString = searchString
+                searchString = ""
+
+                Task
+                {
+                    await readModel.fetchTeacher(updateCountRecod: true)
+                    searchString = oldSearchString
+                }
+                
+                statusSaveEdit = false
+            }
+        }
+        .overlay
+        {
+            if readModel.isLoadingFetchData
+            {
+                LoadingScreen()
+            }
+        }
+        
+        
     }
 }
 

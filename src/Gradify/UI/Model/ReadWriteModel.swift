@@ -84,6 +84,14 @@ struct DepartmentList: Identifiable, Hashable
 }// struct DepartmentList: Identifiable, Hashable
 
 
+struct TeacherList: Identifiable, Hashable
+{
+    var id = UUID()
+    var name: String
+    var teacher: [Teacher]
+}// struct DepartmentList: Identifiable, Hashable
+
+
 
 class ReadWriteModel: ObservableObject
 {
@@ -93,9 +101,10 @@ class ReadWriteModel: ObservableObject
     @Published var specialityList:              [SpecialityList] = []
     @Published var educationalProgramList:      [EducationalProgramList] = []
     @Published var facultyList:                 [FacultyList] = []
-
-    
     @Published var departmentList:              [DepartmentList] = []
+
+
+    @Published var teacherList:                 [TeacherList] = []
 
     
     
@@ -339,10 +348,28 @@ class ReadWriteModel: ObservableObject
     }// func getTeacherList() async -> [String]
 
     
-    func getDeprmentList() async -> [String]
+    func getDeprmentNameList(withOut: String) async -> [String]
     {
-        return ["department1", "department2", "department3"]
-    }// func getDeprmentList() async -> [String]
+        if departmentList.isEmpty
+        {
+            await fetchDepartment(updateCountRecod: false)
+        }
+        
+        var departmentListName: [String] = []
+        
+        for departmentList in departmentList
+        {
+            for department in departmentList.deparment
+            {
+                if department.name != withOut
+                {
+                    departmentListName.append(department.name)
+                }
+            }
+        }
+        
+        return departmentListName
+    }// func getDeprmentNameList(withOut: String) async -> [String]
     
     
     func getGroupNameList() async -> [String]
@@ -444,6 +471,91 @@ class ReadWriteModel: ObservableObject
             }
         }
     }// func fetchDepartment(updateCountRecod: Bool) async
+    
+    
+    func fetchTeacher(updateCountRecod: Bool) async
+    {
+        do
+        {
+            self.isLoadingFetchData = true
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
+            
+            let querySnapshot = try await db.collection("teachers").getDocuments()
+
+            let groupedTeachers = Dictionary(grouping: querySnapshot.documents.map
+                                             { queryDocumentSnapshot in
+                
+                let data = queryDocumentSnapshot.data()
+                
+                let id = data["id"] as? Int ?? -1
+                
+                if updateCountRecod
+                {
+                    if self.maxIdRecord <= id
+                    {
+                        self.maxIdRecord = id + 1
+                    }
+                }
+                
+                /*
+                 
+                 var staffCategory: [String] = []
+                 var subjectSpecialization: [String] = []
+                 
+                 var profilePhoto: String = "" // realese ONLY on diploma
+                 
+                 */
+                
+                let name = data["name"] as? String ?? ""
+                let lastName = data["lastName"] as? String ?? ""
+                let surname = data["surname"] as? String ?? ""
+                
+                let date: Date = dateFormatter.date(from: (data["dateBirth"] as? String) ?? "") ?? Date.from(year: 2000, month: 12, day: 12)!
+                
+                let contactNumber = data["contactNumber"] as? String ?? "+380 000 000 000"
+                let passportNumber = data["passportNumber"] as? String ?? ""
+                let residenceAddress = data["residenceAddress"] as? String ?? ""
+                
+                let category = data["category"] as? String ?? "Немає категорії"
+                let specialization = data["specializations"] as? [String] ?? []
+
+                //code for loading photo
+                
+                return Teacher(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, category: category, specialization: specialization)
+            }, by: { $0.category })
+
+            self.teacherList = groupedTeachers.map
+            { name, teachers in
+                TeacherList(name: name, teacher: teachers)
+            }
+
+            if updateCountRecod
+            {
+                self.countRecords = self.teacherList.flatMap { $0.teacher }.count
+            }
+
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
+            }
+        }
+        catch
+        {
+            DispatchQueue.main.async
+            {
+                print("Not anotteted error : \(error)")
+                self.isLoadingFetchData = false
+            }
+        }
+    }// func fetchTeacher(updateCountRecod: Bool) async
+
+    
+    
+    
     
     
     func fetchEducationalProgram(updateCountRecod: Bool) async
@@ -978,6 +1090,42 @@ class ReadWriteModel: ObservableObject
 
     }// func updateSpeciality(id: Int, name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
 
+    
+    func updateDepartment(id: Int, name: String, description: String, specialization: String, departmentLeader: String, viceLeader: String, teacherList: [String], departmentOffice: String, creationYear: Int) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": id,
+        "name": name,
+        "description": description,
+        "specialization": specialization,
+        "departmentLeader": departmentLeader,
+        "viceLeader" : viceLeader,
+        "teacherList": teacherList,
+        "departmentOffice": departmentOffice,
+        "creationYear": creationYear
+        ]
+
+        do
+        {
+            let snapshot = try await db.collection("departments").whereField("id", isEqualTo: id).getDocuments()
+            
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("departments").document(document.documentID).updateData(object)
+            return true
+        }
+        catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+
+    }// func updateDepartment(id: Int, name: String, description: String, specialization: String, departmentLeader: String, viceLeader: String, teacherList: [String], departmentOffice: String, creationYear: Int) async -> Bool
+    
         
     func updateFaculty(id: Int, name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
     {
@@ -1476,8 +1624,39 @@ class ReadWriteModel: ObservableObject
         {
             print("Error in get data: \(error.localizedDescription)")
         }
-    }// func deleteStudent(withId studentId: Int) async {
+    }// func deleteStudent(withId studentId: Int) async
       
+    
+    func deleteTeacher(withId teacherID: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("teachers").whereField("id", isEqualTo: teacherID).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete teacher: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteTeacher(withId teacherID: Int) async
+    
     
     func addNewFaculty(name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
     {
@@ -1501,6 +1680,33 @@ class ReadWriteModel: ObservableObject
             return false
         }
     }// func addNewFaculty(name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
+    
+    
+    func addNewDepartment(name: String, description: String, specialization: String, departmentLeader: String, viceLeader: String, teacherList: [String], departmentOffice: String, creationYear: Int) async -> Bool
+    {
+        let object: [String: Any] = [
+        "id": maxIdRecord,
+        "name": name,
+        "description": description,
+        "specialization": specialization,
+        "departmentLeader": departmentLeader,
+        "viceLeader" : viceLeader,
+        "teacherList": teacherList,
+        "departmentOffice": departmentOffice,
+        "creationYear": creationYear
+        ]
+        
+        do
+        {
+            try await db.collection("departments").addDocument(data: object)
+            self.maxIdRecord += 1
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }// func addNewDepartment(name: String, description: String, specialization: String, departmentLeader: String, viceLeader: String, teacherList: [String], departmentOffice: String, creationYear: Int) async -> Bool
     
     
     func addNewSpeciality(name: String, duration: String, tuitionCost: Int, specialization: String, branch: String, subjects: [String]) async -> Bool
@@ -1758,4 +1964,17 @@ class ReadWriteModel: ObservableObject
                String(grade.retakePossible).lowercased().contains(searchString.lowercased()) ||  // move to string for ==
                grade.comment.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(grade: Grade, searchString: String) -> Bool
+    
+    
+    func matchesSearch(teacher: Teacher, searchString: String) -> Bool
+    {
+        return teacher.lastName.lowercased().contains(searchString.lowercased()) ||
+               teacher.name.lowercased().contains(searchString.lowercased()) ||
+               teacher.surname.lowercased().contains(searchString.lowercased()) ||
+               teacher.contactNumber.lowercased().contains(searchString.lowercased()) ||
+               teacher.passportNumber.lowercased().contains(searchString.lowercased()) ||
+               teacher.residenceAddress.lowercased().contains(searchString.lowercased()) ||
+               teacher.category.lowercased().contains(searchString.lowercased()) ||
+               teacher.specialization.contains { $0.lowercased().contains(searchString.lowercased()) }
+    }// func matchesSearch(teacher: Teacher, searchString: String) -> Bool
 }

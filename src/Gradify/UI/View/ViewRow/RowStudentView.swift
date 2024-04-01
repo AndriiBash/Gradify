@@ -22,10 +22,10 @@ struct RowStudentView: View
     @State private var statusCopyString:        String  = "Скопіювати"
     @State private var maxWidthForButton:       CGFloat = .zero
 
-    @Binding var isShowView: Bool
-    @Binding var isEditView: Bool
+    @Binding var isShowView:                    Bool
+    @Binding var isEditView:                    Bool
     
-    var student: Student
+    var student:                                Student
     
     
     var body: some View
@@ -347,9 +347,6 @@ struct RowStudentView: View
                 label:
                 {
                     Image(systemName: "square.and.pencil")
-                        //.resizable()
-                        //.aspectRatio(contentMode: .fit)
-                        //.frame(width: 20, height: 20)
                 }// button for edit row
                 .padding(.trailing, 12)
                 .help("Редагувати запис")

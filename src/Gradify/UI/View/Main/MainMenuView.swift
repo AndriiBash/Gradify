@@ -89,7 +89,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Кафедра!", systemImage: "globe.desk")
+                            Label("Кафедра", systemImage: "globe.desk")
                         }// NavigationLink with chair's
 
                         NavigationLink

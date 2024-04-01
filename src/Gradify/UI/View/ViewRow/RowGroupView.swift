@@ -19,10 +19,10 @@ struct RowGroupView: View
     @State private var statusCopyString:            String  = "Скопіювати"
     @State private var maxWidthForButton:           CGFloat = .zero
 
-    @Binding var isShowView: Bool
-    @Binding var isEditView: Bool
+    @Binding var isShowView:                        Bool
+    @Binding var isEditView:                        Bool
     
-    var group: Group
+    var group:                                      Group
     
     init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, group: Group)
     {

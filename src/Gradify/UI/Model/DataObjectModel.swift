@@ -54,8 +54,8 @@ struct Teacher: Identifiable, Sendable, Equatable, Hashable
     var passportNumber: String = ""
     var residenceAddress: String = ""
     
-    var staffCategory: [String] = []
-    var subjectSpecialization: [String] = []
+    var category: String = ""
+    var specialization: [String] = []
     
     var profilePhoto: String = "" // realese ONLY on diploma
 }// struct Teacher: Identifiable

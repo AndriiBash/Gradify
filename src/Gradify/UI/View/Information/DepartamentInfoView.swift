@@ -112,7 +112,7 @@ struct DepartamentInfoView: View
         }
         .sheet(isPresented: $isShowAddDeprmentPanel)
         {
-            //AddFacultyView(isShowForm: $isShowAddFacultyPanel, statusSave: $statusSave, writeModel: readModel)
+            AddDepartmentView(isShowForm: $isShowAddDeprmentPanel, statusSave: $statusSave, writeModel: readModel)
         }
         .sheet(isPresented: $showStatusSave)
         {
@@ -183,7 +183,7 @@ struct DepartamentInfoView: View
             {
                 LoadingScreen()
             }
-        }// onChange(of: statusSaveEdit)
+        }
 
     }
 }

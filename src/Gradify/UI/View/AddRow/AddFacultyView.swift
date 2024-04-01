@@ -65,7 +65,7 @@ struct AddFacultyView: View
                                         .foregroundColor(Color.gray)
                                         .padding(.horizontal, 12)
                                 }
-                            })// textField for name specialty
+                            })// textField for name faculty
                     
                     Picker("Декан", selection: $dean)
                     {
@@ -297,6 +297,7 @@ struct AddFacultyView: View
                 {
                     withAnimation(Animation.easeIn(duration: 0.35))
                     {
+                        isWrongIdName = false
                         isWrongName = false
                         isWrongDean = false
                         isWrongDescription = false
@@ -398,7 +399,7 @@ struct AddFacultyView: View
             {
                 self.teacherList            = await writeModel.getTeacherList()
                 self.specializationList     = await writeModel.getSpecializationNameList()
-                self.departmentsList        = await writeModel.getDeprmentList()
+                self.departmentsList        = await writeModel.getDeprmentNameList(withOut: "")
             }
         }
         .onDisappear

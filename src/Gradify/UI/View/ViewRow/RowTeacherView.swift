@@ -1,42 +1,41 @@
 //
-//  RowDepartmentView.swift
+//  RowTeacherView.swift
 //  Gradify
 //
-//  Created by Андрiй on 22.03.2024.
+//  Created by Андрiй on 01.04.2024.
 //
 
 import SwiftUI
 
-struct RowDepartmentView: View
+struct RowTeacherView: View
 {
-    @State private var hoverOnName:                 Bool = false
-    @State private var hoverOnDescription:          Bool = false
+    @State private var hoverOnName:             Bool = false
+    @State private var hoverOnLastName:         Bool = false
+    @State private var hoverOnSurname:          Bool = false
+    @State private var hoverOnContactNumber:    Bool = false
+    @State private var hoverOnPassportNumber:   Bool = false
+    @State private var hoverOnResidenceAddress: Bool = false
+    @State private var hoverOnCategory:         Bool = false
+    @State private var hoverOnBirthDay:         Bool = false
     
-    @State private var hoverOnSpecialiazation:      Bool = false
-    @State private var hoverOnDepartmentLeader:     Bool = false
-    @State private var hoverOnViceLeader:           Bool = false
+    @State private var hoverOnSpecialization:   [Bool] = []
 
-    @State private var hoverOnTeacher:              [Bool] = []
-    @State private var hoverOnDepartemntOffice:     Bool = false
-    @State private var hoverOnCreationYear:         Bool = false
+    @State private var statusCopyString:        String  = "Скопіювати"
+    @State private var maxWidthForButton:       CGFloat = .zero
+
+    @Binding var isShowView:                    Bool
+    @Binding var isEditView:                    Bool
     
-    @State private var statusCopyString:            String  = "Скопіювати"
-    @State private var maxWidthForButton:           CGFloat = .zero
-    
-    @Binding var isShowView:                        Bool
-    @Binding var isEditView:                        Bool
-    
-    var department:                                 Department
-    
-    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, department: Department)
+    var teacher:                                Teacher
+
+    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, teacher: Teacher)
     {
         self._isShowView = isShowView
         self._isEditView = isEditView
-        self.department = department
+        self.teacher = teacher
         
-        self._hoverOnTeacher = State(initialValue: Array(repeating: false, count: department.teacherList.count))
+        self._hoverOnSpecialization = State(initialValue: Array(repeating: false, count: teacher.specialization.count))
     }
-
     
     var body: some View
     {
@@ -46,7 +45,7 @@ struct RowDepartmentView: View
             {
                 Spacer()
                 
-                Text("[\(department.id)] \(department.name)")
+                Text("[\(teacher.id)] \(teacher.lastName) \(teacher.name) \(teacher.surname)")
                     .font(.system(size: 13))
                     .fontWeight(.bold)
                 
@@ -60,11 +59,11 @@ struct RowDepartmentView: View
                 {
                     HStack
                     {
-                        Text("Назва")
+                        Text("Ім'я")
                         
                         Spacer()
                         
-                        Text("\(department.name)")
+                        Text("\(teacher.name)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
@@ -80,269 +79,300 @@ struct RowDepartmentView: View
                         {
                             Button
                             {
-                                copyInBuffer(text: department.name)
+                                copyInBuffer(text: teacher.name)
                             }
-                        label:
+                            label:
                             {
-                                Text("Скопіювати назву")
+                                Text("Скопіювати ім'я")
                             }
                         }
-                    }// HStack with name department
+                    }// HStack with name teacher
                     
                     HStack
                     {
-                        Text("Спеціалізація")
+                        Text("Прізвище")
                         
                         Spacer()
                         
-                        Text("\(department.specialization)")
+                        Text("\(teacher.lastName)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnSpecialiazation ? Color.gray.opacity(0.2) : Color.clear)
+                                    .fill(hoverOnLastName ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                         { isHovered in
-                            hoverOnSpecialiazation.toggle()
+                            hoverOnLastName.toggle()
                         }
                         .contextMenu
                         {
                             Button
                             {
-                                copyInBuffer(text: department.specialization)
+                                copyInBuffer(text: teacher.lastName)
                             }
-                        label:
+                            label:
                             {
-                                Text("Скопіювати спеціалізацію")
+                                Text("Скопіювати прізвище")
                             }
                         }
-                    }// HStack with specialization department
+                    }// Hstack with lastname teacher
                     
                     HStack
                     {
-                        Text("Завідувач кафедри")
+                        Text("По батькові")
                         
                         Spacer()
                         
-                        Text("\(department.departmentLeader)")
+                        Text("\(teacher.surname)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnDepartmentLeader ? Color.gray.opacity(0.2) : Color.clear)
+                                    .fill(hoverOnSurname ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
-                        { isHovered in
-                            hoverOnDepartmentLeader.toggle()
-                        }
-                        .contextMenu
-                        {
-                            Button
-                            {
-                                copyInBuffer(text: department.departmentLeader)
+                            { isHovered in
+                                hoverOnSurname.toggle()
                             }
-                        label:
+                            .contextMenu
                             {
-                                Text("Скопіювати ПІБ завідувача кафедри")
+                                Button
+                                {
+                                    copyInBuffer(text: teacher.surname)
+                                }
+                                label:
+                                {
+                                    Text("Скопіювати по батькові")
+                                }
                             }
-                        }
-                    }// HStack with departmentLeader department
-                    
-                    HStack
-                    {
-                        Text("Зам.завідувача кафедри")
-                        
-                        Spacer()
-                        
-                        Text("\(department.viceLeader)")
-                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
-                            .padding(.horizontal)
-                            .padding(.vertical, 1)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnViceLeader ? Color.gray.opacity(0.2) : Color.clear)
-                            )
-                            .onHover
-                        { isHovered in
-                            hoverOnViceLeader.toggle()
-                        }
-                        .contextMenu
-                        {
-                            Button
-                            {
-                                copyInBuffer(text: department.viceLeader)
-                            }
-                        label:
-                            {
-                                Text("Скопіювати ПІБ зам.завідувача кафедри")
-                            }
-                        }
-                    }// HStack with viceLeader department
-                    
-                    HStack
-                    {
-                        Text("Аудиторія кафедри")
-                        
-                        Spacer()
-                        
-                        Text("\(department.departmentOffice)")
-                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
-                            .padding(.horizontal)
-                            .padding(.vertical, 1)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnDepartemntOffice ? Color.gray.opacity(0.2) : Color.clear)
-                            )
-                            .onHover
-                        { isHovered in
-                            hoverOnDepartemntOffice.toggle()
-                        }
-                        .contextMenu
-                        {
-                            Button
-                            {
-                                copyInBuffer(text: department.departmentOffice)
-                            }
-                        label:
-                            {
-                                Text("Скопіювати назву аудиторію кафедри")
-                            }
-                        }
-                    }// HStack with departmentOffice department
-                    
-                    HStack
-                    {
-                        Text("Рік заснування")
-                        
-                        Spacer()
-                        
-                        Text("\(department.creationYear) рік")
-                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
-                            .padding(.horizontal)
-                            .padding(.vertical, 1)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnCreationYear ? Color.gray.opacity(0.2) : Color.clear)
-                            )
-                            .onHover
-                        { isHovered in
-                            hoverOnCreationYear.toggle()
-                        }
-                        .contextMenu
-                        {
-                            Button
-                            {
-                                copyInBuffer(text: String(department.creationYear) + " рік")
-                            }
-                        label:
-                            {
-                                Text("Скопіювати рік засунвання кафедри")
-                            }
-                        }
-                    }// HStack with creationYear department
-                }// main section
+                    }// Hstack with surname teacher
+                }// main Section
                 
-                Section(header: Text("Опис"))
+                Section(header: Text("Додаткова інформація"))
                 {
                     HStack
                     {
-                        Text("Опис кафери")
+                        Text("Дата народження")
                         
                         Spacer()
                         
-                        Text("\(department.description) рік")
+                        Text("\(dateFormatter.string(from: teacher.dateBirth))")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
-                                    .fill(hoverOnDescription ? Color.gray.opacity(0.2) : Color.clear)
+                                    .fill(hoverOnBirthDay ? Color.gray.opacity(0.2) : Color.clear)
                             )
                             .onHover
                         { isHovered in
-                            hoverOnDescription.toggle()
+                            hoverOnBirthDay.toggle()
                         }
                         .contextMenu
                         {
                             Button
                             {
-                                copyInBuffer(text: department.description)
+                                copyInBuffer(text: dateFormatter.string(from: teacher.dateBirth))
+                            }
+                            label:
+                            {
+                                Text("Скопіювати дату народження")
+                            }
+                        }
+                    }// Hstack with birthday teacher
+                    
+                    HStack
+                    {
+                        Text("Номер телефону")
+                        
+                        Spacer()
+                        
+                        Text("\(teacher.contactNumber)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnContactNumber ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                        { isHovered in
+                            hoverOnContactNumber.toggle()
+                        }
+                        .contextMenu
+                        {
+                            Button
+                            {
+                                copyInBuffer(text: teacher.contactNumber)
                             }
                         label:
                             {
-                                Text("Скопіювати опис кафедри")
+                                Text("Скопіювати номер телефону")
                             }
                         }
-                    }// HStack with description department
-                }// Section with detail about department
+                    }// Hstack with contact number teacher
+                    
+                    HStack
+                    {
+                        Text("Номер паспорту")
+                        
+                        Spacer()
+                        
+                        Text("\(teacher.passportNumber)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnPassportNumber ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                            { isHovered in
+                                hoverOnPassportNumber.toggle()
+                            }
+                            .contextMenu
+                            {
+                                Button
+                                {
+                                    copyInBuffer(text: teacher.passportNumber)
+                                }
+                                label:
+                                {
+                                    Text("Скопіювати номер паспорту")
+                                }
+                            }
+                    }// Hstack with number passport teacher
+                    
+                    HStack
+                    {
+                        Text("Адреса проживання")
+                        
+                        Spacer()
+                        
+                        Text("\(teacher.residenceAddress)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnResidenceAddress ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                        { isHovered in
+                            hoverOnResidenceAddress.toggle()
+                        }
+                        .contextMenu
+                        {
+                            Button
+                            {
+                                copyInBuffer(text: teacher.residenceAddress)
+                            }
+                            label:
+                            {
+                                Text("Скопіювати адресу проживання")
+                            }
+                        }
+                    }// Hstack with residence address teacher
+                    
+                    HStack
+                    {
+                        Text("Категорія")
+                        
+                        Spacer()
+                        
+                        Text("\(teacher.category)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnCategory ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                        { isHovered in
+                            hoverOnCategory.toggle()
+                        }
+                        .contextMenu
+                        {
+                            Button
+                            {
+                                copyInBuffer(text: teacher.category)
+                            }
+                            label:
+                            {
+                                Text("Скопіювати категорію")
+                            }
+                        }
+                    }// Hstack with residence category teacher
+                }// Detail section
                 
-                Section(header: Text("Список викладачів кафедри"))
+                Section(header: Text("Спеціалізація"))
                 {
-                    if department.teacherList.isEmpty
+                    if teacher.specialization.isEmpty
                     {
                         HStack
                         {
                             Spacer()
                             
-                            Text("Викладачі відсутні")
+                            Text("Спеціалізації відсутні")
                             
                             Spacer()
-                        }// HStack with info about none teacher in department
+                        }// HStack with info about nil specialization teacher
                     }
                     else
                     {
-                        ForEach(department.teacherList.indices, id: \.self)
+                        ForEach(teacher.specialization.indices, id: \.self)
                         { index in
                             HStack
                             {
-                                Text("Викладач №\(index + 1)")
+                                Text("Спеціалізація №\(index + 1)")
                                 
                                 Spacer()
                                 
-                                Text("\(department.teacherList[index])")
+                                Text("\(teacher.specialization[index])")
                                     .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                                     .padding(.horizontal)
                                     .padding(.vertical, 1)
                                     .background(
                                         RoundedRectangle(cornerRadius: 4)
-                                            .fill(hoverOnTeacher.indices.contains(index) && hoverOnTeacher[index] ? Color.gray.opacity(0.2) : Color.clear)
+                                            .fill(hoverOnSpecialization.indices.contains(index) && hoverOnSpecialization[index] ? Color.gray.opacity(0.2) : Color.clear)
                                     )
                                     .onHover
-                                { isHovered in
-                                    if isHovered
-                                    {
-                                        if !hoverOnTeacher.indices.contains(index)
+                                    { isHovered in
+                                        if isHovered
                                         {
-                                            hoverOnTeacher.append(false)
+                                            if !hoverOnSpecialization.indices.contains(index)
+                                            {
+                                                hoverOnSpecialization.append(false)
+                                            }
+                                        }
+                                        hoverOnSpecialization[index].toggle()
+                                    }
+                                    .contextMenu
+                                    {
+                                        Button
+                                        {
+                                            copyInBuffer(text: teacher.specialization[index])
+                                        }
+                                        label:
+                                        {
+                                            Text("Скопіювати назву спеціалізації")
                                         }
                                     }
-                                    hoverOnTeacher[index].toggle()
-                                }
-                                .contextMenu
-                                {
-                                    Button
-                                    {
-                                        copyInBuffer(text: department.teacherList[index])
-                                    }
-                                    label:
-                                    {
-                                        Text("Скопіювати ПІБ викладача")
-                                    }
-                                }
-                            }// ForEach with teacher in departments
+                            }// ForEach with teacher specialization
                         }
                     }
-                }// Section with teacher list
-            }// main form
+                }// Section with specialization
+            }// Form
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
-            
+
             Spacer()
             Divider()
-
+            
             HStack
             {
                 Button
@@ -360,35 +390,36 @@ struct RowDepartmentView: View
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }
-                
+
                 Spacer()
-                
+                                
                 Button
                 {
                     var allInfo = """
-                            [\(department.id)] \(department.name)
+                            [\(teacher.id)] \(teacher.lastName) \(teacher.name) \(teacher.surname)
                             ===========================================
-                            Назва: \(department.name)
-                            Спеціалізація: \(department.specialization)
-                            Завідувач кафедри: \(department.departmentLeader)
-                            Зам завідувач кафедри: \(department.viceLeader)
-                            Аудиторія кафедри: \(department.departmentOffice)
-                            Рік створення: \(department.creationYear)
-                            ===========================================
-                            Опис: \(department.description)
+                            Ім'я: \(teacher.name)
+                            Прізвище: \(teacher.lastName)
+                            По батькові: \(teacher.surname)
+                            Дата народження: \(dateFormatter.string(from: teacher.dateBirth))
+                            Номер телефону: \(teacher.contactNumber)
+                            Номер паспорту: \(teacher.passportNumber)
+                            Адреса проживання: \(teacher.residenceAddress)
+                            Категорія: \(teacher.category)
                             ===========================================\n
                             """
                     
-                    if !department.teacherList.isEmpty
+                    if !teacher.specialization.isEmpty
                     {
-                        for index in department.teacherList.indices
+                        for index in teacher.specialization.indices
                         {
-                            allInfo += "Викладач №\(index + 1) :" + "\(department.teacherList[index])\n"
+                            allInfo += "Спеціалізація №\(index + 1) :" + "\(teacher.specialization[index])\n"
                         }
                         
                         allInfo += "===========================================\n"
                     }
-                    
+
+                                        
                     copyInBuffer(text: allInfo)
                     statusCopyString = "Скопійовано!"
                 }
@@ -401,12 +432,11 @@ struct RowDepartmentView: View
                 { isHovered in
                     changePointingHandCursor(shouldChangeCursor: isHovered)
                 }// change cursor when hover
-                .help("Скопіювати усю інформацію кафедри")
+                .help("Скопіювати усю інформацію викладача")
                 .padding(.horizontal, 12)
                 
                 Button
                 {
-                    isShowView = false
                     isShowView = false
                 }
                 label:
@@ -423,6 +453,7 @@ struct RowDepartmentView: View
             .padding(.vertical, 6)
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
+            
         }// main VStack
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 400, height: 565)
@@ -430,8 +461,8 @@ struct RowDepartmentView: View
         {
             let buttonWidth = getWidthFromString(for: "Скопіювати")
             let doneButtonWidth = getWidthFromString(for: "Готово")
-            
+
             maxWidthForButton = max(buttonWidth, doneButtonWidth)
         }
-    }// body
+    }
 }

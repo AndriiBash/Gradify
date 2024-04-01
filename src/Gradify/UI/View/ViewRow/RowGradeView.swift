@@ -18,13 +18,13 @@ struct RowGradeView: View
     @State private var hoverOnRetakePossible:       Bool = false
     @State private var hoverOnComment:              Bool = false
     
-    @State private var statusCopyString:        String  = "Скопіювати"
-    @State private var maxWidthForButton:       CGFloat = .zero
+    @State private var statusCopyString:            String  = "Скопіювати"
+    @State private var maxWidthForButton:           CGFloat = .zero
 
-    @Binding var isShowView: Bool
-    @Binding var isEditView: Bool
+    @Binding var isShowView:                        Bool
+    @Binding var isEditView:                        Bool
     
-    var grade: Grade
+    var grade:                                      Grade
     
     init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, grade: Grade)
     {

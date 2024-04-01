@@ -17,6 +17,8 @@
 		B5216FD92BAD8DFF00D8151C /* DepartmentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5216FD82BAD8DFF00D8151C /* DepartmentListView.swift */; };
 		B5216FDB2BAD8FA200D8151C /* DepartmentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5216FDA2BAD8FA200D8151C /* DepartmentCardViewModel.swift */; };
 		B5216FDD2BAD961200D8151C /* RowDepartmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5216FDC2BAD961200D8151C /* RowDepartmentView.swift */; };
+		B5216FDF2BAECF5F00D8151C /* AddDepartmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5216FDE2BAECF5F00D8151C /* AddDepartmentView.swift */; };
+		B5216FE12BAEE3C400D8151C /* EditDepartmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5216FE02BAEE3C400D8151C /* EditDepartmentView.swift */; };
 		B52D0A162BA31C5600554677 /* EditGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A152BA31C5600554677 /* EditGradeView.swift */; };
 		B52D0A182BA31C6C00554677 /* AddGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A172BA31C6C00554677 /* AddGradeView.swift */; };
 		B52D0A1A2BA364EA00554677 /* SpecializationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D0A192BA364EA00554677 /* SpecializationListView.swift */; };
@@ -104,6 +106,9 @@
 		B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3352B48462500B8C73D /* SettingView.swift */; };
 		B5EEF33A2B4D609800B8C73D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5EEF33C2B4D609800B8C73D /* Localizable.strings */; };
 		B5F3412F2B4D956300AC5751 /* AcceptChangeLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F3412E2B4D956300AC5751 /* AcceptChangeLanguageView.swift */; };
+		B5F661D02BBAB0FA00D1717C /* TeachersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661CF2BBAB0FA00D1717C /* TeachersListView.swift */; };
+		B5F661D22BBAB9B500D1717C /* TeacherCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661D12BBAB9B500D1717C /* TeacherCardViewModel.swift */; };
+		B5F661D42BBAD6F800D1717C /* RowTeacherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661D32BBAD6F800D1717C /* RowTeacherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +123,8 @@
 		B5216FD82BAD8DFF00D8151C /* DepartmentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentListView.swift; sourceTree = "<group>"; };
 		B5216FDA2BAD8FA200D8151C /* DepartmentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentCardViewModel.swift; sourceTree = "<group>"; };
 		B5216FDC2BAD961200D8151C /* RowDepartmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowDepartmentView.swift; sourceTree = "<group>"; };
+		B5216FDE2BAECF5F00D8151C /* AddDepartmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDepartmentView.swift; sourceTree = "<group>"; };
+		B5216FE02BAEE3C400D8151C /* EditDepartmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDepartmentView.swift; sourceTree = "<group>"; };
 		B52D0A152BA31C5600554677 /* EditGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradeView.swift; sourceTree = "<group>"; };
 		B52D0A172BA31C6C00554677 /* AddGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGradeView.swift; sourceTree = "<group>"; };
 		B52D0A192BA364EA00554677 /* SpecializationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationListView.swift; sourceTree = "<group>"; };
@@ -205,6 +212,9 @@
 		B5EEF3352B48462500B8C73D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		B5EEF33B2B4D609800B8C73D /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B5F3412E2B4D956300AC5751 /* AcceptChangeLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptChangeLanguageView.swift; sourceTree = "<group>"; };
+		B5F661CF2BBAB0FA00D1717C /* TeachersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersListView.swift; sourceTree = "<group>"; };
+		B5F661D12BBAB9B500D1717C /* TeacherCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCardViewModel.swift; sourceTree = "<group>"; };
+		B5F661D32BBAD6F800D1717C /* RowTeacherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowTeacherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,6 +495,7 @@
 				B52D0A252BA5E54D00554677 /* SpecialityCardViewModel.swift */,
 				B5216FD02BAB113400D8151C /* FacultyCardViewModel.swift */,
 				B5216FDA2BAD8FA200D8151C /* DepartmentCardViewModel.swift */,
+				B5F661D12BBAB9B500D1717C /* TeacherCardViewModel.swift */,
 				B5480A162BA1EFF3007D6784 /* GradeCardViewModel.swift */,
 				B5979CEE2B9F46C50040142D /* GroupCardViewModel.swift */,
 				B52D0A2F2BA87FAE00554677 /* EducationalProgramCardViewModel.swift */,
@@ -501,6 +512,7 @@
 				B5979CEA2B9F3D400040142D /* GroupListView.swift */,
 				B5216FCE2BAB0E3100D8151C /* FacultyListView.swift */,
 				B5216FD82BAD8DFF00D8151C /* DepartmentListView.swift */,
+				B5F661CF2BBAB0FA00D1717C /* TeachersListView.swift */,
 				B5480A142BA1E5D3007D6784 /* GradeListView.swift */,
 				B52D0A2D2BA87B4F00554677 /* EducationalProgramListView.swift */,
 			);
@@ -514,6 +526,7 @@
 				B52D0A212BA375BC00554677 /* AddSpecializationView.swift */,
 				B52D0A292BA5ECFF00554677 /* AddSpecialityView.swift */,
 				B5216FD42BAB26A100D8151C /* AddFacultyView.swift */,
+				B5216FDE2BAECF5F00D8151C /* AddDepartmentView.swift */,
 				B52D0A172BA31C6C00554677 /* AddGradeView.swift */,
 				B5979D052BA0BCE40040142D /* AddGroupView.swift */,
 				B52D0A332BA88F9400554677 /* AddEducationProgramView.swift */,
@@ -533,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				B5CC2B1F2B7136E9001E86BD /* EditStudentView.swift */,
+				B5216FE02BAEE3C400D8151C /* EditDepartmentView.swift */,
 				B52D0A1F2BA370FD00554677 /* EditSpecializationView.swift */,
 				B52D0A2B2BA70B3F00554677 /* EditSpecialityView.swift */,
 				B5216FD62BAB499E00D8151C /* EditFacultyView.swift */,
@@ -550,6 +564,7 @@
 				B52D0A1D2BA36CDA00554677 /* RowSpecializationView.swift */,
 				B52D0A272BA5E79500554677 /* RowSpecialityView.swift */,
 				B5216FDC2BAD961200D8151C /* RowDepartmentView.swift */,
+				B5F661D32BBAD6F800D1717C /* RowTeacherView.swift */,
 				B5216FD22BAB149B00D8151C /* RowFacultyView.swift */,
 				B5480A182BA2016F007D6784 /* RowGradeView.swift */,
 				B5979CEC2B9F46110040142D /* RowGroupView.swift */,
@@ -659,6 +674,7 @@
 				B5216FCF2BAB0E3100D8151C /* FacultyListView.swift in Sources */,
 				B5216FD12BAB113500D8151C /* FacultyCardViewModel.swift in Sources */,
 				B5CC2B262B714534001E86BD /* AppKitFunc.swift in Sources */,
+				B5F661D22BBAB9B500D1717C /* TeacherCardViewModel.swift in Sources */,
 				B5CC2B132B6EA13F001E86BD /* DateExtension.swift in Sources */,
 				B5216FD32BAB149B00D8151C /* RowFacultyView.swift in Sources */,
 				B5979CE32B9EF72E0040142D /* FacultyInfoView.swift in Sources */,
@@ -691,6 +707,7 @@
 				B5A5C8B42B6BD331008F03D5 /* PressedInfoButtonStyle.swift in Sources */,
 				B5CC2B152B6FBF0B001E86BD /* AddStudentView.swift in Sources */,
 				B52D0A1C2BA36AA000554677 /* SpecializationCardViewModel.swift in Sources */,
+				B5F661D42BBAD6F800D1717C /* RowTeacherView.swift in Sources */,
 				B5B55EE72B30CEC0002E0F4D /* PopOverView.swift in Sources */,
 				B5EEF3362B48462500B8C73D /* SettingView.swift in Sources */,
 				B5216FDD2BAD961200D8151C /* RowDepartmentView.swift in Sources */,
@@ -702,6 +719,7 @@
 				B5979CEB2B9F3D410040142D /* GroupListView.swift in Sources */,
 				B5A5C8B82B6BD8AC008F03D5 /* StudentCardViewModel.swift in Sources */,
 				B52D0A202BA370FD00554677 /* EditSpecializationView.swift in Sources */,
+				B5216FE12BAEE3C400D8151C /* EditDepartmentView.swift in Sources */,
 				B5979CFA2B9F51230040142D /* AcceptDeleteRowGrades.swift in Sources */,
 				B5B55EDF2B30CE9F002E0F4D /* LoginView.swift in Sources */,
 				B5979CE12B9EF7220040142D /* DepartamentInfoView.swift in Sources */,
@@ -722,10 +740,12 @@
 				B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */,
 				B5979CE72B9EF7440040142D /* SpecialtyInfoView.swift in Sources */,
 				B5480A152BA1E5D3007D6784 /* GradeListView.swift in Sources */,
+				B5F661D02BBAB0FA00D1717C /* TeachersListView.swift in Sources */,
 				B5979CF82B9F51140040142D /* AcceptDeleteRowSubject.swift in Sources */,
 				B5979CDB2B9EF6E30040142D /* GradeInfoView.swift in Sources */,
 				B5A6F37F2B52CD8E0044DFF8 /* ReadWriteModel.swift in Sources */,
 				B5480A192BA2016F007D6784 /* RowGradeView.swift in Sources */,
+				B5216FDF2BAECF5F00D8151C /* AddDepartmentView.swift in Sources */,
 				B5979CD92B9EF6420040142D /* GroupInfoView.swift in Sources */,
 				B5EEF3342B4845C800B8C73D /* RespectView.swift in Sources */,
 				B5A5C8B22B6BD30A008F03D5 /* PressedDeleteButtonStyle.swift in Sources */,

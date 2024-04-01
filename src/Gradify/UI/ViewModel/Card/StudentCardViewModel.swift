@@ -75,8 +75,6 @@ struct StudentCardViewModel: View
                     
                     Spacer()
                 }// Hstack with residence address
-                
-                
             }// VStack with another info
             .padding(.horizontal, 6)
             .padding(.top, 4)

@@ -224,7 +224,7 @@ struct AddGroupView: View
             {
                 self.curatorList            = await writeModel.getTeacherList()
                 self.studentList            = await writeModel.getStudentList(groupName: "Без групи")
-                self.departmentList         = await writeModel.getDeprmentList()
+                self.departmentList         = await writeModel.getDeprmentNameList(withOut: "")
                 self.educationProgramList   = await writeModel.getEducatProgramNameList(withOut: "")
             }
         }

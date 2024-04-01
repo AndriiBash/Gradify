@@ -251,7 +251,7 @@ struct EditGroupView: View
             {
                 self.curatorList            = await writeModel.getTeacherList()
                 self.studentList            = await writeModel.getStudentList(groupName: self.group.name)
-                self.departmentList         = await writeModel.getDeprmentList()
+                self.departmentList         = await writeModel.getDeprmentNameList(withOut: "")
                 self.educationProgramList   = await writeModel.getEducatProgramNameList(withOut: "")
             
                 self.editedName = group.name
