@@ -1,43 +1,47 @@
 //
-//  EditStudentView.swift
+//  EditTeacherView.swift
 //  Gradify
 //
-//  Created by Андрiй on 05.02.2024.
+//  Created by Андрiй on 02.04.2024.
 //
 
 import SwiftUI
 
-struct EditStudentView: View
+struct EditTeacherView: View
 {
-    @State private var editedName:                    String = ""
-    @State private var editedLastName:                String = ""
-    @State private var editedSurname:                 String = ""
-    @State private var editedBirthDayDate:            Date = Date()
-    @State private var editedContactNumber:           String = ""
-    @State private var editedPassportNumber:          String = ""
-    @State private var editedResidenceAddress:        String = ""
-    @State private var editedGroup:                   String = "Без групи"
-    @State private var editedEducationProgram:        String = "Немає програми"
+    @State private var editedName:                      String = ""
+    @State private var editedLastName:                  String = ""
+    @State private var editedSurname:                   String = ""
+    @State private var editedBirthDayDate:              Date = Date()
+    @State private var editedContactNumber:             String = ""
+    @State private var editedPassportNumber:            String = ""
+    @State private var editedResidenceAddress:          String = ""
+    @State private var editedCategory:                  String = "Без категорії"
+
+    @State private var editedSpecialization:            [String] = []
     
-    @State private var isWrongName:                   Bool = false
-    @State private var isWrongLastName:               Bool = false
-    @State private var isWrongSurname:                Bool = false
-    @State private var isWrongContactNumber:          Bool = false
-    @State private var isWrongPassportNumber:         Bool = false
-    @State private var isWrongResidenceAddress:       Bool = false
+    @State private var isWrongName:                     Bool = false
+    @State private var isWrongLastName:                 Bool = false
+    @State private var isWrongSurname:                  Bool = false
+    @State private var isWrongContactNumber:            Bool = false
+    @State private var isWrongPassportNumber:           Bool = false
+    @State private var isWrongResidenceAddress:         Bool = false
+    @State private var isWrongLastSpecialization:       Bool = false
 
-    @State private var statusSaveString:              String = "Зберегти"
-    @State private var groupList:                     [String] = []
-    @State private var educatProgramList:             [String] = []
+    @State private var isWrongSpecialization:           [Bool] = []
 
-    @State private var maxWidthForButton:             CGFloat = .zero
+    @State private var statusSaveString:                String = "Зберегти"
+    @State private var specializationList:          [String] = []
+    @State private var categoryList:                [String] = []
 
-    @Binding var isShowView:                          Bool
-    @Binding var isEditView:                          Bool
-    @Binding var isUpdateListStudent:                 Bool
-    @Binding var student:                             Student
+    @State private var maxWidthForButton:               CGFloat = .zero
+
+    @Binding var isShowView:                            Bool
+    @Binding var isEditView:                            Bool
+    @Binding var isUpdateListTeacher:                   Bool
+    @Binding var teacher:                               Teacher
     
-    @ObservedObject var writeModel:                   ReadWriteModel
+    @ObservedObject var writeModel:                     ReadWriteModel
 
     var body: some View
     {
@@ -53,7 +57,7 @@ struct EditStudentView: View
                 
                 Spacer()
             }// HStack title
-                
+            
             Form
             {
                 Section(header: Text("Головне"))
@@ -99,7 +103,7 @@ struct EditStudentView: View
                                         .padding(.horizontal, 12)
                                 }
                             })
-                }// Section with main info
+                }// main section
                 
                 Section(header: Text("Додаткова інформація"))
                 {
@@ -142,8 +146,7 @@ struct EditStudentView: View
                                 let filteredValue = newValue.filter { "0123456789".contains($0) }
                                 editedPassportNumber = String(filteredValue.prefix(8))
                             }
-                    
-                    
+
                     TextField("Адреса проживання", text: $editedResidenceAddress)
                         .foregroundColor(isWrongResidenceAddress ? Color.red : Color("MainTextForBlur"))
                         .overlay(
@@ -158,48 +161,112 @@ struct EditStudentView: View
                                 }
                             })
                     
-                    Picker("Навчальна програма", selection: $editedEducationProgram)
+                    Picker("Категорія", selection: $editedCategory)
                     {
-                        Text("Немає програми")
-                                .tag("Немає програми")
-                        
+                        Text("Без категорії")
+                                .tag("Без категорії")
+
                         Divider()
                         
-                        ForEach(educatProgramList, id: \.self)
+                        ForEach(categoryList, id: \.self)
                         {
                             Text($0)
                                 .tag($0)
                         }
-                    }// Picker for select educationProgram
-                    
-                    Picker("Група", selection: $editedGroup)
-                    {
-                        Text("Без групи")
-                                .tag("Без групи")
+                    }// Picker for select category
+                }// detail form
+                
+                Section(header: Text("Спеціалізація"))
+                {
+                    ForEach(editedSpecialization.indices, id: \.self)
+                    { index in
+                        HStack(alignment: .center)
+                        {
+                            Picker("Спеціалізація №\(index + 1)", selection: $editedSpecialization[index])
+                            {
+                                Text("Спеціалізацію не обрано")
+                                        .tag("Спеціалізацію не обрано")
 
-                        Divider()
-                        
-                        ForEach(groupList, id: \.self)
-                        { groupName in
-                            Text(groupName)
-                                .tag(groupName)
+                                Divider()
+                                
+                                ForEach(specializationList, id: \.self)
+                                { subject in
+                                    Text(subject)
+                                        .tag(subject)
+                                }
+                            }// Picker for select specialization
+                            .foregroundColor(isWrongSpecialization[index] ? Color.red : Color("PopUpTextColor"))
+                            
+                            Button
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.25))
+                                {
+                                    editedSpecialization.remove(at: index)
+                                    isWrongSpecialization.remove(at: index)
+                                }
+                            }
+                            label:
+                            {
+                                Image(systemName: "trash")
+                                    .aspectRatio(contentMode: .fit)
+                            }// Button for delete specialization
+                            .help("Видалити спеціалізацію")
                         }
-                    }// Picker for select group
-                }// Section with additional info student
-            }// Form with info and TextField
+                    }
+                    
+                    HStack
+                    {
+                        if isWrongLastSpecialization
+                        {
+                            Text("Оберіть попередній предмет!")
+                                .foregroundColor(Color.red)
+                        }
+                        
+                        Spacer()
+                        
+                        Button
+                        {
+                            if !editedSpecialization.contains("Спеціалізацію не обрано")
+                            {
+                                
+                                withAnimation(Animation.easeIn(duration: 0.25))
+                                {
+                                    isWrongLastSpecialization = false
+                                    
+                                    editedSpecialization.append("Спеціалізацію не обрано")
+                                    isWrongSpecialization.append(false)
+                                }
+                            }
+                            else
+                            {
+                                withAnimation(Animation.easeIn(duration: 0.25))
+                                {
+                                    isWrongLastSpecialization = true
+                                }
+                            }
+                        }
+                        label:
+                        {
+                            Image(systemName: "plus")
+                                .aspectRatio(contentMode: .fit)
+                        }// Button for add specialization
+                        .help("Додати нову спеціалізацію для вчителя")
+                    }// HStack with button for add specialization
+                }// section with specialization
+            }// main form
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .formStyle(.grouped)
-                
+
             Spacer()
             
-            if isWrongName || isWrongLastName || isWrongSurname || isWrongContactNumber || isWrongPassportNumber || isWrongResidenceAddress
+            if isWrongName || isWrongLastName || isWrongSurname || isWrongContactNumber || isWrongPassportNumber || isWrongResidenceAddress || isWrongSpecialization.contains(true)
             {
                 Text("Заповніть всі поля коректно")
                     .foregroundColor(Color.red)
             }
 
             Divider()
-                
+
             HStack
             {
                 Button
@@ -236,13 +303,13 @@ struct EditStudentView: View
                 
                 Button
                 {
-                    if !editedName.isEmpty && !editedLastName.isEmpty && !editedSurname.isEmpty && !editedContactNumber.isEmpty && editedContactNumber.count >= 12 && editedPassportNumber.count == 8 && !editedResidenceAddress.isEmpty
+                    if !editedName.isEmpty && !editedLastName.isEmpty && !editedSurname.isEmpty && !editedContactNumber.isEmpty && editedContactNumber.count == 13 && editedPassportNumber.count == 8 && !editedResidenceAddress.isEmpty && !editedSpecialization.contains("Спеціалізацію не обрано") && !isWrongSpecialization.contains(true) && !writeModel.isLoadingFetchData
                     {
                         Task
                         {
-                            let status = await writeModel.updateStudent(id: student.id, name: editedName, lastName: editedLastName, surname: editedSurname, dateBirth: dateFormatter.string(from: editedBirthDayDate), contactNumber: editedContactNumber, passportNumber: editedPassportNumber, residenceAddress: editedResidenceAddress, educationProgram: editedEducationProgram, group: editedGroup)
-                            
-                            isUpdateListStudent.toggle()
+                            let status = await writeModel.updateTeacher(id: teacher.id, name: editedName, lastName: editedLastName, surname: editedSurname, dateBirth: dateFormatter.string(from: editedBirthDayDate), contactNumber: editedContactNumber, passportNumber: editedPassportNumber, residenceAddress: editedResidenceAddress, category: editedCategory, specialization: editedSpecialization)
+                                                        
+                            isUpdateListTeacher.toggle()
                             
                             statusSaveString = status ? "Збережено" : "Невдалося зберегти"
                         }
@@ -251,13 +318,15 @@ struct EditStudentView: View
                     {
                         withAnimation(Animation.easeIn(duration: 0.35))
                         {
-                            isWrongName             = false
-                            isWrongLastName         = false
-                            isWrongSurname          = false
-                            isWrongContactNumber    = false
-                            isWrongPassportNumber   = false
+                            isWrongName = false
+                            isWrongLastName = false
+                            isWrongSurname = false
+                            isWrongContactNumber = false
+                            isWrongPassportNumber = false
                             isWrongResidenceAddress = false
-
+                            isWrongLastSpecialization = false
+                            isWrongSpecialization = Array(repeating: false, count: editedSpecialization.count)
+                            
                             if editedName.isEmpty
                             {
                                 isWrongName = true
@@ -270,7 +339,7 @@ struct EditStudentView: View
                             {
                                 isWrongSurname = true
                             }
-                            if editedContactNumber.isEmpty || editedContactNumber.count < 12
+                            if editedContactNumber.isEmpty || editedContactNumber.count < 13
                             {
                                 isWrongContactNumber = true
                             }
@@ -281,6 +350,16 @@ struct EditStudentView: View
                             if editedResidenceAddress.isEmpty
                             {
                                 isWrongResidenceAddress = true
+                            }
+                            if editedSpecialization.contains("Спеціалізацію не обрано")
+                            {
+                                for index in editedSpecialization.indices
+                                {
+                                    if editedSpecialization[index] == "Спеціалізацію не обрано"
+                                    {
+                                        isWrongSpecialization[index] = true
+                                    }
+                                }
                             }
                         }
                     }
@@ -301,7 +380,24 @@ struct EditStudentView: View
             .padding(.vertical, 6)
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
-        }// VStack main
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }// main VStack
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 400, height: 565)
@@ -314,18 +410,20 @@ struct EditStudentView: View
             
             Task
             {
-                self.groupList              = await writeModel.getGroupNameList()
-                self.educatProgramList      = await writeModel.getEducatProgramNameList(withOut: "")
+                self.specializationList     = await writeModel.getSpecializationNameList()
+                self.categoryList           = await writeModel.getTeacherCategory()
+
+                editedName                  = teacher.name
+                editedLastName              = teacher.lastName
+                editedSurname               = teacher.surname
+                editedBirthDayDate          = teacher.dateBirth
+                editedContactNumber         = teacher.contactNumber
+                editedPassportNumber        = teacher.passportNumber
+                editedResidenceAddress      = teacher.residenceAddress
+                editedCategory              = teacher.category
+                editedSpecialization        = teacher.specialization
                 
-                editedGroup                 = student.group
-                editedEducationProgram      = student.educationProgram
-                editedName                  = student.name
-                editedLastName              = student.lastName
-                editedSurname               = student.surname
-                editedBirthDayDate          = student.dateBirth
-                editedContactNumber         = student.contactNumber
-                editedPassportNumber        = student.passportNumber
-                editedResidenceAddress      = student.residenceAddress
+                isWrongSpecialization = Array(repeating: false, count: teacher.specialization.count)
             }
         }
         .onDisappear
@@ -338,7 +436,5 @@ struct EditStudentView: View
                 }
             }
         }
-
-        
     }
 }

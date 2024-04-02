@@ -164,7 +164,7 @@ struct TeacherCardViewModel: View
         }
         .sheet(isPresented: $showEditTeacher)
         {
-            //EditDepartmentView(isShowView: $showAboutDepartment, isEditView: $showEditDepartment, isUpdateListDepartment: $isUpdateDeparment, department: $department, writeModel: writeModel)
+            EditTeacherView(isShowView: $showAboutTeacher, isEditView: $showEditTeacher, isUpdateListTeacher: $isUpdateTeacher, teacher: $teacher, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteTaecher)
         {

@@ -161,10 +161,12 @@ class ReadWriteModel: ObservableObject
         return educationalProgramListName
     }// func getEducatProgramNameList(withOut: String) async -> [String]
     
+    
     func getTeacherCategory() async -> [String]
     {
         return ["Спеціаліст", "Спеціаліст другої категорії", "Спеціаліст першої категорії", "Спеціаліст вищої категорії"]
     }// func getTeacherCategory() async -> [String]
+    
     
     func getSubjectType() async -> [String]
     {
@@ -1466,7 +1468,7 @@ class ReadWriteModel: ObservableObject
         {
             return false
         }
-    }//     func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
+    }// func addNewStudent(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
     
                                            
     func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
@@ -1502,7 +1504,71 @@ class ReadWriteModel: ObservableObject
         }
     }// func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
 
-                                           
+                
+    func addNewTeacher(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, category: String, specialization: [String]) async -> Bool
+    {
+        let object: [String: Any] = [
+            "id": maxIdRecord,
+            "name": name,
+            "lastName": lastName,
+            "surname": surname,
+            "dateBirth": dateBirth,
+            "contactNumber": contactNumber,
+            "passportNumber": passportNumber,
+            "residenceAddress": residenceAddress,
+            "specializations": specialization,
+            "category": category
+        ]
+        
+        do
+        {
+            try await db.collection("teachers").addDocument(data: object)
+            self.maxIdRecord += 1
+            return true
+        }
+        catch
+        {
+            return false
+        }
+    }// func addNewTeacher(name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, category: String, specialization: [String]) async -> Bool
+    
+    
+    func updateTeacher(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, category: String, specialization: [String]) async -> Bool
+    {    let object: [String: Any] = [
+        "id": id,
+        "name": name,
+        "lastName": lastName,
+        "surname": surname,
+        "dateBirth": dateBirth,
+        "contactNumber": contactNumber,
+        "passportNumber": passportNumber,
+        "residenceAddress": residenceAddress,
+        "specializations": specialization,
+        "category": category
+    ]
+        
+        do
+        {
+            let snapshot = try await db.collection("teachers").whereField("id", isEqualTo: id).getDocuments(
+            )
+            guard let document = snapshot.documents.first else
+            {
+                print("No documents or multiple documents found")
+                return false
+            }
+            
+            try await db.collection("teachers").document(document.documentID).updateData(object)
+            return true
+        } catch
+        {
+            print("Error in update data: \(error)")
+            return false
+        }
+    }// func updateStudent(id: Int, name: String, lastName: String, surname: String, dateBirth: String, contactNumber: String, passportNumber: String, residenceAddress: String, educationProgram: String, group: String) async -> Bool
+
+    
+    
+    
     func deleteGrade(withId gradeId: Int) async
     {
         do

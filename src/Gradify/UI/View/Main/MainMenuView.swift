@@ -80,7 +80,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Викладачі!", systemImage: "person")
+                            Label("Викладачі", systemImage: "person")
                         }// NavigationLink with teacher's
                         
                         NavigationLink
