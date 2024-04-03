@@ -96,7 +96,7 @@ struct Subject: Identifiable, Sendable, Equatable, Hashable
     var labHours: Int = 0
     var seminarHours: Int = 0
     var independentStudyHours: Int = 0
-    var semester: Int = 0
+    var semester: String = ""
     var semesterControl: String = ""
 }// struct Subject: Identifiable
 

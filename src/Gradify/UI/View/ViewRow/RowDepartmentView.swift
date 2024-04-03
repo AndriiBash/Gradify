@@ -82,7 +82,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: department.name)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати назву")
                             }
@@ -113,7 +113,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: department.specialization)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати спеціалізацію")
                             }
@@ -144,7 +144,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: department.departmentLeader)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати ПІБ завідувача кафедри")
                             }
@@ -175,7 +175,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: department.viceLeader)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати ПІБ зам.завідувача кафедри")
                             }
@@ -206,7 +206,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: department.departmentOffice)
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати назву аудиторію кафедри")
                             }
@@ -237,7 +237,7 @@ struct RowDepartmentView: View
                             {
                                 copyInBuffer(text: String(department.creationYear) + " рік")
                             }
-                        label:
+                            label:
                             {
                                 Text("Скопіювати рік засунвання кафедри")
                             }

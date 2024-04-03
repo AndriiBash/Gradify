@@ -102,20 +102,17 @@ class ReadWriteModel: ObservableObject
     @Published var educationalProgramList:      [EducationalProgramList] = []
     @Published var facultyList:                 [FacultyList] = []
     @Published var departmentList:              [DepartmentList] = []
-
-
     @Published var teacherList:                 [TeacherList] = []
 
-    
+    @Published var subjectList:                 [SubjectList] = []
     
     
     
     @Published var gradeList:                   [GradeList] = []
-    @Published var subjectList:                 [SubjectList] = []
 
     
     
-    
+    // delete this
     @Published var groups                       = [Group]()
     @Published var teachers                     = [Teacher]()
     @Published var departments                  = [Department]()
@@ -502,16 +499,7 @@ class ReadWriteModel: ObservableObject
                         self.maxIdRecord = id + 1
                     }
                 }
-                
-                /*
-                 
-                 var staffCategory: [String] = []
-                 var subjectSpecialization: [String] = []
-                 
-                 var profilePhoto: String = "" // realese ONLY on diploma
-                 
-                 */
-                
+                                
                 let name = data["name"] as? String ?? ""
                 let lastName = data["lastName"] as? String ?? ""
                 let surname = data["surname"] as? String ?? ""
@@ -526,7 +514,10 @@ class ReadWriteModel: ObservableObject
                 let specialization = data["specializations"] as? [String] ?? []
 
                 //code for loading photo
-                
+                /*
+                    var profilePhoto: String = "" // realese ONLY on diploma
+                 */
+
                 return Teacher(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, category: category, specialization: specialization)
             }, by: { $0.category })
 
@@ -898,16 +889,19 @@ class ReadWriteModel: ObservableObject
         do
         {
             self.isLoadingFetchData = true
-            self.countRecords = 0
-
+            
+            if updateCountRecod
+            {
+                self.countRecords = 0
+            }
+            
             let querySnapshot = try await db.collection("subjects").getDocuments()
 
-            var intermediateSubjects: [Subject] = []
-            
-            for queryDocumentSnapshot in querySnapshot.documents
-            {
+            let groupedSubject = Dictionary(grouping: querySnapshot.documents.map
+            { queryDocumentSnapshot in
+                
                 let data = queryDocumentSnapshot.data()
-
+                
                 let id = data["id"] as? Int ?? -1
                 
                 if updateCountRecod
@@ -917,74 +911,50 @@ class ReadWriteModel: ObservableObject
                         self.maxIdRecord = id + 1
                     }
                 }
-
+                                
                 let name = data["name"] as? String ?? ""
                 let type = data["type"] as? String ?? ""
-                
-                var teacherList: [String] = []
-
-                for queryDocumentSnapshot in querySnapshot.documents
-                {
-                    let data = queryDocumentSnapshot.data()
-
-                    // Отримання списку учителів з даних
-                    let teachers = data["teachers"] as? String ?? ""
-
-                    let teacherArray = teachers.split(separator: ",").map { String($0) }
-                    
-                    teacherList.append(contentsOf: teacherArray)
-                }
-
                 let departamentSubject = data["departamentSubject"] as? String ?? ""
+
+                let teacherList = data["teacherList"] as? [String] ?? []
                 
-                let totalHours = data["totalHours"] as? Int ?? -1
-                let lectureHours = data["lectureHours"] as? Int ?? -1
-                let labHours = data["labHours"] as? Int ?? -1
-                let seminarHours = data["seminarHours"] as? Int ?? -1
-                let independentStudyHours = data["independentStudyHours"] as? Int ?? -1
-                let semester = data["semester"] as? Int ?? -1
+                let totalHours = data["totalHours"] as? Int ?? 0
+                let lectureHours = data["lectureHours"] as? Int ?? 0
+                let labHours = data["labHours"] as? Int ?? 0
+                let seminarHours = data["seminarHours"] as? Int ?? 0
+                let independentStudyHours = data["independentStudyHours"] as? Int ?? 0
+                
+                let semester = data["semester"] as? String ?? ""
                 let semesterControl = data["semesterControl"] as? String ?? ""
 
-                let subject = Subject(id: id,
-                                      name: name,
-                                      type: type,
-                                      teacherList: teacherList,
-                                      departamentSubject: departamentSubject,
-                                      totalHours: totalHours,
-                                      lectureHours: lectureHours,
-                                      labHours: labHours,
-                                      seminarHours: seminarHours,
-                                      independentStudyHours: independentStudyHours,
-                                      semester: semester,
-                                      semesterControl: semesterControl)
                 
-                intermediateSubjects.append(subject)
+                return Subject(id: id, name: name, type: type, teacherList: teacherList, departamentSubject: departamentSubject, totalHours: totalHours, lectureHours: lectureHours, labHours: labHours, seminarHours: seminarHours, independentStudyHours: independentStudyHours, semester: semester, semesterControl: semesterControl)
+            }, by: { $0.type })
+
+            self.subjectList = groupedSubject.map
+            { name, subject in
+                SubjectList(name: name, subject: subject)
             }
 
-            let groupedSubjects = Dictionary(grouping: intermediateSubjects, by: { $0.type })
-
-                  // self.gradeList = groupedSubjects.map { (subject, grades) -> GradeList in
-                  //     return GradeList(name: subject, grades: grades)
-                  // }
-            
-            self.countRecords = self.subjectList.flatMap { $0.subject }.count
-
-            DispatchQueue.main.async
+            if updateCountRecod
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
-                {
-                    self.isLoadingFetchData = false
-                }
+                self.countRecords = self.subjectList.flatMap { $0.subject }.count
+            }
+
+            withAnimation(Animation.easeOut(duration: 0.5))
+            {
+                self.isLoadingFetchData = false
             }
         }
         catch
         {
             DispatchQueue.main.async
             {
-                print("Error fetching data : \(error)")
+                print("Not anotteted error : \(error)")
                 self.isLoadingFetchData = false
             }
         }
+
     }// func fetchSubjectData() async
     
 
@@ -1724,6 +1694,37 @@ class ReadWriteModel: ObservableObject
     }// func deleteTeacher(withId teacherID: Int) async
     
     
+    func deleteSubject(withId subjectID: Int) async
+    {
+        do
+        {
+            let snapshot = try await db.collection("subjects").whereField("id", isEqualTo: subjectID).getDocuments()
+            
+            if snapshot.documents.isEmpty
+            {
+                print("No documents found")
+                return
+            }
+            
+            for document in snapshot.documents
+            {
+                do
+                {
+                    try await document.reference.delete()
+                }
+                catch
+                {
+                    print("Error in delete subject: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch
+        {
+            print("Error in get data: \(error.localizedDescription)")
+        }
+    }// func deleteSubject(withId subjectID: Int) async
+    
+    
     func addNewFaculty(name: String, dean: String, description: String, deparments: [String], specialization: [String]) async -> Bool
     {
         let object: [String: Any] = [
@@ -2043,4 +2044,21 @@ class ReadWriteModel: ObservableObject
                teacher.category.lowercased().contains(searchString.lowercased()) ||
                teacher.specialization.contains { $0.lowercased().contains(searchString.lowercased()) }
     }// func matchesSearch(teacher: Teacher, searchString: String) -> Bool
+    
+    
+    func matchesSearch(subject: Subject, searchString: String) -> Bool
+    {
+        return subject.name.lowercased().contains(searchString.lowercased()) ||
+               subject.type.lowercased().contains(searchString.lowercased()) ||
+               subject.teacherList.contains { $0.lowercased().contains(searchString.lowercased()) } ||
+               subject.departamentSubject.lowercased().contains(searchString.lowercased()) ||
+               "\(subject.totalHours)".contains(searchString) ||
+               "\(subject.lectureHours)".contains(searchString) ||
+               "\(subject.labHours)".contains(searchString) ||
+               "\(subject.seminarHours)".contains(searchString) ||
+               "\(subject.independentStudyHours)".contains(searchString) ||
+               subject.semester.lowercased().contains(searchString.lowercased()) ||
+               subject.semesterControl.lowercased().contains(searchString.lowercased())
+    }// func matchesSearch(teacher: Teacher, searchString: String) -> Bool
+
 }
