@@ -135,6 +135,7 @@ struct EditFacultyView: View
                                 {
                                     editedDepartments.remove(at: index)
                                     isWrongDeparments.remove(at: index)
+                                    isWrongLastDeparments = false
                                 }
                             }
                             label:
@@ -213,6 +214,7 @@ struct EditFacultyView: View
                                 {
                                     editedSpecialization.remove(at: index)
                                     isWrongSpecializations.remove(at: index)
+                                    isWrongLastSpecialization = false
                                 }
                             }
                             label:
@@ -433,7 +435,7 @@ struct EditFacultyView: View
                 self.isWrongDeparments = Array(repeating: false, count: faculty.departments.count)
                 self.isWrongSpecializations = Array(repeating: false, count: faculty.specialiazation.count)
 
-                self.teacherList            = await writeModel.getTeacherList()
+                self.teacherList            = await writeModel.getTeacherList(withOut: "")
                 self.specializationList     = await writeModel.getSpecializationNameList()
                 self.departmentsList        = await writeModel.getDeprmentNameList(withOut: "")
             }

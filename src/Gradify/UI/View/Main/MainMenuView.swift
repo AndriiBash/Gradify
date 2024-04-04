@@ -67,7 +67,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Предмети!", systemImage: "book.pages")
+                            Label("Предмети", systemImage: "book.pages")
                         }// NavigationLink with subjects
                     }// Section about learning and teaching
                     
@@ -157,7 +157,7 @@ struct MainMenuView: View
         {
             VStack
             {
-                Text("Go auth")
+                Text("Вітання!")
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("startView")

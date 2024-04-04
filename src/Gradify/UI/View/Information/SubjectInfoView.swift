@@ -112,7 +112,7 @@ struct SubjectInfoView: View
         }
         .sheet(isPresented: $isShowAddSubjectPanel)
         {
-            //AddTeacherView(isShowForm: $isShowAddTeacherPanel, statusSave: $statusSave, writeModel: readModel)
+            AddSubjectView(isShowForm: $isShowAddSubjectPanel, statusSave: $statusSave, writeModel: readModel)
         }
         .sheet(isPresented: $showStatusSave)
         {

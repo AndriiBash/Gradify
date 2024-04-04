@@ -164,7 +164,7 @@ struct SubjectCardViewModel: View
         }
         .sheet(isPresented: $showEditSubject)
         {
-            //EditSpecializationView(isShowView: $showAboutSpecialization, isEditView: $showEditSpecialization, isUpdateListSpecialization: $isUpdateSpecialization, specialization: $specialization, writeModel: writeModel)
+            EditSubjectView(isShowView: $showAboutSubject, isEditView: $showEditSubject, isUpdateListSubject: $isUpdateSubject, subject: $subject, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteSubject)
         {

@@ -31,8 +31,8 @@ struct EditTeacherView: View
     @State private var isWrongSpecialization:           [Bool] = []
 
     @State private var statusSaveString:                String = "Зберегти"
-    @State private var specializationList:          [String] = []
-    @State private var categoryList:                [String] = []
+    @State private var specializationList:              [String] = []
+    @State private var categoryList:                    [String] = []
 
     @State private var maxWidthForButton:               CGFloat = .zero
 
@@ -380,23 +380,6 @@ struct EditTeacherView: View
             .padding(.vertical, 6)
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }// main VStack
         .padding(.top, 8)
         .foregroundColor(Color("MainTextForBlur"))

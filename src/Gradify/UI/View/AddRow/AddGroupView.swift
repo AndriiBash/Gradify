@@ -222,7 +222,7 @@ struct AddGroupView: View
         {
             Task
             {
-                self.curatorList            = await writeModel.getTeacherList()
+                self.curatorList            = await writeModel.getTeacherList(withOut: "")
                 self.studentList            = await writeModel.getStudentList(groupName: "Без групи")
                 self.departmentList         = await writeModel.getDeprmentNameList(withOut: "")
                 self.educationProgramList   = await writeModel.getEducatProgramNameList(withOut: "")

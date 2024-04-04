@@ -168,6 +168,7 @@ struct EditEducationProgramView: View
                                 {
                                     editedSpecialization.remove(at: index)
                                     isWrongSpecialiazation.remove(at: index)
+                                    isWrongLastSpecialiazation = false
                                 }
                             }
                             label:

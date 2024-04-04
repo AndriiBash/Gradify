@@ -199,6 +199,7 @@ struct AddDepartmentView: View
                                 {
                                     teachers.remove(at: index)
                                     isWrongTeachers.remove(at: index)
+                                    isWrongLastTeacher = false
                                 }
                             }
                             label:
@@ -393,7 +394,7 @@ struct AddDepartmentView: View
         {
             Task
             {
-                self.teacherList            = await writeModel.getTeacherList()
+                self.teacherList            = await writeModel.getTeacherList(withOut: "")
                 self.specializationList     = await writeModel.getSpecializationNameList()
             }
         }

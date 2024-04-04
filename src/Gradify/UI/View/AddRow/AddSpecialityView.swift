@@ -177,6 +177,7 @@ struct AddSpecialityView: View
                                 {
                                     subjects.remove(at: index)
                                     isWrongSubjects.remove(at: index)
+                                    isWrongLastSubject = false
                                 }
                             }
                             label:

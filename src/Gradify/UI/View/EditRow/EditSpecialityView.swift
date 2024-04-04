@@ -183,6 +183,7 @@ struct EditSpecialityView: View
                                 {
                                     editedSubjects.remove(at: index)
                                     isWrongSubjects.remove(at: index)
+                                    isWrongLastSubject = false
                                 }
                             }
                             label:
