@@ -22,8 +22,8 @@ struct EditFacultyView: View
     @State private var isWrongLastDeparments:           Bool = false
     @State private var isWrongLastSpecialization:       Bool = false
 
-    @State private var isWrongDeparments:           [Bool] = []
-    @State private var isWrongSpecializations:      [Bool] = []
+    @State private var isWrongDeparments:               [Bool] = []
+    @State private var isWrongSpecializations:          [Bool] = []
 
     @State private var teacherList:                     [String] = []
     @State private var specializationList:              [String] = []

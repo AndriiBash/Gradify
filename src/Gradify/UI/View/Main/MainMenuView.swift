@@ -9,14 +9,10 @@ import SwiftUI
 
 struct MainMenuView: View
 {
-    // Temp trash
-    //@State private var searchText: String = ""
-    @State private var expandAllList: Bool = false
-    @State var sideBarVisibility: NavigationSplitViewVisibility = .doubleColumn
+    @State private var expandAllList:   Bool = false
+    @State var sideBarVisibility:       NavigationSplitViewVisibility = .doubleColumn
 
-    // Current, and used element
-    @State private var columnVisibility     = NavigationSplitViewVisibility.detailOnly
-    
+    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     
     var body: some View
     {
@@ -58,7 +54,7 @@ struct MainMenuView: View
                         }
                         label:
                         {
-                            Label("!Оцінки!", systemImage: "list.star")
+                            Label("Оцінки", systemImage: "list.star")
                         }// NavigationLink with grades
 
                         NavigationLink

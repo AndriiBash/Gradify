@@ -55,7 +55,7 @@ struct GradeInfoView: View
                     
                     withAnimation
                     {
-                        readModel.grades.sort(by: { isSotredList ? $0.subject < $1.subject : $0.subject > $1.subject })
+                        readModel.gradeList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
                     }
                 }
             }// Main ScrollView
@@ -112,7 +112,7 @@ struct GradeInfoView: View
         }
         .sheet(isPresented: $isShowAddGradePanel)
         {
-            //AddGroupView(isShowForm: $isShowAddGroupPanel, statusSave: $statusSave, writeModel: readModel)
+            AddGradeView(isShowForm: $isShowAddGradePanel, statusSave: $statusSave, writeModel: readModel)
         }
         .sheet(isPresented: $showStatusSave)
         {

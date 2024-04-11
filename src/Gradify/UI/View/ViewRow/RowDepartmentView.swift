@@ -253,7 +253,7 @@ struct RowDepartmentView: View
                         
                         Spacer()
                         
-                        Text("\(department.description) рік")
+                        Text("\(department.description)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)

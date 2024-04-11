@@ -107,6 +107,7 @@ struct Grade: Identifiable, Sendable, Equatable, Hashable
 
     var subject: String = ""
     var recipient: String = ""
+    var recipientGroup: String = ""
     var grader: String = ""
     
     var score: Int = 0

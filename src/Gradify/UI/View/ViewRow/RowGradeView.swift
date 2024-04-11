@@ -11,6 +11,7 @@ struct RowGradeView: View
 {
     @State private var hoverOnSubject:              Bool = false
     @State private var hoverOnRecipient:            Bool = false
+    @State private var hoverOnRecipientGroup:       Bool = false
     @State private var hoverOnGrader:               Bool = false
     @State private var hoverOnScore:                Bool = false
     @State private var hoverOnDateGiven:            Bool = false
@@ -83,6 +84,38 @@ struct RowGradeView: View
                             }
                         }
                     }// HStack with subject grade
+                    
+                    HStack
+                    {
+                        Text("Група отримувача")
+                        
+                        Spacer()
+                        
+                        Text("\(grade.recipientGroup)")
+                            .foregroundColor(Color("MainTextForBlur").opacity(0.7))
+                            .padding(.horizontal)
+                            .padding(.vertical, 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(hoverOnRecipientGroup ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .onHover
+                            { isHovered in
+                                changePointingHandCursor(shouldChangeCursor: isHovered)
+                                hoverOnRecipientGroup.toggle()
+                            }
+                            .contextMenu
+                            {
+                                Button
+                                {
+                                    copyInBuffer(text: grade.recipientGroup)
+                                }
+                                label:
+                                {
+                                    Text("Скопіювати групу отримувача")
+                                }
+                            }
+                    }// HStack with recipientGroup grade
                     
                     HStack
                     {
@@ -218,7 +251,7 @@ struct RowGradeView: View
                         
                         Spacer()
                         
-                        Text("\(grade.gradeType))")
+                        Text("\(grade.gradeType)")
                             .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                             .padding(.horizontal)
                             .padding(.vertical, 1)
@@ -337,10 +370,11 @@ struct RowGradeView: View
                                 
                 Button
                 {
-                    var allInfo = """
+                    let allInfo = """
                             [\(grade.id)] \(grade.grader) : \(grade.score) (\(dateFormatter.string(from: grade.dateGiven)))
                             ===========================================
                             Предмет: \(grade.subject)
+                            Група отримувача: \(grade.recipientGroup)
                             Отримувач: \(grade.recipient)
                             Хто виставив: \(grade.grader)
                             Оцінка: \(grade.score)
@@ -385,17 +419,7 @@ struct RowGradeView: View
             .padding(.vertical, 6)
             .padding(.bottom, 8)
             .padding(.horizontal, 22)
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }// main VStack
-        
         .foregroundColor(Color("MainTextForBlur"))
         .frame(width: 400, height: 565)
         .onAppear

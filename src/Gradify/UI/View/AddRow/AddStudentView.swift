@@ -277,7 +277,7 @@ struct AddStudentView: View
         {
             Task
             {
-                self.groupList = await writeModel.getGroupNameList()
+                self.groupList = await writeModel.getGroupNameList(withOut: "")
                 self.educatProgramList = await writeModel.getEducatProgramNameList(withOut: "")
             }
         }

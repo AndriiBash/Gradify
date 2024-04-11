@@ -161,7 +161,7 @@ struct GradeCardViewModel: View
         }
         .sheet(isPresented: $showEditGrade)
         {
-            EditGradeView(isShowView: $showAboutGrade, isEditView: $showEditGrade, isUpdateListGroup: $isUpdateGrade, grade: $grade, writeModel: writeModel)
+            EditGradeView(isShowView: $showAboutGrade, isEditView: $showEditGrade, isUpdateListGrade: $isUpdateGrade, grade: $grade, writeModel: writeModel)
         }
         .sheet(isPresented: $showDeleteGrade)
         {

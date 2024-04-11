@@ -50,12 +50,12 @@ struct GroupInfoView: View
                 {
                     Task
                     {
-                        await readModel.fetchBigGroupData(updateCountRecod: true)
+                        await readModel.fetchGroupData(updateCountRecod: true)
                     }
                     
                     withAnimation
                     {
-                        readModel.groups.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
+                        readModel.groupList.sort(by: { isSotredList ? $0.name < $1.name : $0.name > $1.name })
                     }
                 }
             }// Main ScrollView
@@ -126,7 +126,7 @@ struct GroupInfoView: View
 
                         Task
                         {
-                            await readModel.fetchBigGroupData(updateCountRecod: true)
+                            await readModel.fetchGroupData(updateCountRecod: true)
                             searchString = oldSearchString
                         }// need add wait view (monitor)
                     }
@@ -170,7 +170,7 @@ struct GroupInfoView: View
 
                 Task
                 {
-                    await readModel.fetchBigGroupData(updateCountRecod: true)
+                    await readModel.fetchGroupData(updateCountRecod: true)
                     searchString = oldSearchString
                 }
                 
