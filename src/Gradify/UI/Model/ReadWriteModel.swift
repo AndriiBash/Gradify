@@ -140,7 +140,7 @@ class ReadWriteModel: ObservableObject
     {
         if educationalProgramList.isEmpty
         {
-            await fetchEducationalProgram(updateCountRecod: false)
+            await fetchEducationalProgram(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var educationalProgramListName: [String] = []
@@ -176,7 +176,7 @@ class ReadWriteModel: ObservableObject
     {
         if subjectList.isEmpty
         {
-            await fetchSubjectData(updateCountRecod: false)
+            await fetchSubjectData(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var subjectListName: [String] = []
@@ -225,7 +225,7 @@ class ReadWriteModel: ObservableObject
     {
         if facultyList.isEmpty
         {
-            await fetchFacultyData(updateCountRecod: false)
+            await fetchFacultyData(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var facultyListName: [String] = []
@@ -249,7 +249,7 @@ class ReadWriteModel: ObservableObject
     {
         if specialityList.isEmpty
         {
-            await fetchSpecialityData(updateCountRecod: false)
+            await fetchSpecialityData(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var specialityListName: [String] = []
@@ -273,7 +273,7 @@ class ReadWriteModel: ObservableObject
     {
         if specializationList.isEmpty
         {
-            await fetchSpecializationData(updateCountRecod: false)
+            await fetchSpecializationData(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var specializationListName: [String] = []
@@ -297,7 +297,7 @@ class ReadWriteModel: ObservableObject
     {
         if specializationList.isEmpty
         {
-            await fetchSpecializationData(updateCountRecod: false)
+            await fetchSpecializationData(updateCountRecod: false, checkStatusUpdate: false)
         }
         
         var specializationListName: [String] = []
@@ -349,7 +349,7 @@ class ReadWriteModel: ObservableObject
             
             if studentList.isEmpty
             {
-                await fetchStudentData(updateCountRecod: false)
+                await fetchStudentData(updateCountRecod: false, checkStatusUpdate: false)
             }
             
             for group in self.studentList
@@ -381,7 +381,7 @@ class ReadWriteModel: ObservableObject
             
             if departmentList.isEmpty
             {
-                await fetchDepartment(updateCountRecod: false)
+                await fetchDepartment(updateCountRecod: false, checkStatusUpdate: false)
             }
             
             for list in self.departmentList
@@ -632,11 +632,14 @@ class ReadWriteModel: ObservableObject
     }// func fetchTeacher(updateCountRecod: Bool) async
     
     
-    func fetchEducationalProgram(updateCountRecod: Bool) async
+    func fetchEducationalProgram(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -682,9 +685,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.educationalProgramList.flatMap { $0.educationalProgram }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -692,17 +698,24 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
     }// func fetchEducationalProgram(updateCountRecod: Bool) async
 
     
-    func fetchSpecialityData(updateCountRecod: Bool) async
+    func fetchSpecialityData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -747,9 +760,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.specialityList.flatMap { $0.speciality }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -757,17 +773,24 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
     }// func fetchSpecialityData() async
     
     
-    func fetchFacultyData(updateCountRecod: Bool) async
+    func fetchFacultyData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -812,9 +835,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.facultyList.flatMap { $0.faculty }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -822,17 +848,24 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
     }// func fetchFacultynData(updateCountRecod: Bool) async
     
     
-    func fetchSpecializationData(updateCountRecod: Bool) async
+    func fetchSpecializationData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -873,9 +906,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.specializationList.flatMap { $0.specialization }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -883,17 +919,24 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
     }// func fetchStudentData() async
     
     
-    func fetchGradeData(updateCountRecod: Bool) async
+    func fetchGradeData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -940,9 +983,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.gradeList.flatMap { $0.grades }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -950,18 +996,25 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
 
     }// func fetchGradeData() async
     
     
-    func fetchSubjectData(updateCountRecod: Bool) async
+    func fetchSubjectData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
             
             if updateCountRecod
             {
@@ -1014,9 +1067,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.subjectList.flatMap { $0.subject }.count
             }
 
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -1024,7 +1080,11 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
 
@@ -1305,8 +1365,7 @@ class ReadWriteModel: ObservableObject
                         self.maxIdRecord = id + 1
                     }
                 }
-                
-                
+
                 let name = data["name"] as? String ?? ""
                 let curator = data["curator"] as? String ?? ""
                 let groupLeader = data["groupLeader"] as? String ?? ""
@@ -1354,12 +1413,15 @@ class ReadWriteModel: ObservableObject
     }// func fetchGroupData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     
 
-    func fetchStudentData(updateCountRecod: Bool) async
+    func fetchStudentData(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
         do
         {
-            self.isLoadingFetchData = true
-            
+            if checkStatusUpdate
+            {
+                self.isLoadingFetchData = true
+            }
+                
             if updateCountRecod
             {
                 self.countRecords = 0
@@ -1401,9 +1463,12 @@ class ReadWriteModel: ObservableObject
                 self.countRecords = self.studentList.flatMap { $0.students }.count
             }
             
-            withAnimation(Animation.easeOut(duration: 0.5))
+            if checkStatusUpdate
             {
-                self.isLoadingFetchData = false
+                withAnimation(Animation.easeOut(duration: 0.5))
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
         catch
@@ -1411,7 +1476,11 @@ class ReadWriteModel: ObservableObject
             DispatchQueue.main.async
             {
                 print("Not anotteted error : \(error)")
-                self.isLoadingFetchData = false
+                
+                if checkStatusUpdate
+                {
+                    self.isLoadingFetchData = false
+                }
             }
         }
     }// func fetchStudentData() async
