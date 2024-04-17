@@ -189,19 +189,3 @@ struct GroupListView: View
         }
     }// body
 }
-
-
-struct GroupListView_Previews: PreviewProvider
-{
-    @State private static var listGroup                 = GroupList(name: "testName", groups: [])
-    @State private static var isExapndAllList: Bool     = false
-    @State private static var isUpdateList: Bool        = false
-    @State private static var searchString: String      = ""
-    
-    @StateObject private static var writeModel          = ReadWriteModel()
-
-    static var previews: some View
-    {
-        GroupListView(groupList: $listGroup, isExpandListForAll: $isExapndAllList, isUpdateList: $isUpdateList, searchString: $searchString, writeModel: writeModel)
-    }
-}

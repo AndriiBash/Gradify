@@ -104,37 +104,18 @@ class ReadWriteModel: ObservableObject
     @Published var departmentList:              [DepartmentList] = []
     @Published var teacherList:                 [TeacherList] = []
     @Published var subjectList:                 [SubjectList] = []
-    
-    
-    
     @Published var gradeList:                   [GradeList] = []
 
-    
-    
-    // delete this
-    /*
-    @Published var groups                       = [Group]()
-    @Published var teachers                     = [Teacher]()
-    @Published var departments                  = [Department]()
-    @Published var subjects                     = [Subject]()
-    @Published var grades                       = [Grade]()
-    @Published var facultys                     = [Faculty]()
-    @Published var specializations              = [Specialization]()
-    @Published var specialtys                   = [Specialty]()
-    @Published var educationalPrograms          = [EducationalProgram]()
-     */
-    
     @Published var maxIdRecord:                 Int = 0
     @Published var countRecords:                Int = 0
     
-    @Published var isLoadingFetchData = false
+    @Published var isLoadingFetchData:          Bool = false
 
     private var ref = Database.database().reference()
     private var db = Firestore.firestore()
     
     
     //MARK: - Method's
-    
     
     func getEducatProgramNameList(withOut: String) async -> [String]
     {
@@ -193,7 +174,6 @@ class ReadWriteModel: ObservableObject
         }
         
         return subjectListName
-
     } // func getSubjectNameList(withOut: String) async -> [String]
     
     
@@ -460,13 +440,6 @@ class ReadWriteModel: ObservableObject
         return departmentListName
     }// func getDeprmentNameList(withOut: String) async -> [String]
     
-    
-    // MARK: - maybe delete
-    func getGroupStudent(of nameStudent: String) async -> String
-    {
-        return "sd"
-    }// func getGroupStudent(of nameStudent: String) async -> String
-
 
     func fetchDepartment(updateCountRecod: Bool, checkStatusUpdate: Bool = true) async
     {
@@ -1373,6 +1346,7 @@ class ReadWriteModel: ObservableObject
                 let educationProgram = data["educationProgram"] as? String ?? ""
                 
                 // MARK: - Check
+                // do not need use this
                 //let studentList = await getStudentList(groupName: name)
 
                 return Group(id: id, name: name, curator: curator, groupLeader: groupLeader, departmentName: departmentName, educationProgram: educationProgram, studentList: [])
@@ -2173,6 +2147,7 @@ class ReadWriteModel: ObservableObject
                student.passportNumber.lowercased().contains(searchString.lowercased()) ||
                student.residenceAddress.lowercased().contains(searchString.lowercased()) ||
                student.educationProgram.lowercased().contains(searchString.lowercased()) ||
+               dateFormatter.string(from: student.dateBirth).lowercased().contains(searchString.lowercased()) ||
                student.group.lowercased().contains(searchString.lowercased())
     }// private func matchesSearch(_ student: Student) -> Bool
 
@@ -2243,8 +2218,7 @@ class ReadWriteModel: ObservableObject
                grade.recipient.lowercased().contains(searchString.lowercased()) ||
                grade.grader.lowercased().contains(searchString.lowercased()) ||
                String(grade.score).contains(searchString) ||  // move to string for ==
-               grade.dateGiven.description.lowercased().contains(searchString.lowercased()) ||
-               grade.gradeType.lowercased().contains(searchString.lowercased()) ||
+               dateFormatter.string(from: grade.dateGiven).lowercased().contains(searchString.lowercased()) ||               grade.gradeType.lowercased().contains(searchString.lowercased()) ||
                String(grade.retakePossible).lowercased().contains(searchString.lowercased()) ||  // move to string for ==
                grade.comment.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(grade: Grade, searchString: String) -> Bool
@@ -2259,7 +2233,9 @@ class ReadWriteModel: ObservableObject
                teacher.passportNumber.lowercased().contains(searchString.lowercased()) ||
                teacher.residenceAddress.lowercased().contains(searchString.lowercased()) ||
                teacher.category.lowercased().contains(searchString.lowercased()) ||
-               teacher.specialization.contains { $0.lowercased().contains(searchString.lowercased()) }
+               teacher.specialization.contains { $0.lowercased().contains(searchString.lowercased()) } ||
+               dateFormatter.string(from: teacher.dateBirth).lowercased().contains(searchString.lowercased())
+
     }// func matchesSearch(teacher: Teacher, searchString: String) -> Bool
     
     
@@ -2277,5 +2253,4 @@ class ReadWriteModel: ObservableObject
                subject.semester.lowercased().contains(searchString.lowercased()) ||
                subject.semesterControl.lowercased().contains(searchString.lowercased())
     }// func matchesSearch(teacher: Teacher, searchString: String) -> Bool
-
 }

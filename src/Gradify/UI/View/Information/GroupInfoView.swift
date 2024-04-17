@@ -186,10 +186,3 @@ struct GroupInfoView: View
         }// onChange(of: statusSaveEdit)
     }// body
 }
-
-/*
- #Preview
- {
- GroupInfoView()
- }
- */

@@ -37,7 +37,7 @@ struct Group: Identifiable, Sendable, Equatable, Hashable
     var departmentName: String = ""
     var educationProgram: String = ""
     
-    var studentList: [String] = [] //Student
+    var studentList: [String] = []
 }// struct Group: Identifiable
 
 

@@ -186,8 +186,6 @@ struct EditGroupView: View
                     
                     if !editedName.isEmpty && !writeModel.isLoadingFetchData
                     {
-                        
-                        
                         Task
                         {
                             let listGroupKeyName = await writeModel.getGroupNameList(withOut: group.name)
