@@ -116,6 +116,7 @@
 		B5F661DC2BBD416B00D1717C /* SubjectCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661DB2BBD416B00D1717C /* SubjectCardViewModel.swift */; };
 		B5F661DE2BBD471E00D1717C /* RowSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661DD2BBD471E00D1717C /* RowSubjectView.swift */; };
 		B5F661E02BBE901B00D1717C /* AddSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F661DF2BBE901B00D1717C /* AddSubjectView.swift */; };
+		B5FFB3DF2BCFC2A90082183A /* StartMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FFB3DE2BCFC2A90082183A /* StartMainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -229,6 +230,7 @@
 		B5F661DB2BBD416B00D1717C /* SubjectCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCardViewModel.swift; sourceTree = "<group>"; };
 		B5F661DD2BBD471E00D1717C /* RowSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSubjectView.swift; sourceTree = "<group>"; };
 		B5F661DF2BBE901B00D1717C /* AddSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubjectView.swift; sourceTree = "<group>"; };
+		B5FFB3DE2BCFC2A90082183A /* StartMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -482,6 +484,7 @@
 				B5B55EDD2B30CE9F002E0F4D /* LoginView.swift */,
 				B5B55EE92B30CECF002E0F4D /* StartView.swift */,
 				B5B55EDC2B30CE9F002E0F4D /* MainMenuView.swift */,
+				B5FFB3DE2BCFC2A90082183A /* StartMainView.swift */,
 				B5EEF3352B48462500B8C73D /* SettingView.swift */,
 			);
 			path = Main;
@@ -717,6 +720,7 @@
 				B5979CF22B9F50AD0040142D /* AcceptDeleteRowGroup.swift in Sources */,
 				B5979CDF2B9EF7130040142D /* TeacherInfoView.swift in Sources */,
 				B5979CF62B9F50FE0040142D /* AcceptDeleteRowDepartment.swift in Sources */,
+				B5FFB3DF2BCFC2A90082183A /* StartMainView.swift in Sources */,
 				B52D0A182BA31C6C00554677 /* AddGradeView.swift in Sources */,
 				B5216FD52BAB26A200D8151C /* AddFacultyView.swift in Sources */,
 				B5979CE92B9EF74C0040142D /* EducationalProgramInfoView.swift in Sources */,
@@ -969,7 +973,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1002,7 +1006,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L4XDJUG5Z2;
 				ENABLE_HARDENED_RUNTIME = YES;

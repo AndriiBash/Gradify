@@ -151,22 +151,8 @@ struct MainMenuView: View
         } // NavigationSplitView(columnVisibility: $columnVisibility)
         detail:
         {
-            VStack
-            {
-                Text("Вітання!")
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationTitle("startView")
-        }//detail if no selected
-        
-        //.background(Color.red)
-        //.toolbarBackground(Color.pink, for: .automatic)
-        //.toolbarBackground(Color.red, for: .windowToolbar)
-        //.searchable(text: $searchText, placement: .sidebar, prompt: "Пошук")
-
-        //.sheet(item: $isShowTestWindow, content: ButtonView())
-        //.frame(minWidth: 550)
-         
+            StartMainView()
+        }//detail if no selected         
     }
 }
 

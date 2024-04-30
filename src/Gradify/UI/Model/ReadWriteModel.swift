@@ -447,12 +447,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("departments").getDocuments()
@@ -468,7 +474,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                 
@@ -487,21 +496,30 @@ class ReadWriteModel: ObservableObject
                 return Department(id: id, name: name, description: description ,specialization: specialization, departmentLeader: departmentLeader, viceLeader: viceLeader, teacherList: teacherList, departmentOffice: departmentOffice, creationYear: creationYear)
             }, by: { $0.specialization })
 
-            self.departmentList = groupedDepartments.map
-            { name, department in
-                DepartmentList(name: name, deparment: department)
+            DispatchQueue.main.async
+            {
+                self.departmentList = groupedDepartments.map
+                { name, department in
+                    DepartmentList(name: name, deparment: department)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.departmentList.flatMap { $0.deparment }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.departmentList.flatMap { $0.deparment }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -526,12 +544,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("teachers").getDocuments()
@@ -547,7 +571,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                                 
@@ -572,21 +599,30 @@ class ReadWriteModel: ObservableObject
                 return Teacher(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, category: category, specialization: specialization)
             }, by: { $0.category })
 
-            self.teacherList = groupedTeachers.map
-            { name, teachers in
-                TeacherList(name: name, teacher: teachers)
+            DispatchQueue.main.async
+            {
+                self.teacherList = groupedTeachers.map
+                { name, teachers in
+                    TeacherList(name: name, teacher: teachers)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.teacherList.flatMap { $0.teacher }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.teacherList.flatMap { $0.teacher }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -611,12 +647,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("educationalPrograms").getDocuments()
@@ -632,7 +674,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                 
@@ -648,21 +693,30 @@ class ReadWriteModel: ObservableObject
                 
             }, by: { $0.specialty })
 
-            self.educationalProgramList = groupedEducationalPrograms.map
-            { name, educationProgram in
-                EducationalProgramList(name: name, educationalProgram: educationProgram)
+            DispatchQueue.main.async
+            {
+                self.educationalProgramList = groupedEducationalPrograms.map
+                { name, educationProgram in
+                    EducationalProgramList(name: name, educationalProgram: educationProgram)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.educationalProgramList.flatMap { $0.educationalProgram }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.educationalProgramList.flatMap { $0.educationalProgram }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -687,12 +741,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("speciality").getDocuments()
@@ -708,7 +768,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                                 
@@ -723,21 +786,30 @@ class ReadWriteModel: ObservableObject
                 
             }, by: { $0.branch })
 
-            self.specialityList = groupedSpeciality.map
-            { name, speciality in
-                SpecialityList(name: name, speciality: speciality)
+            DispatchQueue.main.async
+            {
+                self.specialityList = groupedSpeciality.map
+                { name, speciality in
+                    SpecialityList(name: name, speciality: speciality)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.specialityList.flatMap { $0.speciality }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.specialityList.flatMap { $0.speciality }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -762,12 +834,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
 
             let querySnapshot = try await db.collection("faculty").getDocuments()
@@ -783,7 +861,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                 
@@ -798,21 +879,30 @@ class ReadWriteModel: ObservableObject
                 return Faculty(id: id, name: name, dean: dean, description: description, specialiazation: specialiazation, departments: departments)
             }, by: { $0.dean })
 
-            self.facultyList = groupedFaculty.map
-            { name, faculty in
-                FacultyList(name: name, faculty: faculty)
+            DispatchQueue.main.async
+            {
+                self.facultyList = groupedFaculty.map
+                { name, faculty in
+                    FacultyList(name: name, faculty: faculty)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.facultyList.flatMap { $0.faculty }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.facultyList.flatMap { $0.faculty }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -837,12 +927,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
 
             let querySnapshot = try await db.collection("specializations").getDocuments()
@@ -858,7 +954,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
 
@@ -869,21 +968,30 @@ class ReadWriteModel: ObservableObject
                 return Specialization(id: id, name: name, description: description, field: field)
             }, by: { $0.field })
 
-            self.specializationList = groupedSpecialization.map
-            { name, specialization in
-                SpecializationList(name: name, specialization: specialization)
+            DispatchQueue.main.async
+            {
+                self.specializationList = groupedSpecialization.map
+                { name, specialization in
+                    SpecializationList(name: name, specialization: specialization)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.specializationList.flatMap { $0.specialization }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.specializationList.flatMap { $0.specialization }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -908,12 +1016,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
 
             let querySnapshot = try await db.collection("grades").getDocuments()
@@ -928,7 +1042,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
 
@@ -946,21 +1063,30 @@ class ReadWriteModel: ObservableObject
                 return Grade(id: id, subject: subject, recipient: recipient, recipientGroup: recipientGroup, grader: grader, score: score, dateGiven: dateGiven, gradeType: gradeType, retakePossible: retakePossible, comment: comment)
             }, by: { $0.subject })
 
-            self.gradeList = groupedGrades.map
-            { name, grades in
-                GradeList(name: name, grades: grades)
+            DispatchQueue.main.async
+            {
+                self.gradeList = groupedGrades.map
+                { name, grades in
+                    GradeList(name: name, grades: grades)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.gradeList.flatMap { $0.grades }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.gradeList.flatMap { $0.grades }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -986,12 +1112,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("subjects").getDocuments()
@@ -1007,7 +1139,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
                                 
@@ -1030,21 +1165,30 @@ class ReadWriteModel: ObservableObject
                 return Subject(id: id, name: name, type: type, teacherList: teacherList, departamentSubject: departamentSubject, totalHours: totalHours, lectureHours: lectureHours, labHours: labHours, seminarHours: seminarHours, independentStudyHours: independentStudyHours, semester: semester, semesterControl: semesterControl)
             }, by: { $0.type })
 
-            self.subjectList = groupedSubject.map
-            { name, subject in
-                SubjectList(name: name, subject: subject)
+            DispatchQueue.main.async
+            {
+                self.subjectList = groupedSubject.map
+                { name, subject in
+                    SubjectList(name: name, subject: subject)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.subjectList.flatMap { $0.subject }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.subjectList.flatMap { $0.subject }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -1314,12 +1458,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
             
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
             
             let querySnapshot = try await db.collection("groups").getDocuments()
@@ -1335,7 +1485,10 @@ class ReadWriteModel: ObservableObject
                 {
                     if self.maxIdRecord <= id
                     {
-                        self.maxIdRecord = id + 1
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
                     }
                 }
 
@@ -1353,21 +1506,30 @@ class ReadWriteModel: ObservableObject
                 
             }, by: { $0.departmentName })
 
-            self.groupList = groupedGroup.map
-            { name, group in
-                GroupList(name: name, groups: group)
+            DispatchQueue.main.async
+            {
+                self.groupList = groupedGroup.map
+                { name, group in
+                    GroupList(name: name, groups: group)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.groupList.flatMap { $0.groups }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.groupList.flatMap { $0.groups }.count
+                }
             }
 
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
@@ -1393,12 +1555,18 @@ class ReadWriteModel: ObservableObject
         {
             if checkStatusUpdate
             {
-                self.isLoadingFetchData = true
+                DispatchQueue.main.async
+                {
+                    self.isLoadingFetchData = true
+                }
             }
                 
             if updateCountRecod
             {
-                self.countRecords = 0
+                DispatchQueue.main.async
+                {
+                    self.countRecords = 0
+                }
             }
 
             let querySnapshot = try await db.collection("students").getDocuments()
@@ -1409,9 +1577,16 @@ class ReadWriteModel: ObservableObject
                 let data = queryDocumentSnapshot.data()
 
                 let id = data["id"] as? Int ?? -1
-                if self.maxIdRecord <= id
+                
+                if updateCountRecod
                 {
-                    self.maxIdRecord = id + 1
+                    if self.maxIdRecord <= id
+                    {
+                        DispatchQueue.main.async
+                        {
+                            self.maxIdRecord = id + 1
+                        }
+                    }
                 }
 
                 let name = data["name"] as? String ?? ""
@@ -1427,21 +1602,30 @@ class ReadWriteModel: ObservableObject
                 return Student(id: id, lastName: lastName, name: name, surname: surname, dateBirth: date, contactNumber: contactNumber, passportNumber: passportNumber, residenceAddress: residenceAddress, educationProgram: educationProgram, group: group)
             }, by: { $0.group })
 
-            self.studentList = groupedUsers.map
-            { group, users in
-                StudentGroupList(name: group, students: users)
+            DispatchQueue.main.async
+            {
+                self.studentList = groupedUsers.map
+                { group, users in
+                    StudentGroupList(name: group, students: users)
+                }
             }
 
             if updateCountRecod
             {
-                self.countRecords = self.studentList.flatMap { $0.students }.count
+                DispatchQueue.main.async
+                {
+                    self.countRecords = self.studentList.flatMap { $0.students }.count
+                }
             }
             
             if checkStatusUpdate
             {
-                withAnimation(Animation.easeOut(duration: 0.5))
+                DispatchQueue.main.async
                 {
-                    self.isLoadingFetchData = false
+                    withAnimation(Animation.easeOut(duration: 0.5))
+                    {
+                        self.isLoadingFetchData = false
+                    }
                 }
             }
         }
