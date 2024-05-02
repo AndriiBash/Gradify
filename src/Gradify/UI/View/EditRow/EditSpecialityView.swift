@@ -400,6 +400,7 @@ struct EditSpecialityView: View
 
                 self.subjectList        = await writeModel.getSubjectNameList(withOut: "")
                 self.branchList         = await writeModel.getBranchName()
+                self.specializationList = await writeModel.getSpecializationNameList(withOut: "")
             }
         }
         .onDisappear

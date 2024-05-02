@@ -148,6 +148,13 @@ struct AddSpecialityView: View
                         }
                     }// Picker for select specialization speciality
                     .foregroundColor(isWrongSpecialization ? Color.red : Color("PopUpTextColor"))
+                    .onAppear
+                    {
+                        Task
+                        {
+                            self.specializationList = await writeModel.getSpecializationNameList(withOut: "")
+                        }
+                    }
                 }// Section with main info
             
                 Section(header: Text("Предмети"))

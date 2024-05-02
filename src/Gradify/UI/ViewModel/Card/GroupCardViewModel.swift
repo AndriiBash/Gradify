@@ -159,7 +159,7 @@ struct GroupCardViewModel: View
         }
         .sheet(isPresented: $showAboutGroup)
         {
-            RowGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, group: group)
+            RowGroupView(isShowView: $showAboutGroup, isEditView: $showEditGroup, group: group, readModel: writeModel)
         }
         .sheet(isPresented: $showEditGroup)
         {

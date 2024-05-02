@@ -132,7 +132,7 @@ struct RowSpecializationView: View
                                 }
                                 label:
                                 {
-                                    Text("Скопіювати детальну інформацію про спецілазіацію")
+                                    Text("Скопіювати детальну інформацію про спеціалізацію")
                                 }
                             }
                     }// Hstack with description specialization

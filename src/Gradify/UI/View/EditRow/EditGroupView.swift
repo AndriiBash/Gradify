@@ -24,14 +24,14 @@ struct EditGroupView: View
     @State private var departmentList:                  [String] = []
     @State private var educationProgramList:            [String] = []
 
-    @State private var maxWidthForButton:             CGFloat = .zero
+    @State private var maxWidthForButton:               CGFloat = .zero
 
-    @Binding var isShowView:                          Bool
-    @Binding var isEditView:                          Bool
-    @Binding var isUpdateListGroup:                   Bool
-    @Binding var group:                               Group
+    @Binding var isShowView:                            Bool
+    @Binding var isEditView:                            Bool
+    @Binding var isUpdateListGroup:                     Bool
+    @Binding var group:                                 Group
     
-    @ObservedObject var writeModel:                   ReadWriteModel
+    @ObservedObject var writeModel:                     ReadWriteModel
 
     var body: some View
     {

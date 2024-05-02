@@ -19,17 +19,22 @@ struct RowGroupView: View
     @State private var statusCopyString:            String  = "Скопіювати"
     @State private var maxWidthForButton:           CGFloat = .zero
 
+    @State private var studentList:                 [String] = []
+    
     @Binding var isShowView:                        Bool
     @Binding var isEditView:                        Bool
     
     var group:                                      Group
     
-    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, group: Group)
+    @ObservedObject var readModel:                  ReadWriteModel
+    
+    init(isShowView: Binding<Bool>, isEditView: Binding<Bool>, group: Group, readModel: ReadWriteModel)
     {
         self._isShowView = isShowView
         self._isEditView = isEditView
         self.group = group
-        self._hoverOnStudent = State(initialValue: Array(repeating: false, count: group.studentList.count))
+        self._hoverOnStudent = State(initialValue: Array(repeating: false, count: 0))
+        self.readModel = readModel
     }
     
     var body: some View
@@ -210,13 +215,13 @@ struct RowGroupView: View
                 
                 Section(header: Text("Студенти"))
                 {
-                    if group.studentList.isEmpty
+                    if studentList.isEmpty
                     {
                         Text("Студенти відсутні")
                     }
                     else
                     {
-                        ForEach(group.studentList.indices, id: \.self)
+                        ForEach(studentList.indices, id: \.self)
                         { index in
                             HStack
                             {
@@ -224,7 +229,7 @@ struct RowGroupView: View
                                 
                                 Spacer()
                                 
-                                Text("\(group.studentList[index])")
+                                Text("\(studentList[index])")
                                     .foregroundColor(Color("MainTextForBlur").opacity(0.7))
                                     .padding(.horizontal)
                                     .padding(.vertical, 1)
@@ -247,7 +252,7 @@ struct RowGroupView: View
                                     {
                                         Button
                                         {
-                                            copyInBuffer(text: group.studentList[index])
+                                            copyInBuffer(text: studentList[index])
                                         }
                                         label:
                                         {
@@ -351,6 +356,11 @@ struct RowGroupView: View
             let doneButtonWidth = getWidthFromString(for: "Готово")
 
             maxWidthForButton = max(buttonWidth, doneButtonWidth)
+            
+            Task
+            {
+                self.studentList = await readModel.getStudentList(groupName: group.name)
+            }
         }
     }
 }

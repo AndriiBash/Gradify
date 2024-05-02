@@ -90,5 +90,4 @@ class AppDelegate: NSObject, NSApplicationDelegate
         NSApp.windows.first?.makeKeyAndOrderFront(self)
         return true
     } // func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool
-        
 }
