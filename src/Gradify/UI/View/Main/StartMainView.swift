@@ -54,10 +54,15 @@ struct StartMainView: View
                 {
                     Button
                     {
-                        // debug moment
-                        print("Відкрити довідку")
-                        
-                        showHelpMenu.toggle()
+                        if let path = Bundle.main.path(forResource: "helpGradify.pdf", ofType: nil)
+                        {
+                            let url = URL(fileURLWithPath: path)
+                            NSWorkspace.shared.open(url)
+                        }
+                        else
+                        {
+                            print("no dovidka")
+                        }
                         
                         //NSHelpManager.shared.openHelpAnchor(NSHelpManager.AnchorName("MyAnchor"), inBook: NSHelpManager.BookName("com.company.App.help") )
                     }

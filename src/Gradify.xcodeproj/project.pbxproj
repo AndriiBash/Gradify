@@ -100,6 +100,7 @@
 		B5D9AF632B66FF6000077CCD /* RowInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EEC2B30CECF002E0F4D /* RowInfoViewModel.swift */; };
 		B5D9AF642B66FF6300077CCD /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B55EE42B30CEC0002E0F4D /* LoadingScreen.swift */; };
 		B5D9AF652B66FF6500077CCD /* DataObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5060CD82B63F6A600316802 /* DataObjectModel.swift */; };
+		B5DEB3C32C0F74D1006CD015 /* helpGradify.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B5DEB3C22C0F74D1006CD015 /* helpGradify.pdf */; };
 		B5E7FBD32B72EC9B00218E9F /* AcceptDeleteRowStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRowStudent.swift */; };
 		B5E956D42B67F79900C00529 /* EventMonitorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E956D32B67F79900C00529 /* EventMonitorController.swift */; };
 		B5EEF3322B48459800B8C73D /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEF3312B48459800B8C73D /* AboutAppView.swift */; };
@@ -214,6 +215,7 @@
 		B5CC2B232B713729001E86BD /* RowStudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowStudentView.swift; sourceTree = "<group>"; };
 		B5CC2B252B714534001E86BD /* AppKitFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitFunc.swift; sourceTree = "<group>"; };
 		B5CE8B312BBEC03000726173 /* EditSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubjectView.swift; sourceTree = "<group>"; };
+		B5DEB3C22C0F74D1006CD015 /* helpGradify.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = helpGradify.pdf; path = Gradify/help/helpGradify.pdf; sourceTree = "<group>"; };
 		B5E7FBD22B72EC9B00218E9F /* AcceptDeleteRowStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptDeleteRowStudent.swift; sourceTree = "<group>"; };
 		B5E956D32B67F79900C00529 /* EventMonitorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorController.swift; path = Gradify/Controller/EventMonitorController.swift; sourceTree = SOURCE_ROOT; };
 		B5EEF3312B48459800B8C73D /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		B5B55E982B30C442002E0F4D = {
 			isa = PBXGroup;
 			children = (
+				B5DEB3C22C0F74D1006CD015 /* helpGradify.pdf */,
 				B5B55EA32B30C442002E0F4D /* Gradify */,
 				B5B55EA22B30C442002E0F4D /* Products */,
 				B5B55EC12B30CAB4002E0F4D /* Frameworks */,
@@ -682,6 +685,7 @@
 				B5EEF33A2B4D609800B8C73D /* Localizable.strings in Resources */,
 				B551A4802B45EB5C00B9E928 /* Localizable.strings in Resources */,
 				B5B55ECC2B30CBE9002E0F4D /* GoogleService-Info.plist in Resources */,
+				B5DEB3C32C0F74D1006CD015 /* helpGradify.pdf in Resources */,
 				B551A4932B46CD2000B9E928 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

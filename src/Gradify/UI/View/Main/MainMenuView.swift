@@ -130,6 +130,7 @@ struct MainMenuView: View
                         }// NavigationLink with Specialty
                     }// Section with specialization and teach programm
                 } // List with section
+                /*
                 .safeAreaInset(edge: .bottom)
                 {
                     Button
@@ -146,7 +147,8 @@ struct MainMenuView: View
                     .padding(.bottom)
                     .buttonStyle(.borderless)
                     .foregroundColor(.accentColor)
-                } // button auth for test
+                } // safeArea isert
+                 */
             }// ZStack
         } // NavigationSplitView(columnVisibility: $columnVisibility)
         detail:

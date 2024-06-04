@@ -322,17 +322,6 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
                 self.tabbedWindows.remove(at: index)
             }
         }
-
-        /*
-        if closedWindow === self.window
-        {
-            // if close main window
-            //NSApplication.shared.terminate(self)
-        }
-        else
-        {
-            removeTabbedWindow(closedWindow)
-        } */
     }// func windowWillClose(_ notification: Notification)
     
     deinit
@@ -354,7 +343,6 @@ class WindowController: NSWindowController, NSWindowDelegate, ObservableObject, 
         useMiniWindow(status: false)
         useTranspertTitleBar(status: false)
         
-
         window?.styleMask.insert(.fullSizeContentView)
 
         //window?.backgroundColor = NSColor(Color.gray)
